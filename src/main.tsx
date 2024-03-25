@@ -5,7 +5,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
-  "https://ton-blockchain-hello-world.vercel.app/public/tonconnect-manifest.json";
+  "https://ton-blockchain-hello-world.vercel.app/tonconnect-manifest.json";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <TonConnectUIProvider manifestUrl={manifestUrl}>
