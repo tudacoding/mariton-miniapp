@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,7 +7,75 @@
     <title>Mariton Gamefi</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <canvas id="game"></canvas>
+    <div id="balance-container" style="display: none">
+      <span>Balance: </span><span id="balance">0</span>
+    </div>
+    <div id="overlay">
+      <div id="overlay-top">
+        <div class="flappy-text" id="score">0</div>
+      </div>
+      <div id="overlay-mid">
+        <div id="after-game" style="display: none">
+          <div id="rewards" style="display: none">
+            <div class="flappy-text game-over">Game Over</div>
+            <div id="tokens-container">
+              <span class="flappy-text award-text">Tokens awarded: </span
+              ><span class="flappy-text award-text" id="tokens-awarded">0</span>
+            </div>
+            <div id="new-achievements"></div>
+          </div>
+          <div id="error" style="display: none"></div>
+        </div>
+        <div id="spinner-container">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div id="connect" style="display: none" class="connect-button">
+          <div style="margin-right: 12px" class="ton-logo"></div>
+          <div class="flappy-text" style="color: black">connect wallet</div>
+        </div>
+        <div id="skin-chooser" style="display: none">
+          <div id="skin-chooser-left"></div>
+          <div id="skin-chooser-mid">
+            <div class="skin-chooser-btn-cont">
+              <img
+                id="skin-prev"
+                class="skin-chooser-btn"
+                src="assets/prev.svg"
+              />
+            </div>
+            <div id="skin-current"><img id="skin-image" /></div>
+            <div class="skin-chooser-btn-cont">
+              <img
+                id="skin-next"
+                class="skin-chooser-btn"
+                src="assets/next.svg"
+              />
+            </div>
+          </div>
+          <div id="skin-chooser-right"></div>
+        </div>
+      </div>
+      <div id="overlay-bottom">
+        <div id="buttons" style="display: none">
+          <div class="button-narrow" id="use" style="display: none">
+            <div class="flappy-text" id="use-text">Use</div>
+          </div>
+          <div style="margin: 12px 0" class="button-narrow" id="shop">
+            <div class="flappy-text">Shop</div>
+          </div>
+          <div class="button-narrow" id="play">
+            <div style="margin-right: 12px" class="play-icon"></div>
+            <div class="flappy-text" id="play-text">Play</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
