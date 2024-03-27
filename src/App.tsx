@@ -1,23 +1,22 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import logo from "./assets/mario-8bit.png";
+import { TonConnectButton } from "@tonconnect/ui-react";
 import "./App.css";
-import CounterApp from "./modules/Counter";
 import "@twa-dev/sdk";
+import StartButton from "./modules/home/StartButton";
 
 function App() {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="p-4 flex justify-center">
+        <div>Welcome to Mariton</div>
       </div>
-      <h1 className="text-3xl font-bold underline">Hello Mariton!</h1>
-      <div>Mario on TON blockchain</div>
-      <CounterApp />
+      <img width={"100%"} src={logo} className="logo react" alt="React logo" />
+      <div className="p-4 flex justify-center flex-col items-center">
+        <TonConnectButton />
+        <div className="mt-4">
+          <StartButton />
+        </div>
+      </div>
     </>
   );
 }
