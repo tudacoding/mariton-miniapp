@@ -13,7 +13,7 @@ import './index.css'
 async function run() {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).Telegram.WebApp.expand();
+    // (window as any).Telegram.WebApp.expand();
     const config = await loadConfig();
 
     // prepare UI elements
