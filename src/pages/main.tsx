@@ -12,7 +12,7 @@ const MainPage = () => {
       </div>
       <MysteryBox />
       <CityBuildings />
-      <ActionBar />
+      <ActionBar isUseAbsolute />
       <NavbarBottom />
     </div>
   );
