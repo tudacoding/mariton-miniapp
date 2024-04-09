@@ -21,7 +21,7 @@ export function useCollectionContract() {
   const collectionContract = useAsyncInitialize(async () => {
     if (!client) return;
     const contract = new NftCollection(
-      Address.parse("EQCK6aK55r_Et2usw0zj6JpTk3KnDWAyMdBG3tIL_-3vMzZQ")
+      Address.parse("EQCmoppZPfzIY1pNIG68NMYrG91zFGpOLDmY7e3DCrfxWU-m")
     );
     return client.open(contract) as OpenedContract<NftCollection>;
   }, [client]);
@@ -49,9 +49,9 @@ export function useCollectionContract() {
     sendMintNft: (type: string) => {
       console.log(userFriendlyAddress);
       return collectionContract?.sendMintNft(sender, {
-        value: toNano(`0.02`),
+        value: toNano(`0.5`),
         queryId: randomSeed,
-        amount: toNano(`0.4`),
+        amount: toNano(`0.5`),
         itemIndex: curentIndex,
         itemOwnerAddress: address(userFriendlyAddress),
         itemContent: setItemContentCell({
