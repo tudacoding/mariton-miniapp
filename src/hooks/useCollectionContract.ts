@@ -47,7 +47,6 @@ export function useCollectionContract() {
     curentIndex: curentIndex,
     address: collectionContract?.address.toString(),
     sendMintNft: (type: string) => {
-      console.log(userFriendlyAddress);
       return collectionContract?.sendMintNft(sender, {
         value: toNano(`0.5`),
         queryId: randomSeed,

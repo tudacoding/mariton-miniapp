@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import ActionBar from "@/modules/home/ActionBar";
 import backgroundShop from "@/assets/game/background-shop.png";
 import eggFire from "@/assets/game/egg-fire.png";
@@ -5,49 +6,89 @@ import eggWater from "@/assets/game/egg-water.png";
 import eggForest from "@/assets/game/egg-forest.png";
 import { useCollectionContract } from "@/hooks/useCollectionContract";
 
+interface IProps {
+  type: string;
+  sendMintNft: Function;
+}
+
+interface IEggCard {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  egg: any;
+  name: string;
+  type: string;
+  sendMintNft: Function;
+  price: number;
+}
+
+const ButtonBuy = (props: IProps) => {
+  return (
+    <button
+      className="rounded-full bg-green-500 px-4 py-1 text-white font-bold hover:bg-green-700"
+      onClick={() => props.sendMintNft(props.type)}
+    >
+      Buy
+    </button>
+  );
+};
+
+const EggCard = (props: IEggCard) => {
+  return (
+    <div className="bg-lime-100 flex flex-col items-center font-bold rounded-lg p-4">
+      <div className="bg-white flex justify-center rounded-lg p-4 w-full border border-orange-800">
+        <img src={props.egg}></img>
+      </div>
+      <div className="text-amber-900 text-center mt-2">{props.name}</div>
+      <div className="w-full flex justify-between items-center mt-2">
+        <div className="flex text-orange-400">
+          {props.price} <span className="ml-1 md:block hidden">TON</span>
+        </div>
+        <ButtonBuy type={props.type} sendMintNft={props.sendMintNft} />
+      </div>
+    </div>
+  );
+};
+
 const ShopScreen = () => {
-  const { mintPrice, maxQuantity, curentIndex, address, sendMintNft } =
+  const { mintPrice, maxQuantity, curentIndex, sendMintNft } =
     useCollectionContract();
   return (
     <div className="relative h-screen">
       <ActionBar />
-      <div>Collection Contract: {address}</div>
-      <div>Max Quantity: {maxQuantity}</div>
-      <div>Current Minted: {curentIndex}</div>
-      <div>Price: {mintPrice} TON</div>
       <div className="relative flex justify-center items-center w-full">
-        <div className="w-9/12 absolute top-1/4 text-lg text-rose-700 text-3xl">
-          <div className="grid grid-rows-2 grid-flow-col gap-4">
-            <div className="bg-lime-100 h-40 rounded-lg">
-              <img src={eggFire}></img>
-              <button
-                className="rounded-lg bg-red-400 px-4 py-2 mt-2"
-                onClick={() => sendMintNft("fire")}
-              >
-                Mint nft
-              </button>
-            </div>
-            <div className="bg-lime-100 rounded-lg">
-              <img src={eggWater}></img>
-              <button
-                className="rounded-lg bg-red-400 px-4 py-2 mt-2"
-                onClick={() => sendMintNft("water")}
-              >
-                Mint nft
-              </button>
-            </div>
-            <div className="bg-lime-100 rounded-lg">
-              <img src={eggForest}></img>
-              <button
-                className="rounded-lg bg-red-400 px-4 py-2 mt-2"
-                onClick={() => sendMintNft("forest")}
-              >
-                Mint nft
-              </button>
-            </div>
-            <div className="bg-lime-100 rounded-lg">
-              {/* <img src={eggOne}></img> */}
-            </div>
+        <div className="w-9/12 absolute top-1/5">
+          <div className="font-bold text-orange-800 flex justify-between p-2 mb-8">
+            <div>Max Quantity: {maxQuantity}</div>
+            <div>Minted Eggs: {curentIndex}</div>
+          </div>
+          <div className="w-full grid grid-rows-2 grid-flow-col gap-4">
+            <EggCard
+              price={mintPrice || 0}
+              sendMintNft={sendMintNft}
+              egg={eggFire}
+              name="Fire Dragon"
+              type="fire"
+            />
+            <EggCard
+              price={mintPrice || 0}
+              sendMintNft={sendMintNft}
+              egg={eggWater}
+              name="Water Turtle"
+              type="water"
+            />
+            <EggCard
+              price={mintPrice || 0}
+              sendMintNft={sendMintNft}
+              egg={eggForest}
+              name="Tree Beetle"
+              type="forest"
+            />
+            <EggCard
+              price={mintPrice || 0}
+              sendMintNft={sendMintNft}
+              egg={eggFire}
+              name="Fire Dragon"
+              type="fire"
+            />
           </div>
         </div>
         <div className="flex justify-center w-11/12">
