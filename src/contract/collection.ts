@@ -10,8 +10,8 @@ import {
 } from "@ton/core";
 
 export type RoyaltyParams = {
-  royaltyFactor: number;
-  royaltyBase: number;
+  mintPrice: number;
+  maxQuantity: number;
   royaltyAddress: Address;
 };
 
@@ -31,8 +31,8 @@ export function nftCollectionConfigToCell(config: NftCollectionConfig): Cell {
     .storeRef(config.nftItemCode)
     .storeRef(
       beginCell()
-        .storeUint(config.royaltyParams.royaltyFactor, 16)
-        .storeUint(config.royaltyParams.royaltyBase, 16)
+        .storeUint(config.royaltyParams.mintPrice, 64)
+        .storeUint(config.royaltyParams.maxQuantity, 64)
         .storeAddress(config.royaltyParams.royaltyAddress)
     )
     .endCell();
@@ -92,5 +92,29 @@ export class NftCollection implements Contract {
         .storeRef(nftMessage) // body
         .endCell(),
     });
+  }
+
+  async getCollectionData(provider: ContractProvider): Promise<{
+    nextItemId: bigint;
+    ownerAddress: Address;
+    collectionContent: Cell;
+  }> {
+    const collection_data = await provider.get("get_collection_data", []);
+    const stack = await collection_data.stack;
+    const nextItem: bigint = stack.readBigNumber();
+    const collectionContent = await stack.readCell();
+    const ownerAddress = await stack.readAddress();
+    return {
+      nextItemId: nextItem,
+      collectionContent: collectionContent,
+      ownerAddress: ownerAddress,
+    };
+  }
+  async getRoyaltyParams(provider: ContractProvider) {
+    const res = await provider.get("royalty_params", []);
+    const mintPrice: bigint = await res.stack.readBigNumber();
+    const maxQuantity: bigint = await res.stack.readBigNumber();
+    const itemAddress = await res.stack.readAddress();
+    return { mintPrice, maxQuantity, itemAddress };
   }
 }

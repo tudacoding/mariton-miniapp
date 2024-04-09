@@ -1,54 +1,61 @@
-// import { useEffect, useState } from "react";
 import { NftCollection } from "../contract/collection";
 import { useTonClient } from "./useTonClient";
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonConnect } from "./useTonConnect";
-import { Address, OpenedContract, toNano } from "@ton/core";
+import { Address, OpenedContract, address, toNano } from "@ton/core";
 import { setItemContentCell } from "@/utils/onChain";
+import { useEffect, useState } from "react";
+import { useTonAddress } from "@tonconnect/ui-react";
 
 export function useCollectionContract() {
   const client = useTonClient();
-  // const [val, setVal] = useState<null | string>();
+  const [price, setMinPrice] = useState<number>();
+  const [maxQuantity, setMaxQuantity] = useState<number>();
+  const [curentIndex, setCurrentIndex] = useState<number>(0);
   const { sender } = useTonConnect();
+  const userFriendlyAddress = useTonAddress();
 
-  // const sleep = (time: number) =>
-  //   new Promise((resolve) => setTimeout(resolve, time));
+  const sleep = (time: number) =>
+    new Promise((resolve) => setTimeout(resolve, time));
 
   const collectionContract = useAsyncInitialize(async () => {
     if (!client) return;
     const contract = new NftCollection(
-      Address.parse("EQA5ZtERS_pzpGpJQ5KW_6WDpQ15JV1qNlLPuo5swZBUtt_X")
+      Address.parse("EQCK6aK55r_Et2usw0zj6JpTk3KnDWAyMdBG3tIL_-3vMzZQ")
     );
     return client.open(contract) as OpenedContract<NftCollection>;
   }, [client]);
 
-  // useEffect(() => {
-  //   async function getValue() {
-  //     if (!counterContract) return;
-  //     setVal(null);
-  //     const val = await counterContract.getCounter();
-  //     setVal(val.toString());
-  //     await sleep(5000); // sleep 5 seconds and poll value again
-  //     getValue();
-  //   }
-  //   getValue();
-  // }, [counterContract]);
+  useEffect(() => {
+    async function getValue() {
+      if (!collectionContract) return;
+      const collectionData = await collectionContract.getCollectionData();
+      const royaltyParams = await collectionContract.getRoyaltyParams();
+      setMinPrice(Number(royaltyParams.mintPrice) / 1000000000);
+      setMaxQuantity(Number(royaltyParams.maxQuantity));
+      setCurrentIndex(Number(collectionData.nextItemId));
+      await sleep(2000);
+      getValue();
+    }
+    getValue();
+  }, [collectionContract]);
+
   const randomSeed = Math.floor(Math.random() * 10000);
   return {
-    // value: val,
+    mintPrice: price,
+    maxQuantity: maxQuantity,
+    curentIndex: curentIndex,
     address: collectionContract?.address.toString(),
-    sendMintNft: () => {
+    sendMintNft: (type: string) => {
+      console.log(userFriendlyAddress);
       return collectionContract?.sendMintNft(sender, {
-        value: toNano("3"), // số tiền chuyển đến nft collection
+        value: toNano(`0.02`),
         queryId: randomSeed,
-        amount: toNano("2.1"), // số tiền chuyển đến nft contract
-        itemIndex: 3,
-        itemOwnerAddress: sender.address as Address,
+        amount: toNano(`0.4`),
+        itemIndex: curentIndex,
+        itemOwnerAddress: address(userFriendlyAddress),
         itemContent: setItemContentCell({
-          name: "OnChain 2",
-          description: "Holds onchain metadata 2",
-          image:
-            "https://raw.githubusercontent.com/Cosmodude/Nexton/main/Nexton_Logo.jpg",
+          commonContentUrl: `${type}.json`,
         }),
       });
     },
