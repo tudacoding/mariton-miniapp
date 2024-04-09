@@ -6,17 +6,16 @@ import { Address, OpenedContract, address, toNano } from "@ton/core";
 import { setItemContentCell } from "@/utils/onChain";
 import { useEffect, useState } from "react";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { toast } from "react-toastify";
 
 export function useCollectionContract() {
   const client = useTonClient();
   const [price, setMinPrice] = useState<number>();
   const [maxQuantity, setMaxQuantity] = useState<number>();
   const [curentIndex, setCurrentIndex] = useState<number>(0);
+  const [loaded, setIsLoaded] = useState<boolean>(false);
   const { sender } = useTonConnect();
   const userFriendlyAddress = useTonAddress();
-
-  const sleep = (time: number) =>
-    new Promise((resolve) => setTimeout(resolve, time));
 
   const collectionContract = useAsyncInitialize(async () => {
     if (!client) return;
@@ -29,29 +28,33 @@ export function useCollectionContract() {
   useEffect(() => {
     async function getValue() {
       if (!collectionContract) return;
+      if (loaded) return;
+      toast.loading('loading info 🥚🥚..')
       const collectionData = await collectionContract.getCollectionData();
       const royaltyParams = await collectionContract.getRoyaltyParams();
       setMinPrice(Number(royaltyParams.mintPrice) / 1000000000);
       setMaxQuantity(Number(royaltyParams.maxQuantity));
       setCurrentIndex(Number(collectionData.nextItemId));
-      await sleep(2000);
-      getValue();
+      toast.dismiss();
+      setIsLoaded(true)
     }
     getValue();
-  }, [collectionContract]);
+  }, [collectionContract, loaded]);
 
   const randomSeed = Math.floor(Math.random() * 10000);
   return {
+    loaded: loaded,
     mintPrice: price,
     maxQuantity: maxQuantity,
     curentIndex: curentIndex,
     address: collectionContract?.address.toString(),
-    sendMintNft: (type: string) => {
+    sendMintNft: async (type: string) => {
+      const collectionData = await collectionContract?.getCollectionData();
       return collectionContract?.sendMintNft(sender, {
         value: toNano(`0.5`),
         queryId: randomSeed,
         amount: toNano(`0.5`),
-        itemIndex: curentIndex,
+        itemIndex: Number(collectionData?.nextItemId),
         itemOwnerAddress: address(userFriendlyAddress),
         itemContent: setItemContentCell({
           commonContentUrl: `${type}.json`,

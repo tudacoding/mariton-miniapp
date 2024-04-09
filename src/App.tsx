@@ -1,8 +1,8 @@
 import "./App.css";
 import "@twa-dev/sdk";
-
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const pages = import.meta.glob("./pages/*.tsx", { eager: true });
 
@@ -35,7 +35,12 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer position="top-center" theme="light" autoClose={5000} hideProgressBar={false} />
+    </>
+  );
 }
 
 export default App;

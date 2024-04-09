@@ -9,6 +9,7 @@ import { useCollectionContract } from "@/hooks/useCollectionContract";
 interface IProps {
   type: string;
   sendMintNft: Function;
+  loaded: boolean;
 }
 
 interface IEggCard {
@@ -18,13 +19,18 @@ interface IEggCard {
   type: string;
   sendMintNft: Function;
   price: number;
+  loaded: boolean;
 }
 
 const ButtonBuy = (props: IProps) => {
   return (
     <button
-      className="rounded-full bg-green-500 px-4 py-1 text-white font-bold hover:bg-green-700"
-      onClick={() => props.sendMintNft(props.type)}
+      className={`rounded-full px-4 py-1 text-white font-bold  ${
+        props.loaded ? "hover:bg-green-700" : ""
+      } ${props.loaded ? "bg-green-500" : "bg-gray-500"}`}
+      onClick={() => {
+        if (props.loaded) props.sendMintNft(props.type);
+      }}
     >
       Buy
     </button>
@@ -42,14 +48,18 @@ const EggCard = (props: IEggCard) => {
         <div className="flex text-orange-400">
           {props.price} <span className="ml-1 md:block hidden">TON</span>
         </div>
-        <ButtonBuy type={props.type} sendMintNft={props.sendMintNft} />
+        <ButtonBuy
+          loaded={props.loaded}
+          type={props.type}
+          sendMintNft={props.sendMintNft}
+        />
       </div>
     </div>
   );
 };
 
 const ShopScreen = () => {
-  const { mintPrice, maxQuantity, curentIndex, sendMintNft } =
+  const { loaded, mintPrice, maxQuantity, curentIndex, sendMintNft } =
     useCollectionContract();
   return (
     <div className="relative h-screen">
@@ -57,11 +67,12 @@ const ShopScreen = () => {
       <div className="relative flex justify-center items-center w-full">
         <div className="w-9/12 absolute top-1/5">
           <div className="font-bold text-orange-800 flex justify-between p-2 mb-8">
-            <div>Max Quantity: {maxQuantity}</div>
+            <div>Max Quantity: {maxQuantity || 0}</div>
             <div>Minted Eggs: {curentIndex}</div>
           </div>
           <div className="w-full grid grid-rows-2 grid-flow-col gap-4">
             <EggCard
+              loaded={loaded}
               price={mintPrice || 0}
               sendMintNft={sendMintNft}
               egg={eggFire}
@@ -69,6 +80,7 @@ const ShopScreen = () => {
               type="fire"
             />
             <EggCard
+              loaded={loaded}
               price={mintPrice || 0}
               sendMintNft={sendMintNft}
               egg={eggWater}
@@ -76,6 +88,7 @@ const ShopScreen = () => {
               type="water"
             />
             <EggCard
+              loaded={loaded}
               price={mintPrice || 0}
               sendMintNft={sendMintNft}
               egg={eggForest}
@@ -83,6 +96,7 @@ const ShopScreen = () => {
               type="forest"
             />
             <EggCard
+              loaded={loaded}
               price={mintPrice || 0}
               sendMintNft={sendMintNft}
               egg={eggFire}
