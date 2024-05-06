@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const MysteryBox = () => {
   return (
     <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <NavLink className="flex justify-center" to="/shop">
+      <NavLink className="flex justify-center" to="/mission">
         <BaseImage
           className="animate-bounce"
           width={"50%"}
