@@ -17,6 +17,7 @@ interface IProps {
 }
 
 const ActionButton = (props: IProps) => {
+  const [check, setCheck] = useState(false);
   return (
     <div className="bg-amber-200 text-slate-800 flex justify-between p-4 mb-4 rounded-xl items-center">
       <div className="flex">
@@ -33,13 +34,18 @@ const ActionButton = (props: IProps) => {
         >
           +20
         </button>
-      ) : (
+      ) : !check ? (
         <button
-          onClick={props.onClick}
+          onClick={() => {
+            props.onClick();
+            setCheck(true);
+          }}
           className="h-10 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded-2xl"
         >
-          +20
+          <span>+20</span>
         </button>
+      ) : (
+        <div className="mr-4">✅</div>
       )}
     </div>
   );
@@ -55,7 +61,7 @@ const MissionScreen = () => {
           <div className="w-full h-full bg-amber-100 rounded-xl p-4">
             <ActionButton
               logo={logoX}
-              title="Follow X"
+              title="Follow Mariton on X"
               description="Lorem Ipsum"
               textButton="Follow"
               onClick={() => {
@@ -66,9 +72,9 @@ const MissionScreen = () => {
             />
             <ActionButton
               logo={logoX}
-              title="Retweet X"
+              title="Like Mariton on X"
               description="Lorem Ipsum"
-              textButton="Retweet"
+              textButton="Follow"
               onClick={() => {
                 window.open("https://twitter.com/Mariton_game", "_blank");
                 setStep(3);
@@ -76,25 +82,36 @@ const MissionScreen = () => {
               isEnable={step > 1}
             />
             <ActionButton
-              logo={logoTelegram}
-              title="Follow telegram"
+              logo={logoX}
+              title="Retweet X"
               description="Lorem Ipsum"
-              textButton="Join"
+              textButton="Retweet"
               onClick={() => {
+                window.open("https://twitter.com/Mariton_game", "_blank");
                 setStep(4);
               }}
               isEnable={step > 2}
             />
             <ActionButton
               logo={logoTelegram}
-              title="Join Comunity Chat"
+              title="Follow annoucement"
+              description="Lorem Ipsum"
+              textButton="Join"
+              onClick={() => {
+                setStep(5);
+              }}
+              isEnable={step > 3}
+            />
+            <ActionButton
+              logo={logoTelegram}
+              title="Join Mariton Chat"
               description="Lorem Ipsum"
               textButton="Join"
               onClick={() => {
                 window.open("https://t.me/Mariton_Chat", "_blank");
-                setStep(5);
+                setStep(6);
               }}
-              isEnable={step > 3}
+              isEnable={step > 4}
             />
             <ActionButton
               logo={logoTelegram}
@@ -102,9 +119,9 @@ const MissionScreen = () => {
               description="Invite Friend"
               textButton="Copy"
               onClick={() => {
-                setStep(6);
+                setStep(7);
               }}
-              isEnable={step > 4}
+              isEnable={step > 5}
             />
           </div>
           <NavLink className="flex justify-center" to="/">
