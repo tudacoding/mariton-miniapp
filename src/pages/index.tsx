@@ -1,12 +1,12 @@
 import WelcomePage from "@/pages/welcome";
-import { useTonWallet } from "@tonconnect/ui-react";
 import MainPage from "@/pages/main";
+import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
 
 const IndexPage = () => {
-  const wallet = useTonWallet();
+  const { account } = useGetFirstRegister();
   return (
     <div>
-      <div>{wallet ? <MainPage /> : <WelcomePage />}</div>
+      <div>{account ? <MainPage /> : <WelcomePage />}</div>
     </div>
   );
 };
