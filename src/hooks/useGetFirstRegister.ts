@@ -11,6 +11,7 @@ export function useGetFirstRegister() {
   const { account } = useSelector((s: RootState) => s.accountStore);
   useEffect(() => {
     async function checkConnection() {
+      if (account) return;
       await accountStore.getFirstRegister({
         address: get(wallet, "account.address"),
         publicKey: get(wallet, "account.publicKey"),

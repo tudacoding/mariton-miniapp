@@ -4,10 +4,12 @@ import pickSpin from "@/assets/game/pick-spin.png";
 import spinButton from "@/assets/game/spin-button.png";
 import inviteFriends from "@/assets/game/invite-button.png";
 import { useState } from "react";
+import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
 
 const SpinScreen = () => {
   const [isSpinning, setIsSpinning] = useState(false);
-  const numberSpin = 0;
+  const { account } = useGetFirstRegister();
+  const numberSpin = account ? account.totalSpins - account.usedSpins : 0;
   return (
     <div className="relative h-screen">
       <div className="absolute z-40 w-full">
