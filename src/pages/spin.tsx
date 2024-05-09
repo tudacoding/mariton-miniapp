@@ -16,14 +16,19 @@ const SpinScreen = () => {
         <ActionBar />
       </div>
 
-      <img
-        className={`absolute -top-40 ${isSpinning ? "animate-spin" : ""}`}
-        src={spinCircle}
-      ></img>
-      <img
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-        src={pickSpin}
-      ></img>
+      <div className="absolute -top-40">
+        <div className="relative">
+          <img
+            className={`${isSpinning ? "animate-spin" : ""}`}
+            src={spinCircle}
+          ></img>
+          <img
+            className="absolute -bottom-8 left-1/2 transform -translate-x-1/2"
+            src={pickSpin}
+          ></img>
+        </div>
+      </div>
+
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
         {!numberSpin ? (
           <div className="font-lalezar text-2xl mb-4 text-center">
