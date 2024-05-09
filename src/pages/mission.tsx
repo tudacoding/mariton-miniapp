@@ -2,7 +2,7 @@ import ActionBar from "@/modules/home/ActionBar";
 import missionBackground from "@/assets/game/mission-bg.png";
 import closeBigButton from "@/assets/game/close-big-button.png";
 import logoX from "@/assets/game/logo-x.png";
-import logoTelegram from "@/assets/game/telegram-logo.webp";
+import logoTelegram from "@/assets/game/telegram-logo.png";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
@@ -116,7 +116,7 @@ const MissionScreen = () => {
             <ActionButton
               logo={logoTelegram}
               title="Invite Friend"
-              description="Invite Friend"
+              description="XKOISOD"
               textButton="Copy"
               onClick={() => {
                 setStep(7);
