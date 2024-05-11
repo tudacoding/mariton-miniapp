@@ -5,8 +5,8 @@ import BaseImage from "@/components/BaseImage";
 const CityBuildings = () => {
   return (
     <div className="w-full flex justify-between absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <BaseImage width={"40%"} src={shopHouse} alt="shop" />
-      <BaseImage width={"40%"} src={arenaHouse} alt="arena" />
+      <BaseImage path="/shop" width={"40%"} src={shopHouse} alt="shop" />
+      <BaseImage path="/arena" width={"40%"} src={arenaHouse} alt="arena" />
     </div>
   );
 };

@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { useTonWallet } from "@tonconnect/ui-react";
 import { get } from "lodash-es";
+import { useNavigate } from "react-router-dom";
 
 export function useGetFirstRegister() {
   const wallet = useTonWallet();
   const { accountStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
+  const navigate = useNavigate();
   useEffect(() => {
     async function checkConnection() {
       if (account) return;
@@ -19,6 +21,8 @@ export function useGetFirstRegister() {
     }
     if (get(wallet, "account.address")) {
       checkConnection();
+    } else {
+      navigate("/");
     }
   }, [wallet]);
 

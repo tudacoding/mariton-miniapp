@@ -2,12 +2,13 @@
 import addButton from "@/assets/game/add-button.png";
 import BaseImage from "@/components/BaseImage";
 import { TonConnectButton } from "@tonconnect/ui-react";
-
+import { useNavigate } from "react-router-dom";
 interface IProps {
   isUseAbsolute?: boolean;
 }
 
 const ActionBar = (props: IProps) => {
+  const navigate = useNavigate();
   return (
     <div
       className={`w-full font-bold text-center items-end p-4 flex justify-between ${
@@ -16,7 +17,7 @@ const ActionBar = (props: IProps) => {
           : ""
       }`}
     >
-      <div className="flex justify-start">
+      <div  onClick={() => navigate('/inventory')} className="flex justify-start">
         <BaseImage width={"80%"} src={addButton} alt="add-button" />
       </div>
       <div className="flex justify-end">
