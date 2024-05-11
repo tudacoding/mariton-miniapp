@@ -5,19 +5,23 @@ import spinButton from "@/assets/game/spin-button.png";
 import inviteFriends from "@/assets/game/invite-button.png";
 import { useState } from "react";
 import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
 import { get } from "lodash-es";
 import { useTonWallet } from "@tonconnect/ui-react";
 import { useNavigate } from "react-router-dom";
+import DialogLottery from "@/modules/spin/DialogLottery";
 
 const SpinScreen = () => {
   const [isSpinning, setIsSpinning] = useState(false);
   const { account } = useGetFirstRegister();
   const { spinLottery } = useDispatch<Dispatch>().spinStore;
-  const numberSpin = account ? account.totalSpins - account.usedSpins : 0;
+  const [numberSpin, setNumberSpin] = useState(
+    account ? account.totalSpins - account.usedSpins : 0
+  );
   const wallet = useTonWallet();
+  const [isOpenDialogLottery, setIsOpenDialogLottery] = useState(false);
+  const [loteryItem, setLoteryItem] = useState({ id: 0, type: "", value: "" });
   const navigate = useNavigate();
   return (
     <div className="relative h-screen">
@@ -52,17 +56,15 @@ const SpinScreen = () => {
           <img
             onClick={async () => {
               setIsSpinning(true);
-              toast.loading("spinning lottery");
+              setNumberSpin(numberSpin - 1);
               setTimeout(async () => {
                 const result = await spinLottery({
                   address: get(wallet, "account.address"),
                   publicKey: get(wallet, "account.publicKey"),
                 });
-                toast.success(`${result.type} - ${result.value}`);
+                setLoteryItem(result);
+                setIsOpenDialogLottery(true);
                 setIsSpinning(false);
-                setTimeout(() => {
-                  toast.dismiss();
-                }, 2000);
               }, 3000);
             }}
             className="hover:opacity-50 cursor-pointer"
@@ -75,10 +77,14 @@ const SpinScreen = () => {
             src={inviteFriends}
           ></img>
         )}
-        <div onClick={() => navigate("/")} className="mt-2 font-bold hover:opacity-50 cursor-pointer">
+        <div
+          onClick={() => navigate("/")}
+          className="mt-2 font-bold hover:opacity-50 cursor-pointer"
+        >
           No, thanks!
         </div>
       </div>
+      <DialogLottery isOpenDialog={isOpenDialogLottery} item={loteryItem} />
     </div>
   );
 };

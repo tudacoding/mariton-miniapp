@@ -42,6 +42,7 @@ const Pagination = () => {
 
 const InventoryScreen = () => {
   // const { account } = useGetFirstRegister();
+  const navigate = useNavigate();
   return (
     <div className="h-screen">
       <div>
@@ -53,8 +54,11 @@ const InventoryScreen = () => {
           <img className="absolute" src={bodyBgLottery}></img>
           <LotteryCard />
         </div>
-        <div className="absolute bottom-40">
+        <div className="absolute bottom-40 flex flex-col">
           <Pagination />
+          <div onClick={() => navigate("/")} className="btn mt-2">
+            close
+          </div>
         </div>
       </div>
     </div>
