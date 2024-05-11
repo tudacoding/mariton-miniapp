@@ -13,7 +13,7 @@ export function useGetFirstRegister() {
   const navigate = useNavigate();
   useEffect(() => {
     async function checkConnection() {
-      if (account) return;
+      // if (account) return;
       await accountStore.getFirstRegister({
         address: get(wallet, "account.address"),
         publicKey: get(wallet, "account.publicKey"),
