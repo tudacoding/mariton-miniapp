@@ -29,7 +29,7 @@ const SpinScreen = () => {
         <ActionBar />
       </div>
 
-      <div className="absolute -top-40">
+      <div className="absolute -top-40 w-full flex items-center justify-center">
         <div className="relative">
           <img
             className={`${isSpinning ? "animate-spin" : ""}`}

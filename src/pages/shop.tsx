@@ -2,8 +2,6 @@
 import ActionBar from "@/modules/home/ActionBar";
 import headerBgShop from "@/assets/game/header-bg-shop.png";
 import bodyBgShop from "@/assets/game/body-bg-shop.png";
-import closeButton from "@/assets/game/close-button.png";
-import { useNavigate } from "react-router-dom";
 // import eggFire from "@/assets/game/egg-fire.png";
 // import eggWater from "@/assets/game/egg-water.png";
 // import eggForest from "@/assets/game/egg-forest.png";
@@ -64,7 +62,6 @@ import { useNavigate } from "react-router-dom";
 const ShopScreen = () => {
   // const { loaded, mintPrice, maxQuantity, curentIndex, sendMintNft } =
   //   useCollectionContract();
-  const navigate = useNavigate();
   return (
     <div className="h-screen">
       <ActionBar />
@@ -72,15 +69,6 @@ const ShopScreen = () => {
         <img src={headerBgShop} alt="bg-shop" />
         <div className="relative flex justify-center">
           <img src={bodyBgShop} alt="body-bg-shop" />
-          <img
-            onClick={() => {
-              navigate("/");
-            }}
-            width={80}
-            className="absolute bottom-8 hover:opacity-50"
-            src={closeButton}
-            alt="bg-shop"
-          />
           <div className="absolute top-8 font-lalezar text-amber-600 text-2xl">
             Coming Soon!
           </div>

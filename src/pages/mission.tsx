@@ -1,9 +1,7 @@
 import ActionBar from "@/modules/home/ActionBar";
 import missionBackground from "@/assets/game/mission-bg.png";
-import closeBigButton from "@/assets/game/close-big-button.png";
 import logoX from "@/assets/game/logo-x.png";
 import logoTelegram from "@/assets/game/telegram-logo.png";
-import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 interface IProps {
@@ -124,11 +122,6 @@ const MissionScreen = () => {
               isEnable={step > 5}
             />
           </div>
-          <NavLink className="flex justify-center" to="/">
-            <div className="absolute -bottom-12 w-full justify-center flex hover:opacity-40 cursor-pointer">
-              <img src={closeBigButton} alt="bg-shop" />
-            </div>
-          </NavLink>
         </div>
 
         <div className="flex justify-center w-11/12">

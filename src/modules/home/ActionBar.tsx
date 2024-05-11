@@ -1,14 +1,16 @@
-// import walletButton from "@/assets/game/wallet-button.png";
-import addButton from "@/assets/game/add-button.png";
+import walletButton from "@/assets/game/wallet-button.png";
+import backButton from "@/assets/game/back-button-appbar.png";
 import BaseImage from "@/components/BaseImage";
 import { TonConnectButton } from "@tonconnect/ui-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 interface IProps {
   isUseAbsolute?: boolean;
 }
 
 const ActionBar = (props: IProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
   return (
     <div
       className={`w-full font-bold text-center items-end p-4 flex justify-between ${
@@ -17,12 +19,18 @@ const ActionBar = (props: IProps) => {
           : ""
       }`}
     >
-      <div  onClick={() => navigate('/inventory')} className="flex justify-start">
-        <BaseImage width={"80%"} src={addButton} alt="add-button" />
-      </div>
+      {location.pathname !== "/" ? (
+        <div onClick={() => navigate("/")} className="flex justify-start">
+          <BaseImage width={"80%"} src={backButton} alt="add-button" />
+        </div>
+      ) : (
+        <div onClick={() => navigate("/inventory")} className="flex justify-start">
+          <BaseImage width={"80%"} src={walletButton} alt="wallet-button" />
+        </div>
+      )}
+
       <div className="flex justify-end">
         <TonConnectButton />
-        {/* <BaseImage width={"80%"} src={walletButton} alt="wallet-button" /> */}
       </div>
     </div>
   );

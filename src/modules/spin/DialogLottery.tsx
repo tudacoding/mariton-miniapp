@@ -18,7 +18,7 @@ const DialogLottery = (props: IProps) => {
     props.isOpenDialog && (
       <div
         onClick={() => navigate("/inventory")}
-        className="absolute z-40 flex justify-center flex-col p-4 w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-900/50"
+        className="cursor-pointer absolute z-40 flex justify-center flex-col p-4 w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-900/50"
       >
         <div className="relative w-full flex flex-col items-center h-full mt-10">
           <img className="h-fit absolute" src={dialogLottery}></img>
