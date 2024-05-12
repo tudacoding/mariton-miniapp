@@ -15,12 +15,11 @@ import DialogLottery from "@/modules/spin/DialogLottery";
 const SpinScreen = () => {
   const [isSpinning, setIsSpinning] = useState(false);
   const { account } = useGetFirstRegister();
-  const { spinLottery } = useDispatch<Dispatch>().spinStore;
+  const { spinLottery, setIsOpenDialog } = useDispatch<Dispatch>().spinStore;
   const [numberSpin, setNumberSpin] = useState(
     account ? account.totalSpins - account.usedSpins : 0
   );
   const wallet = useTonWallet();
-  const [isOpenDialogLottery, setIsOpenDialogLottery] = useState(false);
   const [loteryItem, setLoteryItem] = useState({ id: 0, type: "", value: "" });
   const navigate = useNavigate();
   return (
@@ -63,7 +62,7 @@ const SpinScreen = () => {
                   publicKey: get(wallet, "account.publicKey"),
                 });
                 setLoteryItem(result);
-                setIsOpenDialogLottery(true);
+                setIsOpenDialog(true);
                 setIsSpinning(false);
               }, 3000);
             }}
@@ -84,7 +83,9 @@ const SpinScreen = () => {
           No, thanks!
         </div>
       </div>
-      <DialogLottery isOpenDialog={isOpenDialogLottery} item={loteryItem} />
+      <DialogLottery
+        item={loteryItem}
+      />
     </div>
   );
 };

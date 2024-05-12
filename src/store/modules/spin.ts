@@ -6,6 +6,7 @@ import LotteryItem from "@/types/models/lotteryItem";
 
 interface State {
   collectedItem: LotteryItem;
+  isOpenDialog: boolean;
 }
 const spinStore = createModel<RootModel>()({
   state: {} as State,
@@ -14,6 +15,12 @@ const spinStore = createModel<RootModel>()({
       return {
         ...state,
         collectedItem: data,
+      };
+    },
+    setIsOpenDialog(state, data) {
+      return {
+        ...state,
+        isOpenDialog: data,
       };
     },
   },

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import dialogLottery from "@/assets/game/dialog-lottery.png";
 import LotteryItem from "@/types/models/lotteryItem";
 import tonLogo from "@/assets/game/lottery-item/ton.png";
@@ -6,18 +7,19 @@ import puzzleFire from "@/assets/game/lottery-item/fire-puzzle.png";
 import puzzleWater from "@/assets/game/lottery-item/water-puzzle.png";
 import puzzleTree from "@/assets/game/lottery-item/tree-puzzle.png";
 import { getTitleLotteryItem } from "@/utils/string";
-import { useNavigate } from "react-router-dom";
+import { Dispatch, RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
 interface IProps {
-  isOpenDialog: boolean;
   item: LotteryItem;
 }
 const DialogLottery = (props: IProps) => {
   const title = getTitleLotteryItem(props.item);
-  const navigate = useNavigate();
+  const { isOpenDialog } = useSelector((s: RootState) => s.spinStore);
+  const { spinStore } = useDispatch<Dispatch>();
   return (
-    props.isOpenDialog && (
+    isOpenDialog && (
       <div
-        onClick={() => navigate("/inventory")}
+        onClick={() => spinStore.setIsOpenDialog(false)}
         className="cursor-pointer absolute z-40 flex justify-center flex-col p-4 w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-900/50"
       >
         <div className="relative w-full flex flex-col items-center h-full mt-10">
