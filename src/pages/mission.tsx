@@ -3,65 +3,18 @@ import missionHeader from "@/assets/game/mission-header.png";
 import missionBody from "@/assets/game/mission-body.png";
 import logoX from "@/assets/game/logo-x.png";
 import logoTelegram from "@/assets/game/telegram-logo.png";
-import { useState } from "react";
 import config from "@/config";
 import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
 import useCopy from "@/hooks/useCopy";
 import { toast } from "react-toastify";
-interface IProps {
-  title: string;
-  description: string;
-  textButton: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onClick: any;
-  isEnable?: boolean;
-  logo: string;
-  noMargin?: boolean;
-}
-
-const ActionButton = (props: IProps) => {
-  const [check, setCheck] = useState(false);
-  return (
-    <div
-      className={`bg-amber-200 text-slate-800 flex justify-between p-4 ${
-        !props.noMargin && "mb-4"
-      } rounded-xl items-center`}
-    >
-      <div className="flex">
-        <img className="h-8 w-8 mr-4" src={props.logo}></img>
-        <div>
-          <div className="font-bold text-xs text-amber-800">{props.title}</div>
-          <div className="text-xs">{props.description}</div>
-        </div>
-      </div>
-      {!props.isEnable ? (
-        <button
-          disabled
-          className="h-10 bg-yellow-800 text-white font-bold py-1 px-4 rounded-2xl opacity-50"
-        >
-          +20
-        </button>
-      ) : !check ? (
-        <button
-          onClick={() => {
-            props.onClick();
-            setCheck(true);
-          }}
-          className="h-10 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded-2xl"
-        >
-          <span>+20</span>
-        </button>
-      ) : (
-        <div className="mr-4">✅</div>
-      )}
-    </div>
-  );
-};
+import ActionButton from "@/modules/mission/ActionButton";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@/store/store";
 
 const MissionScreen = () => {
-  const [step, setStep] = useState(1);
   const { account } = useGetFirstRegister();
   const [copy] = useCopy(account ? `${config.botTele}${account.ref}` : "");
+  const { accountStore } = useDispatch<Dispatch>();
   return (
     <div className="relative h-screen">
       <ActionBar />
@@ -84,68 +37,104 @@ const MissionScreen = () => {
                 title="Follow Mariton"
                 description="Click & follow on X"
                 textButton="Follow"
-                onClick={() => {
+                currentStep={account && account.currentStep}
+                index={1}
+                onClick={async () => {
                   window.open(config.twitter, "_blank");
-                  setStep(2);
+                  await accountStore.completeMission({
+                    address: account.wallet,
+                    publicKey: account.publicKey,
+                    step: 1,
+                  });
                 }}
                 isEnable
               />
               <ActionButton
+                currentStep={account && account.currentStep}
+                index={2}
                 logo={logoX}
                 title="Like Mariton"
                 description="Click & like on X"
                 textButton="Follow"
-                onClick={() => {
+                onClick={async () => {
                   window.open(config.likePost, "_blank");
-                  setStep(3);
+                  await accountStore.completeMission({
+                    address: account.wallet,
+                    publicKey: account.publicKey,
+                    step: 2,
+                  });
                 }}
-                isEnable={step > 1}
+                isEnable={account && account.currentStep > 0}
               />
               <ActionButton
+                currentStep={account && account.currentStep}
+                index={3}
                 logo={logoX}
                 title="Retweet X"
                 description="Click & retweet"
                 textButton="Retweet"
-                onClick={() => {
+                onClick={async () => {
                   window.open(config.retweet, "_blank");
-                  setStep(4);
+                  await accountStore.completeMission({
+                    address: account.wallet,
+                    publicKey: account.publicKey,
+                    step: 3,
+                  });
                 }}
-                isEnable={step > 2}
+                isEnable={account && account.currentStep > 1}
               />
               <ActionButton
+                currentStep={account && account.currentStep}
+                index={4}
                 logo={logoTelegram}
                 title="Mariton Channel"
                 description="Join channel"
                 textButton="Join"
-                onClick={() => {
+                onClick={async () => {
                   window.open(config.annoucementTelegram, "_blank");
-                  setStep(5);
+                  await accountStore.completeMission({
+                    address: account.wallet,
+                    publicKey: account.publicKey,
+                    step: 4,
+                  });
                 }}
-                isEnable={step > 3}
+                isEnable={account && account.currentStep > 2}
               />
               <ActionButton
+                currentStep={account && account.currentStep}
+                index={5}
                 logo={logoTelegram}
                 title="Join Mariton Chat"
                 description="Join Chat"
                 textButton="Join"
-                onClick={() => {
+                onClick={async () => {
                   window.open(config.telegram, "_blank");
-                  setStep(6);
+                  await accountStore.completeMission({
+                    address: account.wallet,
+                    publicKey: account.publicKey,
+                    step: 5,
+                  });
                 }}
-                isEnable={step > 4}
+                isEnable={account && account.currentStep > 3}
               />
               <ActionButton
+                currentStep={account && account.currentStep}
+                index={6}
                 noMargin
                 logo={logoTelegram}
                 title="Invite Friend"
                 description={`${account ? account.ref : ""}`}
                 textButton="Copy"
-                onClick={() => {
+                onClick={async () => {
                   copy();
-                  toast.success("Completed & Copy Sucessfully!");
-                  setStep(7);
+                  toast.success("Completed & Copy link ref sucessfully!");
+                  await accountStore.completeMission({
+                    address: account.wallet,
+                    publicKey: account.publicKey,
+                    step: 6,
+                  });
                 }}
-                isEnable={step > 5}
+                isEnable={account && account.currentStep > 4}
               />
             </div>
           </div>

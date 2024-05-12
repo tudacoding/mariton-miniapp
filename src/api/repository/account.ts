@@ -4,6 +4,7 @@ import axios from "axios";
 interface IProps {
   address: string;
   publicKey: string;
+  step?: number;
 }
 
 const AccountRepository = {
@@ -11,6 +12,14 @@ const AccountRepository = {
     const res = await axios.post(`${config.apiUrl}/game/first-register`, {
       address,
       publicKey,
+    });
+    return res.data || {};
+  },
+  completeMission: async ({ address, publicKey, step }: IProps) => {
+    const res = await axios.post(`${config.apiUrl}/game/complete-mission`, {
+      address,
+      publicKey,
+      step,
     });
     return res.data || {};
   },
