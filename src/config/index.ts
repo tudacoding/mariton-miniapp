@@ -7,5 +7,5 @@ export default {
   likePost: '',
   retweet: '',
   annoucementTelegram: '',
-  botTele: 'https://t.me/mariton?start='
+  botTele: 'https://t.me/mariotontestnet_bot?start='
 };

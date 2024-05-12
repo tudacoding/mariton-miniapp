@@ -18,10 +18,12 @@ Ref
 [x] Chỉnh sửa lại các nút giao diện
 [x] Chú ý góp ý của mọi người
 
-Deplot production
-- Đổi tên miền vercel cho app chính
-- Clear database
-- Env Prod trong project (testnet, sandbox, development ...) front-end + back-end + bot
-- thay logo invite friend
+Deploy production
+- Đổi tên miền vercel cho app chính mariton.xyz
+- Clear databasel
+- Env production trong project (testnet, sandbox, development ...) front-end + back-end + bot
 - setup lại bot khi deploy production
+
+- thay logo invite friend
 - hiện số ton đã quay được
+- thêm nhạc cho website
