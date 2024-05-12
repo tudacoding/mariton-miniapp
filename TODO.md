@@ -8,6 +8,7 @@ Lottery
 
 Mission
 [x] Màn hình làm nhiệm vụ
+[] Hoàn thành nhiệm vụ
 
 Kho đồ
 [x] Màn hình kho đồ
@@ -16,7 +17,9 @@ Ref
 [x] Ô điền ref, cơ chế tự động nhận ref
 
 - Đổi tên miền vercel cho app chính
-- Env Prod
+- Env Prod trong project
 - Clear database
 - Chỉnh sửa lại các nút giao diện
 - Chú ý góp ý của mọi người
+- setup lại bot production
+- hiện số ton đã quay được

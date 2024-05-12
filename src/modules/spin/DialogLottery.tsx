@@ -64,7 +64,7 @@ const DialogLottery = (props: IProps) => {
                 {String(title).toUpperCase()}
               </div>
               <div className="text-amber-950 font-bold text-center py-4">
-                Congratulations! <br /> You receive a {title}.
+                Congratulations! <br /> You have received a {title}.
               </div>
             </div>
           </div>
