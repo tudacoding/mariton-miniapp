@@ -10,7 +10,6 @@ interface IProps {
 const ActionBar = (props: IProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
   return (
     <div
       className={`w-full font-bold text-center items-end p-4 flex justify-between ${

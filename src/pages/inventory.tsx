@@ -1,17 +1,26 @@
-// import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import headBgLottery from "@/assets/game/head-background-lottery.png";
 import bodyBgLottery from "@/assets/game/body-background-lottery.png";
 import ActionBar from "@/modules/home/ActionBar";
-import eggImage from "@/assets/game/egg-fire.png";
+import { useGetInventory } from "@/hooks/useGetInventory";
+import { getTitleLotteryItem } from "@/utils/string";
+import { get } from "lodash-es";
+import ImageLotteryItem from "@/components/ImageLotteryItem";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
 
-const LotteryItem = () => {
+const LotteryItem = (props: any) => {
+  const attributes = get(props.item, "attributes.lottery_item.data.attributes");
   return (
     <div className="w-full h-400 bg-amber-50 rounded-lg p-2">
-      <div className="flex justify-center border border-amber-400 rounded-lg p-4">
-        <img src={eggImage}></img>
+      <div className="relative flex justify-center border border-amber-400 rounded-lg p-4">
+        <ImageLotteryItem item={attributes} />
+        <div className="ml-1 text-amber-800 absolute top-0 left-0">
+          {get(props.item, "id")}
+        </div>
       </div>
       <div className="font-lalezar text-center text-amber-600 mt-4">
-        Fire Dragon
+        {getTitleLotteryItem(attributes)}
       </div>
       <div className="rounded-3xl bg-yellow-400 h-8 p-1 text-center font-lalezar text-amber-800 text-2xl">
         {" "}
@@ -21,14 +30,14 @@ const LotteryItem = () => {
   );
 };
 
-const LotteryCard = () => {
+const LotteryCard = (props: any) => {
   return (
     <div className="absolute top-0 w-full flex flex-col items-center p-4 justify-center">
       <div className="grid grid-cols-2 gap-4 w-80">
-        <LotteryItem />
-        <LotteryItem />
-        <LotteryItem />
-        <LotteryItem />
+        {props.inventory &&
+          props.inventory.map((item: any, index: number) => (
+            <LotteryItem key={index} item={item} />
+          ))}
       </div>
       <Pagination />
     </div>
@@ -36,17 +45,36 @@ const LotteryCard = () => {
 };
 
 const Pagination = () => {
+  const { accountStore } = useDispatch<Dispatch>();
+  const { currentPage } = useSelector((s: RootState) => s.accountStore);
+  const { pagination } = useSelector((s: RootState) => s.accountStore);
   return (
     <div className="join mt-4">
-      <button className="join-item btn">«</button>
-      <button className="join-item btn">Page 1</button>
-      <button className="join-item btn">»</button>
+      <button
+        disabled={(currentPage || 1) <= 1}
+        onClick={() => {
+          accountStore.setCurrentPage((currentPage || 1) - 1);
+        }}
+        className="join-item btn"
+      >
+        «
+      </button>
+      <button className="join-item btn">Page {currentPage || 1}</button>
+      <button
+        disabled={pagination && pagination.page * pagination.pageSize > pagination.total}
+        onClick={() => {
+          accountStore.setCurrentPage((currentPage || 1) + 1);
+        }}
+        className="join-item btn"
+      >
+        »
+      </button>
     </div>
   );
 };
 
 const InventoryScreen = () => {
-  // const { account } = useGetFirstRegister();
+  const { inventory } = useGetInventory();
   return (
     <div className="h-screen">
       <div>
@@ -56,7 +84,7 @@ const InventoryScreen = () => {
         <img src={headBgLottery}></img>
         <div className="relative w-full h-full flex justify-center">
           <img className="absolute" src={bodyBgLottery}></img>
-          <LotteryCard />
+          <LotteryCard inventory={inventory} />
         </div>
       </div>
     </div>

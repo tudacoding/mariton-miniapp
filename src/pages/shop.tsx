@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import ActionBar from "@/modules/home/ActionBar";
-import headerBgShop from "@/assets/game/header-bg-shop.png";
-import bodyBgShop from "@/assets/game/body-bg-shop.png";
+// import headerBgShop from "@/assets/game/header-bg-shop.png";
+// import bodyBgShop from "@/assets/game/body-bg-shop.png";
+import bgShopComingSoon from "@/assets/game/background-shop-coming-soon.png";
 // import eggFire from "@/assets/game/egg-fire.png";
 // import eggWater from "@/assets/game/egg-water.png";
 // import eggForest from "@/assets/game/egg-forest.png";
@@ -66,13 +67,14 @@ const ShopScreen = () => {
     <div className="h-screen">
       <ActionBar />
       <div className="flex flex-col justify-center p-4">
-        <img src={headerBgShop} alt="bg-shop" />
+      <img src={bgShopComingSoon} alt="bg-shop" />
+        {/* <img src={headerBgShop} alt="bg-shop" />
         <div className="relative flex justify-center">
           <img src={bodyBgShop} alt="body-bg-shop" />
           <div className="absolute top-8 font-lalezar text-amber-600 text-2xl">
             Coming Soon!
           </div>
-        </div>
+        </div> */}
         {/* <div className="w-9/12 absolute top-1/5">
           <div className="font-bold text-orange-800 flex justify-between p-2 mb-8">
             <div>Max Quantity: {maxQuantity || 0}</div>
