@@ -1,9 +1,13 @@
 import ActionBar from "@/modules/home/ActionBar";
-import missionBackground from "@/assets/game/mission-bg.png";
+import missionHeader from "@/assets/game/mission-header.png";
+import missionBody from "@/assets/game/mission-body.png";
 import logoX from "@/assets/game/logo-x.png";
 import logoTelegram from "@/assets/game/telegram-logo.png";
 import { useState } from "react";
-
+import config from "@/config";
+import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
+import useCopy from "@/hooks/useCopy";
+import { toast } from "react-toastify";
 interface IProps {
   title: string;
   description: string;
@@ -12,17 +16,22 @@ interface IProps {
   onClick: any;
   isEnable?: boolean;
   logo: string;
+  noMargin?: boolean;
 }
 
 const ActionButton = (props: IProps) => {
   const [check, setCheck] = useState(false);
   return (
-    <div className="bg-amber-200 text-slate-800 flex justify-between p-4 mb-4 rounded-xl items-center">
+    <div
+      className={`bg-amber-200 text-slate-800 flex justify-between p-4 ${
+        !props.noMargin && "mb-4"
+      } rounded-xl items-center`}
+    >
       <div className="flex">
-        <img className="h-12 w-12 mr-4" src={props.logo}></img>
+        <img className="h-8 w-8 mr-4" src={props.logo}></img>
         <div>
-          <div className="font-bold text-amber-800">{props.title}</div>
-          <div>{props.description}</div>
+          <div className="font-bold text-xs text-amber-800">{props.title}</div>
+          <div className="text-xs">{props.description}</div>
         </div>
       </div>
       {!props.isEnable ? (
@@ -51,81 +60,95 @@ const ActionButton = (props: IProps) => {
 
 const MissionScreen = () => {
   const [step, setStep] = useState(1);
+  const { account } = useGetFirstRegister();
+  const [copy] = useCopy(account ? `${config.botTele}${account.ref}` : "");
   return (
     <div className="relative h-screen">
       <ActionBar />
-      <div className="relative flex justify-center items-center w-full">
-        <div className="w-9/12 absolute top-1/5 ">
-          <div className="w-full h-full bg-amber-100 rounded-xl p-4">
-            <ActionButton
-              logo={logoX}
-              title="Follow Mariton on X"
-              description="Lorem Ipsum"
-              textButton="Follow"
-              onClick={() => {
-                window.open("https://twitter.com/Mariton_game", "_blank");
-                setStep(2);
-              }}
-              isEnable
-            />
-            <ActionButton
-              logo={logoX}
-              title="Like Mariton on X"
-              description="Lorem Ipsum"
-              textButton="Follow"
-              onClick={() => {
-                window.open("https://twitter.com/Mariton_game", "_blank");
-                setStep(3);
-              }}
-              isEnable={step > 1}
-            />
-            <ActionButton
-              logo={logoX}
-              title="Retweet X"
-              description="Lorem Ipsum"
-              textButton="Retweet"
-              onClick={() => {
-                window.open("https://twitter.com/Mariton_game", "_blank");
-                setStep(4);
-              }}
-              isEnable={step > 2}
-            />
-            <ActionButton
-              logo={logoTelegram}
-              title="Follow annoucement"
-              description="Lorem Ipsum"
-              textButton="Join"
-              onClick={() => {
-                setStep(5);
-              }}
-              isEnable={step > 3}
-            />
-            <ActionButton
-              logo={logoTelegram}
-              title="Join Mariton Chat"
-              description="Lorem Ipsum"
-              textButton="Join"
-              onClick={() => {
-                window.open("https://t.me/Mariton_Chat", "_blank");
-                setStep(6);
-              }}
-              isEnable={step > 4}
-            />
-            <ActionButton
-              logo={logoTelegram}
-              title="Invite Friend"
-              description="XKOISOD"
-              textButton="Copy"
-              onClick={() => {
-                setStep(7);
-              }}
-              isEnable={step > 5}
-            />
+      <div className="relative flex flex-col items-center justify-center w-full p-4">
+        <img
+          className="absolute top-0 z-10"
+          src={missionHeader}
+          alt="bg-mission-header"
+        />
+        <div className="absolute top-10 relative w-full">
+          <img
+            className="absolute w-full"
+            src={missionBody}
+            alt="bg-mission-body"
+          />
+          <div className="w-full absolute p-6 mt-2">
+            <div className="w-full h-full bg-amber-100 rounded-xl p-4">
+              <ActionButton
+                logo={logoX}
+                title="Follow Mariton"
+                description="Click & follow on X"
+                textButton="Follow"
+                onClick={() => {
+                  window.open(config.twitter, "_blank");
+                  setStep(2);
+                }}
+                isEnable
+              />
+              <ActionButton
+                logo={logoX}
+                title="Like Mariton"
+                description="Click & like on X"
+                textButton="Follow"
+                onClick={() => {
+                  window.open(config.likePost, "_blank");
+                  setStep(3);
+                }}
+                isEnable={step > 1}
+              />
+              <ActionButton
+                logo={logoX}
+                title="Retweet X"
+                description="Click & retweet"
+                textButton="Retweet"
+                onClick={() => {
+                  window.open(config.retweet, "_blank");
+                  setStep(4);
+                }}
+                isEnable={step > 2}
+              />
+              <ActionButton
+                logo={logoTelegram}
+                title="Mariton Channel"
+                description="Join channel"
+                textButton="Join"
+                onClick={() => {
+                  window.open(config.annoucementTelegram, "_blank");
+                  setStep(5);
+                }}
+                isEnable={step > 3}
+              />
+              <ActionButton
+                logo={logoTelegram}
+                title="Join Mariton Chat"
+                description="Join Chat"
+                textButton="Join"
+                onClick={() => {
+                  window.open(config.telegram, "_blank");
+                  setStep(6);
+                }}
+                isEnable={step > 4}
+              />
+              <ActionButton
+                noMargin
+                logo={logoTelegram}
+                title="Invite Friend"
+                description={`${account ? account.ref : ""}`}
+                textButton="Copy"
+                onClick={() => {
+                  copy();
+                  toast.success("Completed & Copy Sucessfully!");
+                  setStep(7);
+                }}
+                isEnable={step > 5}
+              />
+            </div>
           </div>
-        </div>
-
-        <div className="flex justify-center w-11/12">
-          <img src={missionBackground} alt="bg-shop" />
         </div>
       </div>
     </div>

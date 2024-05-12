@@ -8,4 +8,5 @@ export default interface Account {
   createdAt: Date;
   updatedAt: Date;
   publicKey: string;
+  ref?: string;
 }

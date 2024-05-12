@@ -1,16 +1,22 @@
 System
-[ ] Check isActive account
+[x] Check isActive account
 [x] Đăng xuất trở về màn hình welcome
 
 Lottery
 [x] Viết api quay thưởng
-[ ] Show ra phần thưởng được nhận kèm thông báo
+[x] Show ra phần thưởng được nhận kèm thông báo
 
 Mission
-[ ] Màn hình làm nhiệm vụ
+[x] Màn hình làm nhiệm vụ
 
 Kho đồ
-[ ] Màn hình kho đồ
+[x] Màn hình kho đồ
 
 Ref
-[ ] Ô điền ref, cơ chế tự động nhận ref
+[x] Ô điền ref, cơ chế tự động nhận ref
+
+- Đổi tên miền vercel cho app chính
+- Env Prod
+- Clear database
+- Chỉnh sửa lại các nút giao diện
+- Chú ý góp ý của mọi người
