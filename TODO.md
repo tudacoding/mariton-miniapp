@@ -22,7 +22,7 @@ Deploy production
 [x] Đổi tên miền vercel cho app chính mariton.xyz
 [x] Clear database
 [x] Env production trong project (testnet, sandbox, development ...) front-end + back-end + bot
-- setup lại bot khi deploy production
+[x] setup lại bot khi deploy production
 
 - thay logo invite friend
 - hiện số ton đã quay được
