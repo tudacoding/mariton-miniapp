@@ -10,7 +10,7 @@ interface State {
   account: Account;
   inventory: Array<any>;
   pagination: any;
-  currentPage: number
+  currentPage: number;
 }
 const accountStore = createModel<RootModel>()({
   state: {} as State,
@@ -47,9 +47,11 @@ const accountStore = createModel<RootModel>()({
       return res;
     },
     async completeMission(params) {
-      const res = await AccountRepository.completeMission(params);
-      if (res) dispatch.accountStore.setAccount(res);
-      return res;
+      setTimeout(async () => {
+        const res = await AccountRepository.completeMission(params);
+        if (res) dispatch.accountStore.setAccount(res);
+        return res;
+      }, 10000);
     },
     async getHistoryLottery(params) {
       const res = await SpinRepository.getHistoryLottery(params);

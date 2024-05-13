@@ -20,7 +20,7 @@ Ref
 
 Deploy production
 - Đổi tên miền vercel cho app chính mariton.xyz
-- Clear databasel
+- Clear database
 - Env production trong project (testnet, sandbox, development ...) front-end + back-end + bot
 - setup lại bot khi deploy production
 
