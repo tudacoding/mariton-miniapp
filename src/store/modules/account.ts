@@ -51,7 +51,7 @@ const accountStore = createModel<RootModel>()({
         const res = await AccountRepository.completeMission(params);
         if (res) dispatch.accountStore.setAccount(res);
         return res;
-      }, 2 * 60000);
+      }, 2* 60000);
     },
     async getHistoryLottery(params) {
       const res = await SpinRepository.getHistoryLottery(params);

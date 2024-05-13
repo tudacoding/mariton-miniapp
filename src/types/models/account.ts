@@ -9,5 +9,5 @@ export default interface Account {
   updatedAt: Date;
   publicKey: string;
   ref?: string;
-  currentStep: number;
+  completedMission: string;
 }

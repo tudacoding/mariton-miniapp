@@ -37,7 +37,7 @@ const MissionScreen = () => {
                 title="Follow Mariton"
                 description="Click & follow on X"
                 textButton="Follow"
-                currentStep={account && account.currentStep}
+                completedMission={account && account.completedMission}
                 index={1}
                 onClick={async () => {
                   window.open(config.twitter, "_blank");
@@ -47,10 +47,9 @@ const MissionScreen = () => {
                     step: 1,
                   });
                 }}
-                isEnable
               />
               <ActionButton
-                currentStep={account && account.currentStep}
+                completedMission={account && account.completedMission}
                 index={2}
                 logo={logoX}
                 title="Like Mariton"
@@ -64,10 +63,9 @@ const MissionScreen = () => {
                     step: 2,
                   });
                 }}
-                isEnable={account && account.currentStep > 0}
               />
               <ActionButton
-                currentStep={account && account.currentStep}
+                completedMission={account && account.completedMission}
                 index={3}
                 logo={logoX}
                 title="Retweet X"
@@ -81,10 +79,9 @@ const MissionScreen = () => {
                     step: 3,
                   });
                 }}
-                isEnable={account && account.currentStep > 1}
               />
               <ActionButton
-                currentStep={account && account.currentStep}
+                completedMission={account && account.completedMission}
                 index={4}
                 logo={logoTelegram}
                 title="Mariton Channel"
@@ -98,10 +95,9 @@ const MissionScreen = () => {
                     step: 4,
                   });
                 }}
-                isEnable={account && account.currentStep > 2}
               />
               <ActionButton
-                currentStep={account && account.currentStep}
+                completedMission={account && account.completedMission}
                 index={5}
                 logo={logoTelegram}
                 title="Join Mariton Chat"
@@ -115,12 +111,11 @@ const MissionScreen = () => {
                     step: 5,
                   });
                 }}
-                isEnable={account && account.currentStep > 3}
               />
               <ActionButton
-                currentStep={account && account.currentStep}
+                completedMission={account && account.completedMission}
                 index={6}
-                noMargin
+                inviteFriend
                 logo={logoTelegram}
                 title="Invite Friend"
                 description={`${account ? account.ref : ""}`}
@@ -134,7 +129,6 @@ const MissionScreen = () => {
                     step: 6,
                   });
                 }}
-                isEnable={account && account.currentStep > 4}
               />
             </div>
           </div>
