@@ -1,3 +1,5 @@
+import checkIcon from "@/assets/game/check.png";
+
 interface IProps {
   title: string;
   description: string;
@@ -42,7 +44,9 @@ const ActionButton = (props: IProps) => {
           <span>+20</span>
         </button>
       ) : (
-        <div className="mr-4">✅</div>
+        <div className="mr-4">
+          <img className="w-8" src={checkIcon}></img>
+        </div>
       )}
     </div>
   );
