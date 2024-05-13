@@ -7,5 +7,5 @@ export default {
   likePost: 'https://x.com/Mariton_game/status/1790024047826493547',
   retweet: 'https://x.com/Mariton_game/status/1790024047826493547',
   annoucementTelegram: 'https://t.me/MaritonAnn',
-  botTele: 'https://t.me/mariotontestnet_bot?start='
+  botTele: 'https://t.me/mariton_bot?start='
 };
