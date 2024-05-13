@@ -121,7 +121,7 @@ const MissionScreen = () => {
                 inviteFriend
                 logo={logoAddFriend}
                 title="Invite Friend"
-                description={`${account ? account.ref : ""}`}
+                description={`Total refs: ${countRef}`}
                 textButton="Copy"
                 countRef={countRef}
                 onClick={async () => {
