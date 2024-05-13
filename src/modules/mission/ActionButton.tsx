@@ -34,7 +34,7 @@ const ActionButton = (props: IProps) => {
           <div className="text-xs">{props.description}</div>
         </div>
       </div>
-      {!(props.completedMission || "").includes(`${props.index}`) ? (
+      {!props.inviteFriend && !(props.completedMission || "").includes(`${props.index}`) ? (
         <button
           onClick={() => {
             props.onClick();
