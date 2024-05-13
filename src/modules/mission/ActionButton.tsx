@@ -15,6 +15,7 @@ interface IProps {
   inviteFriend?: boolean;
   completedMission: string;
   index: number;
+  countRef?: number;
 }
 
 const ActionButton = (props: IProps) => {
@@ -46,7 +47,7 @@ const ActionButton = (props: IProps) => {
         <div className="mr-4 flex items-center">
           {props.inviteFriend ? (
             <div className="flex items-center">
-              <div className="text-xs mr-4">Ref: 0</div>
+              <div className="text-xs mr-4">Ref: {props.countRef || 0}</div>
               <div
                 onClick={() => {
                   copy();

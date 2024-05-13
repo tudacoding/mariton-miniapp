@@ -5,12 +5,14 @@ import AccountRepository from "@/api/repository/account";
 import type { RootModel } from "..";
 import Account from "@/types/models/account";
 import SpinRepository from "@/api/repository/spin";
+import { get } from "lodash-es";
 
 interface State {
   account: Account;
   inventory: Array<any>;
   pagination: any;
   currentPage: number;
+  countRef: number;
 }
 const accountStore = createModel<RootModel>()({
   state: {} as State,
@@ -39,6 +41,12 @@ const accountStore = createModel<RootModel>()({
         currentPage: data,
       };
     },
+    setCountRef(state, data) {
+      return {
+        ...state,
+        countRef: data,
+      };
+    },
   },
   effects: (dispatch) => ({
     async getFirstRegister(params) {
@@ -51,7 +59,7 @@ const accountStore = createModel<RootModel>()({
         const res = await AccountRepository.completeMission(params);
         if (res) dispatch.accountStore.setAccount(res);
         return res;
-      }, 2* 60000);
+      }, 2 * 60000);
     },
     async getHistoryLottery(params) {
       const res = await SpinRepository.getHistoryLottery(params);
@@ -59,6 +67,11 @@ const accountStore = createModel<RootModel>()({
       if (res.meta && res.meta.pagination)
         dispatch.accountStore.setPagination(res.meta.pagination);
       return res;
+    },
+    async getRef(params) {
+      const res = await AccountRepository.getRef(params);
+      dispatch.accountStore.setCountRef(get(res, "meta.pagination.total"));
+      return get(res, "meta.pagination.total");
     },
   }),
 });

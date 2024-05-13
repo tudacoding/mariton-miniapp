@@ -3,6 +3,7 @@ import missionHeader from "@/assets/game/mission-header.png";
 import missionBody from "@/assets/game/mission-body.png";
 import logoX from "@/assets/game/logo-x.png";
 import logoTelegram from "@/assets/game/telegram-logo.png";
+import logoAddFriend from "@/assets/game/add-friend_11261574.png";
 import config from "@/config";
 import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
 import useCopy from "@/hooks/useCopy";
@@ -10,11 +11,13 @@ import { toast } from "react-toastify";
 import ActionButton from "@/modules/mission/ActionButton";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
+import { useGetCountRef } from "@/hooks/useGetCountRef";
 
 const MissionScreen = () => {
   const { account } = useGetFirstRegister();
   const [copy] = useCopy(account ? `${config.botTele}${account.ref}` : "");
   const { accountStore } = useDispatch<Dispatch>();
+  const { countRef } = useGetCountRef();
   return (
     <div className="relative h-screen">
       <ActionBar />
@@ -116,10 +119,11 @@ const MissionScreen = () => {
                 completedMission={account && account.completedMission}
                 index={6}
                 inviteFriend
-                logo={logoTelegram}
+                logo={logoAddFriend}
                 title="Invite Friend"
                 description={`${account ? account.ref : ""}`}
                 textButton="Copy"
+                countRef={countRef}
                 onClick={async () => {
                   copy();
                   toast.success("Completed & Copy link ref sucessfully!");

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import config from "@/config";
 import axios from "axios";
-
+import qs from "qs";
 interface IProps {
   address: string;
   publicKey: string;
@@ -21,6 +22,29 @@ const AccountRepository = {
       publicKey,
       step,
     });
+    return res.data || {};
+  },
+  getRef: async ({ address }: any) => {
+    const query = qs.stringify(
+      {
+        populate: {
+          inviteBy: {
+            fields: ["wallet"],
+          },
+        },
+        filters: {
+          inviteBy: {
+            wallet: {
+              $eq: address,
+            },
+          },
+        },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const res = await axios.get(`${config.apiUrl}/references?${query}`);
     return res.data || {};
   },
 };
