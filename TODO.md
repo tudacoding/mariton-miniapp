@@ -24,6 +24,7 @@ Deploy production
 [x] Env production trong project (testnet, sandbox, development ...) front-end + back-end + bot
 [x] setup lại bot khi deploy production
 
-- thay logo invite friend
+[x] thay logo invite friend
 - hiện số ton đã quay được
 - thêm nhạc cho website
+- thêm message cho bot gửi khi nhận /start

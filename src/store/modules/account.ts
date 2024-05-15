@@ -64,9 +64,10 @@ const accountStore = createModel<RootModel>()({
     async completeMission(params) {
       const res = await AccountRepository.completeMission(params);
       if (res) dispatch.accountStore.setAccount(res);
-      const listMissions = await AccountRepository.getMissionsOfAccount(
-        params.address
-      );
+      console.log(params);
+      const listMissions = await AccountRepository.getMissionsOfAccount({
+        address: params.address,
+      });
       dispatch.accountStore.setMissions(listMissions.data);
       return res;
     },
@@ -79,9 +80,9 @@ const accountStore = createModel<RootModel>()({
     },
     async getRef(params) {
       const res = await AccountRepository.getRef(params);
-      const listMissions = await AccountRepository.getMissionsOfAccount(
-        params.address
-      );
+      const listMissions = await AccountRepository.getMissionsOfAccount({
+        address: params.address,
+      });
       dispatch.accountStore.setMissions(listMissions.data);
       dispatch.accountStore.setCountRef(get(res, "meta.pagination.total"));
       return get(res, "meta.pagination.total");
