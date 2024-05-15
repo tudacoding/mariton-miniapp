@@ -28,3 +28,4 @@ Deploy production
 - hiện số ton đã quay được
 - thêm nhạc cho website
 - thêm message cho bot gửi khi nhận /start
+- thay link bài post khác
