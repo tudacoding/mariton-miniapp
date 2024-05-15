@@ -47,5 +47,28 @@ const AccountRepository = {
     const res = await axios.get(`${config.apiUrl}/references?${query}`);
     return res.data || {};
   },
+  getMissionsOfAccount: async ({ address }: any) => {
+    const query = qs.stringify(
+      {
+        populate: {
+          account: {
+            fields: ["wallet"],
+          },
+        },
+        filters: {
+          account: {
+            wallet: {
+              $eq: address,
+            },
+          },
+        },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    const res = await axios.get(`${config.apiUrl}/missions?${query}`);
+    return res.data || {};
+  },
 };
 export default AccountRepository;

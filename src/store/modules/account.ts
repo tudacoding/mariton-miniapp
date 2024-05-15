@@ -13,6 +13,7 @@ interface State {
   pagination: any;
   currentPage: number;
   countRef: number;
+  listMissions: Array<any>;
 }
 const accountStore = createModel<RootModel>()({
   state: {} as State,
@@ -47,6 +48,12 @@ const accountStore = createModel<RootModel>()({
         countRef: data,
       };
     },
+    setMissions(state, data) {
+      return {
+        ...state,
+        listMissions: data,
+      };
+    },
   },
   effects: (dispatch) => ({
     async getFirstRegister(params) {
@@ -55,11 +62,13 @@ const accountStore = createModel<RootModel>()({
       return res;
     },
     async completeMission(params) {
-      setTimeout(async () => {
-        const res = await AccountRepository.completeMission(params);
-        if (res) dispatch.accountStore.setAccount(res);
-        return res;
-      }, 2 * 60000);
+      const res = await AccountRepository.completeMission(params);
+      if (res) dispatch.accountStore.setAccount(res);
+      const listMissions = await AccountRepository.getMissionsOfAccount(
+        params.address
+      );
+      dispatch.accountStore.setMissions(listMissions.data);
+      return res;
     },
     async getHistoryLottery(params) {
       const res = await SpinRepository.getHistoryLottery(params);
@@ -70,6 +79,10 @@ const accountStore = createModel<RootModel>()({
     },
     async getRef(params) {
       const res = await AccountRepository.getRef(params);
+      const listMissions = await AccountRepository.getMissionsOfAccount(
+        params.address
+      );
+      dispatch.accountStore.setMissions(listMissions.data);
       dispatch.accountStore.setCountRef(get(res, "meta.pagination.total"));
       return get(res, "meta.pagination.total");
     },
