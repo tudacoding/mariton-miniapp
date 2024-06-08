@@ -1,51 +1,94 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import bodyBgLottery from "@/assets/game/mission-body.png";
 import ActionBar from "@/modules/home/ActionBar";
-import AirNavbar from "@/modules/airdrop/AirNavbarBottom";
-import missionHeader from "@/assets/game/mission-header.png";
-import missionBody from "@/assets/game/mission-body.png";
-import BoostActionButton from "@/modules/airdrop/BoostActionButton";
-import logo from "@/assets/airdrop/air-logo-mission.png";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useGetInventory } from "@/hooks/useGetInventory";
+import { getTitleLotteryItem } from "@/utils/string";
+import { get } from "lodash-es";
+import ImageLotteryItem from "@/components/ImageLotteryItem";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
+import AirdropBottomNav from "@/modules/airdrop/AirdropBottomNav";
 
-const AirdropPage = () => {
-  const [view, setView] = useState<string>('home');
-
-  const handleButtonClick = (buttonType: string) => {
-    console.log('======= buttonType', buttonType);
-    if (buttonType === 'airdrop') {
-      // Reload the page
-      window.location.reload();
-    } else {
-      // Change the view based on the buttonType
-      setView(buttonType);
-    }
-  };
-  return (
-    <div className="relative h-screen overflow-x-hidden">
-      <ActionBar />
-      <div className="w-full absolute top-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <img
-          className="absolute top-0 z-10"
-          src={missionHeader}
-          alt="bg-mission-header"
-        />
-        <div className="absolute top-10 relative w-full">
-          <img
-            className="absolute w-full"
-            src={missionBody}
-            alt="bg-mission-body"
-          />
+const LotteryItem = (props: any) => {
+    const attributes = get(props.item, "attributes.lottery_item.data.attributes");
+    return (
+        <div className="w-full h-400 bg-amber-50 rounded-lg p-2">
+            <div className="relative flex justify-center border border-amber-400 rounded-lg p-4">
+                <ImageLotteryItem item={attributes} />
+                <div className="ml-1 text-amber-800 absolute top-0 left-0">
+                    {get(props.item, "id")}
+                </div>
+            </div>
+            <div className="font-lalezar text-center text-amber-600 mt-4">
+                {getTitleLotteryItem(attributes)}
+            </div>
+            <div className="rounded-3xl bg-yellow-400 h-8 p-1 text-center font-lalezar text-amber-800 text-2xl">
+                {" "}
+                x1
+            </div>
         </div>
-      </div>
-      {view === 'home' ? (
-        <div className="content">Default View Content</div>
-      ) : (
-        <div className="content">{view} View Content</div>
-      )}
-      <AirNavbar onButtonClick={handleButtonClick} />
-    </div>
-  );
+    );
 };
 
-  export default AirdropPage;
+const LotteryCard = (props: any) => {
+    return (
+        <div className="absolute top-0 w-full flex flex-col items-center p-4 justify-center">
+            <div className="grid grid-cols-2 gap-4 w-80">
+                {props.inventory &&
+                    props.inventory.map((item: any, index: number) => (
+                        <LotteryItem key={index} item={item} />
+                    ))}
+            </div>
+            <Pagination />
+        </div>
+    );
+};
+
+const Pagination = () => {
+    const { accountStore } = useDispatch<Dispatch>();
+    const { currentPage } = useSelector((s: RootState) => s.accountStore);
+    const { pagination } = useSelector((s: RootState) => s.accountStore);
+    return (
+        <div className="join mt-4">
+            <button
+                disabled={(currentPage || 1) <= 1}
+                onClick={() => {
+                    accountStore.setCurrentPage((currentPage || 1) - 1);
+                }}
+                className="join-item btn"
+            >
+                «
+            </button>
+            <button className="join-item btn">Page {currentPage || 1}</button>
+            <button
+                disabled={pagination && pagination.page * pagination.pageSize > pagination.total}
+                onClick={() => {
+                    accountStore.setCurrentPage((currentPage || 1) + 1);
+                }}
+                className="join-item btn"
+            >
+                »
+            </button>
+        </div>
+    );
+};
+
+const AirdropScreen = () => {
+    const { inventory } = useGetInventory();
+    return (
+        <div className="relative h-screen overflow-x-hidden">
+            <div>
+                <ActionBar />
+            </div>
+            <div className="flex flex-col items-center p-2">
+                <div className="relative w-full h-full flex justify-center">
+                    <img className="absolute" src={bodyBgLottery}></img>
+                    <LotteryCard inventory={inventory} />
+                </div>
+            </div>
+            <AirdropBottomNav />
+        </div>
+    );
+};
+
+export default AirdropScreen;
