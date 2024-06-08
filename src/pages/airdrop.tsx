@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import bodyBgLottery from "@/assets/game/mission-body.png";
-import ActionBar from "@/modules/home/ActionBar";
+import AirdropActionBar from "@/modules/airdrop/AirdropActionBar";
 import { useGetInventory } from "@/hooks/useGetInventory";
 import { getTitleLotteryItem } from "@/utils/string";
 import { get } from "lodash-es";
@@ -78,7 +78,7 @@ const AirdropScreen = () => {
     return (
         <div className="relative h-screen overflow-x-hidden">
             <div>
-                <ActionBar />
+                <AirdropActionBar />
             </div>
             <div className="flex flex-col items-center p-2">
                 <div className="relative w-full h-full flex justify-center">
