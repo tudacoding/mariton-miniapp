@@ -1,80 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import bodyBgLottery from "@/assets/game/mission-body.png";
+import mainBanner from "@/assets/air/main-banner.png";
+import leaderboardClaimBtnBg from "@/assets/air/leaderboard-claim-btn-bg.png";
 import AirdropActionBar from "@/modules/airdrop/AirdropActionBar";
-import { useGetInventory } from "@/hooks/useGetInventory";
-import { getTitleLotteryItem } from "@/utils/string";
-import { get } from "lodash-es";
-import ImageLotteryItem from "@/components/ImageLotteryItem";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, RootState } from "@/store/store";
 import AirdropBottomNav from "@/modules/airdrop/AirdropBottomNav";
+import BaseImage from "@/components/BaseImage";
 
-const LotteryItem = (props: any) => {
-    const attributes = get(props.item, "attributes.lottery_item.data.attributes");
-    return (
-        <div className="w-full h-400 bg-amber-50 rounded-lg p-2">
-            <div className="relative flex justify-center border border-amber-400 rounded-lg p-4">
-                <ImageLotteryItem item={attributes} />
-                <div className="ml-1 text-amber-800 absolute top-0 left-0">
-                    {get(props.item, "id")}
-                </div>
-            </div>
-            <div className="font-lalezar text-center text-amber-600 mt-4">
-                {getTitleLotteryItem(attributes)}
-            </div>
-            <div className="rounded-3xl bg-yellow-400 h-8 p-1 text-center font-lalezar text-amber-800 text-2xl">
-                {" "}
-                x1
-            </div>
-        </div>
-    );
-};
 
-const LotteryCard = (props: any) => {
+const HomeCard = () => {
     return (
-        <div className="absolute top-0 w-full flex flex-col items-center p-4 justify-center">
-            <div className="grid grid-cols-2 gap-4 w-80">
-                {props.inventory &&
-                    props.inventory.map((item: any, index: number) => (
-                        <LotteryItem key={index} item={item} />
-                    ))}
+        <div className="grid grid-flow-row auto-rows-max absolute top-0 w-full flex-col items-center p-5 justify-center">
+            <img src={mainBanner} alt="main-banner" />
+            <div className="w-full flex justify-between absolute top-80 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <BaseImage path="/leaderboard" width={"35%"} src={leaderboardClaimBtnBg} alt="leaderboard" />
+                <BaseImage path="/claim" width={"35%"} src={leaderboardClaimBtnBg} alt="claim" />
             </div>
-            <Pagination />
-        </div>
-    );
-};
-
-const Pagination = () => {
-    const { accountStore } = useDispatch<Dispatch>();
-    const { currentPage } = useSelector((s: RootState) => s.accountStore);
-    const { pagination } = useSelector((s: RootState) => s.accountStore);
-    return (
-        <div className="join mt-4">
-            <button
-                disabled={(currentPage || 1) <= 1}
-                onClick={() => {
-                    accountStore.setCurrentPage((currentPage || 1) - 1);
-                }}
-                className="join-item btn"
-            >
-                «
-            </button>
-            <button className="join-item btn">Page {currentPage || 1}</button>
-            <button
-                disabled={pagination && pagination.page * pagination.pageSize > pagination.total}
-                onClick={() => {
-                    accountStore.setCurrentPage((currentPage || 1) + 1);
-                }}
-                className="join-item btn"
-            >
-                »
-            </button>
         </div>
     );
 };
 
 const AirdropScreen = () => {
-    const { inventory } = useGetInventory();
     return (
         <div className="relative h-screen overflow-x-hidden">
             <div>
@@ -83,7 +28,7 @@ const AirdropScreen = () => {
             <div className="flex flex-col items-center p-2">
                 <div className="relative w-full h-full flex justify-center">
                     <img className="absolute" src={bodyBgLottery}></img>
-                    <LotteryCard inventory={inventory} />
+                    <HomeCard />
                 </div>
             </div>
             <AirdropBottomNav />
