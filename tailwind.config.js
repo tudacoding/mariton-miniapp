@@ -18,6 +18,12 @@ export default {
         "t-button": "#A72929",
         "t-light": "#FDFCDE",
         "t-blur": "#76653D",
+
+        //background
+        card: "#EBEAD2",
+
+        //button
+        "b-primary": "#F0C233",
       },
     },
   },

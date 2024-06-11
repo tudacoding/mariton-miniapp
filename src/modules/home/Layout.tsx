@@ -1,11 +1,15 @@
 import { PropsWithChildren } from "react";
 import AirNavbar from "../airdrop/AirNavbarBottom";
-
-export default function HomeLayout({ children }: PropsWithChildren) {
+interface IHomeLayout extends PropsWithChildren {
+  classname?: string;
+}
+export default function HomeLayout({ children, classname }: IHomeLayout) {
   return (
-    <div className="h-screen">
-      <AirNavbar />
-      <div className="mx-3 flex justify-center items-center h-full">{children}</div>
+    <div className="h-screen w-screen">
+      <div className="flex flex-col h-full">
+        <div className={"grow px-3 overflow-auto " + classname}>{children}</div>
+        <AirNavbar />
+      </div>
     </div>
   );
 }

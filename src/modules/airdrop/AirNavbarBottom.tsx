@@ -40,7 +40,7 @@ const AirNavbar = () => {
     },
   ];
   return (
-    <div className="w-full font-bold text-center p-4 flex justify-between absolute bottom-0 z-[100]">
+    <div className="w-full font-bold text-center p-4 flex justify-between z-[1000]">
       {routers.map((item, index) => {
         return (
           <div
