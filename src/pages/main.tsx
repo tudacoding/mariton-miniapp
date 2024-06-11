@@ -2,6 +2,7 @@ import land from "@/assets/game/land.png";
 import NavbarBottom from "@/modules/home/NavbarBottom";
 import ActionBar from "@/modules/home/ActionBar";
 import CityBuildings from "@/modules/home/CityBuildings";
+import AirdopBtn from "@/modules/home/AirdopBtn";
 import MysteryBox from "@/modules/home/MysteryBox";
 import FirstCongrats from "@/modules/congrats/FirstCongrats";
 import { useSelector } from "react-redux";
@@ -20,6 +21,7 @@ const MainPage = () => {
 
       <MysteryBox />
       <CityBuildings />
+      <AirdopBtn />
       <LuckySpin />
       <ActionBar isUseAbsolute />
       <NavbarBottom />
