@@ -23,7 +23,7 @@ const MainPage = () => {
       <CityBuildings />
       <AirdopBtn />
       <LuckySpin />
-      <ActionBar isUseAbsolute />
+      <ActionBar />
       <NavbarBottom />
     </div>
   );

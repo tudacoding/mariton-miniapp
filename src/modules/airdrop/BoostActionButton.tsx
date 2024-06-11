@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface IProps {
   logo: string;
   title: string;
@@ -12,7 +10,7 @@ const BoostActionButton = (props: IProps) => {
   return (
     <div
       className="bg-amber-200 text-slate-800 flex justify-between p-4 mb-4 rounded-xl items-center"
-      style={{ backgroundColor: '#EBEAD2' }}
+      style={{ backgroundColor: "#EBEAD2" }}
     >
       <div className="flex items-center">
         <img className="h-8 w-8 mr-4" src={props.logo} alt="logo" />
@@ -23,8 +21,7 @@ const BoostActionButton = (props: IProps) => {
       </div>
       <button
         onClick={props.onClick}
-        className="h-10 bg-yellow-500 hover:bg-yellow-700 font-bold py-1 px-4 rounded-2xl"
-        style={{ backgroundColor: '#F0C233', color: '#925E04' }}
+        className="h-10 bg-yellow-500 active:bg-yellow-700 font-bold py-1 px-4 rounded-2xl text-[#925E04]"
       >
         <span>Next</span>
       </button>
