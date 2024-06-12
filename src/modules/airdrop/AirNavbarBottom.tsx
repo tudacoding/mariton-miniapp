@@ -16,7 +16,7 @@ const AirNavbar = () => {
   const routers = [
     {
       title: "Home",
-      link: "/home",
+      link: "/airdrop-home",
       image: homeButton,
       alt: "home-button",
     },
