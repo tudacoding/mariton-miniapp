@@ -12,6 +12,8 @@ export default {
         "spin-slow": "spin 6s linear infinite",
       },
       colors: {
+        primary: "#F0C233",
+        light: "#FFFCE1",
         //text
         "t-title": "#925E04",
         "t-description": "#A79575",
@@ -24,6 +26,7 @@ export default {
 
         //button
         "b-primary": "#F0C233",
+        "b-secondary": "#C9B785",
       },
     },
   },
