@@ -28,7 +28,7 @@ export default function Boost() {
                     description="Check in TW to increase 20% speed in 8h"
                     onClick={() => {}}
                     actionComponent={
-                      <BaseButton className="!py-1 !rounded-2xl !text-xs !text-t-title font-bold">
+                      <BaseButton className="!py-[5px] !px-[14px] !rounded-2xl !text-xs !text-t-title font-bold">
                         Next
                       </BaseButton>
                     }

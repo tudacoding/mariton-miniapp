@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 const AirNavbar = () => {
   const nav = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   const onButtonClick = (type: string) => {
     nav(type);

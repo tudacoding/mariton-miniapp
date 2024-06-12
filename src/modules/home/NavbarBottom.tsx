@@ -17,7 +17,7 @@ const Navbar = () => {
         <div>News</div>
       </div>
       <div
-        onClick={() => navigate("/home")}
+        onClick={() => navigate("/airdrop-home")}
         className="flex flex-col items-center">
         <BaseImage width={"50%"} src={homeButton} alt="home-button" />
         <div>Home</div>
