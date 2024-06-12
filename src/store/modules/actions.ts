@@ -19,8 +19,8 @@ const actionsStore = createModel<RootModel>()({
                 dialog?.showModal()
                 return { ...state, childrenDialog: data.children ?? null, classWrapperDialog: data.classWrapperDialog ?? "", classDialog: data.classDialog ?? "" }
             }
-            dialog?.close()
-            return { ...state, childrenDialog: null, classWrapperDialog: '', classDialog: '' }
+            dialog.close()
+            return state
         }
     }
 })
