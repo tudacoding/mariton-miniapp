@@ -20,10 +20,11 @@ export default {
         "t-button": "#A72929",
         "t-light": "#FDFCDE",
         "t-blur": "#76653D",
+        "t-dark": "#615031",
 
         //background
         card: "#EBEAD2",
-
+        base: "#915D0A",
         //button
         "b-primary": "#F0C233",
         "b-secondary": "#C9B785",

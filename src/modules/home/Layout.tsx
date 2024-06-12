@@ -7,7 +7,7 @@ export default function HomeLayout({ children, classname }: IHomeLayout) {
   return (
     <div className="h-screen w-screen overflow-hidden">
       <div className="flex flex-col h-full">
-        <div className={"grow px-3 overflow-auto " + classname}>{children}</div>
+        <div className={"grow mx-3 overflow-auto " + classname}>{children}</div>
         <AirNavbar />
       </div>
     </div>
