@@ -42,10 +42,11 @@ function App() {
       <Provider store={store}>
         <RouterProvider router={router} />
         <ToastContainer
-          position="top-center"
+          position="top-right"
           theme="light"
-          autoClose={5000}
-          hideProgressBar={false}
+          autoClose={3000}
+          hideProgressBar={true}
+          toastClassName={'m-3 rounded-xl text-sm font-semibold-all'}
         />
       </Provider>
     </>

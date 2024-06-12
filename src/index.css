@@ -21,3 +21,8 @@
   font-family: "Lalezar";
   src: url('./assets/fonts/Lalezar-Regular.ttf');
 }
+@layer components {
+  .font-semibold-all * {
+    font-weight: 600 !important;
+  }
+}
