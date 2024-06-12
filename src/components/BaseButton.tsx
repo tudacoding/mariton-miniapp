@@ -11,7 +11,7 @@ export default function BaseButton({
   return (
     <button
       className={
-        "rounded-xl py-2 px-3 bg-b-primary active:opacity-75 duration-100 active:scale-[1.02] text-t-light leading-1 " +
+        "rounded-xl py-2 px-3 bg-b-primary active:opacity-75 duration-100 active:scale-[0.95] text-t-light leading-1 " +
         className
       }
       {...props}

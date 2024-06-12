@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { store } from "@/store/store";
 import { Provider } from "react-redux";
+import BaseDialog from "./components/BaseDialog";
 
 const pages = import.meta.glob("./pages/*.tsx", { eager: true });
 
@@ -41,12 +42,13 @@ function App() {
     <>
       <Provider store={store}>
         <RouterProvider router={router} />
+        <BaseDialog />
         <ToastContainer
           position="top-right"
           theme="light"
           autoClose={3000}
           hideProgressBar={true}
-          toastClassName={'m-3 rounded-xl text-sm font-semibold-all'}
+          toastClassName={"m-3 rounded-xl text-sm font-semibold-all"}
         />
       </Provider>
     </>

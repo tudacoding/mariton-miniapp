@@ -8,10 +8,21 @@ import BaseTitleDivider from "@/components/BaseTitleDivider";
 import BaseDivider from "@/components/BaseDivider";
 import BaseCard from "@/components/BaseCard";
 import boostLogo from "@/assets/air/air-logo-friend.png";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@/store/store";
+import LevelUpDialog from "@/modules/home-dialog/LevelUpDialog";
 
 export default function InvitePage() {
+  const { handleDialog } = useDispatch<Dispatch>().actionsStore;
   const [tab, setTab] = useState<"achievenment" | "friends">("achievenment");
   const friends = [1, 2, 4, 3];
+  const openDialog = () => {
+    handleDialog({
+      isVisible: true,
+      children: <LevelUpDialog />,
+      classWrapperDialog: "!p-0 !overflow-visible",
+    });
+  };
   return (
     <HomeLayout>
       <div className="h-full flex">
@@ -87,7 +98,7 @@ export default function InvitePage() {
                       avatar={boostLogo}
                       title="item 1"
                       description="Check in TW to increase 20% speed in 8h"
-                      onClick={() => {}}
+                      onClick={() => openDialog()}
                       actionComponent={
                         <div className="border border-0.5 border-solid rounded-full h-6 w-6 border-t-description"></div>
                       }
