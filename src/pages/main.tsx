@@ -15,8 +15,8 @@ const MainPage = () => {
     <div className="relative h-screen overflow-x-hidden">
       {account && !account.isUsedFirstSpin && <FirstCongrats />}
 
-      <div className="w-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <img src={land} alt="land" />
+      <div className="w-full h-full absolute top-20 left-0">
+        <img src={land} alt="land" className="object-cover w-full h-full" />
       </div>
 
       <MysteryBox />
