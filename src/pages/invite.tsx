@@ -91,7 +91,7 @@ export default function InvitePage() {
               </BaseButton>
             </div>
             <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset]">
-              {friends.map((item, index) => {
+              {friends.map((_, index) => {
                 return (
                   <div key={index} className="pb-3">
                     <BaseCard

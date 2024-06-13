@@ -19,7 +19,7 @@ export default function Boost() {
           />
           <div className="grow overflow-auto mt-[100px] mb-10 px-6">
             <BaseTitleDivider>Daily Misson</BaseTitleDivider>
-            {items.map((item, index) => {
+            {items.map((_, index) => {
               return (
                 <div key={index} className="pb-3">
                   <BaseCard
@@ -37,7 +37,7 @@ export default function Boost() {
               );
             })}
             <BaseTitleDivider>One-time Misson</BaseTitleDivider>
-            {items.map((item, index) => {
+            {items.map((_, index) => {
               return (
                 <div key={index} className="pb-3">
                   <BaseCard
