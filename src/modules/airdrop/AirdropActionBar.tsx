@@ -5,7 +5,7 @@ import BaseImage from "@/components/BaseImage";
 const AirdropActionBar = ({ className = "" }: { className?: string }) => {
   return (
     <div
-      className={`top-0 z-20 font-bold flex justify-between py-4` + className}
+      className={`top-0 z-20 font-bold flex justify-between py-3` + className}
     >
       <div className="flex justify-start items-center">
         <BaseImage width={"80%"} src={backButton} alt="add-button" path="/" />

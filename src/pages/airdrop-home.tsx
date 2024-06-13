@@ -1,7 +1,7 @@
 import HomeLayout from "@/modules/home/Layout";
 import background from "@/assets/air/background-body-short.png";
-import AirdropActionBar from "@/modules/airdrop/AirdropActionBar";
-import mainBanner from "@/assets/air/background-homefix.gif";
+// import mainBanner from "@/assets/air/background-homefix.gif";
+import mainBanner from "@/assets/air/mining-animation.gif";
 import btnMaritonTK from "@/assets/air/mariton-tk-ico.png";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
@@ -17,9 +17,6 @@ export default function AirDopHome() {
   return (
     <HomeLayout>
       <div className="h-full flex flex-col">
-        <div className="w-full">
-          <AirdropActionBar />
-        </div>
         <div className="grow relative overflow-auto">
           <img
             className="w-full h-full absolute z-[-10]"
@@ -81,10 +78,10 @@ export default function AirDopHome() {
                   Level 2
                 </BaseButton>
               </div>
-              <p className="pt-2 text-t-dark text-xs font-semibold text-center">
-                COST 0.5 MRT NEWSPEED 0.5 MRT/H
-              </p>
             </div>
+            <p className="pt-2 text-t-dark text-xs font-semibold text-center whitespace-nowrap">
+              COST 0.5 MRT NEWSPEED 0.5 MRT/H
+            </p>
           </div>
         </div>
       </div>

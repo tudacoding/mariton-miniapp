@@ -26,7 +26,7 @@ export default function InvitePage() {
   return (
     <HomeLayout>
       <div className="h-full flex">
-        <div className="relative grow mt-[10px]">
+        <div className="relative grow">
           <img
             className="w-full h-full absolute z-[-10]"
             src={boostBody}

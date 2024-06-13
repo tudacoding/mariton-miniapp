@@ -3,7 +3,6 @@ import NavbarBottom from "@/modules/home/NavbarBottom";
 import ActionBar from "@/modules/home/ActionBar";
 import CityBuildings from "@/modules/home/CityBuildings";
 import AirdopBtn from "@/modules/home/AirdopBtn";
-import MysteryBox from "@/modules/home/MysteryBox";
 import FirstCongrats from "@/modules/congrats/FirstCongrats";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -19,7 +18,6 @@ const MainPage = () => {
         <img src={land} alt="land" className="object-cover w-full h-full" />
       </div>
 
-      <MysteryBox />
       <CityBuildings />
       <AirdopBtn />
       <LuckySpin />
@@ -29,7 +27,6 @@ const MainPage = () => {
         <NavbarBottom />
       </div>
     </div>
-
   );
 };
 

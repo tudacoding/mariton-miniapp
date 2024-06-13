@@ -11,7 +11,7 @@ export default function Boost() {
   return (
     <HomeLayout>
       <div className="h-full flex">
-        <div className="relative grow mt-[10px] flex">
+        <div className="relative grow flex">
           <img
             className="w-full h-full absolute z-[-10]"
             src={boostBody}
