@@ -14,13 +14,13 @@ export default function LeaderboardDialog() {
   const friends = [1, 2, 4, 3, 6, 7, 8];
 
   return (
-    <div className="h-fix w-fix relative">
+    <div className="h-full w-full relative">
       <img src={boostBody} alt="" className="absolute h-full w-full z-[-5]" />
-      <div className="top-0 p-[30px] w-full">
+      <div className="top-0 p-[20px] w-full">
         <p className="text-t-button text-center font-extrabold text-[24px]">
           LEADERBOARD
         </p>
-        <BaseDivider className="my-4 !h-[1px]" />
+        <BaseDivider className="mt-3 mb-4 !h-[1px]" />
         <div>
           <div className="grid grid-cols-2 gap-3 my-2">
             <BaseButton
@@ -46,7 +46,7 @@ export default function LeaderboardDialog() {
               TOP MINT
             </BaseButton>
           </div>
-          <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset] h-[calc(100vh-450px)]">
+          <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset] h-[calc(100vh-300px)]">
             {friends.map((_, index) => {
               return (
                 <div key={index} className="pb-3">

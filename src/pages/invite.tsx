@@ -32,9 +32,9 @@ export default function InvitePage() {
             src={boostBody}
             alt="bg-mission-body"
           />
-          <div className="w-full h-full px-6 pb-10 flex flex-col pt-[100px]">
+          <div className="w-full h-full px-6 pb-[30px] flex flex-col pt-[86px]">
             <BaseTitleDivider>Link invite</BaseTitleDivider>
-            <div className="flex flex-row gap-3 py-2">
+            <div className="flex flex-row gap-3 pb-2">
               <div className="py-3 px-4 text-t-description bg-card rounded-xl grow">
                 <p className="line-clamp-1 text-sm">
                   Now you can import your SVG and use it
@@ -47,7 +47,7 @@ export default function InvitePage() {
             </div>
             <div className="rounded-xl bg-primary flex flex-row py-5 px-[14px] justify-between my-[6px]">
               <div className="flex flex-row gap-2 items-center justify-center">
-                <span className="text-2xl text-t-button font-bold">
+                <span className="text-2xl text-t-button font-bold leading-none">
                   0.123123
                 </span>
                 <img
@@ -65,8 +65,8 @@ export default function InvitePage() {
             <p className="text-center text-t-description text-xs  font-semibold">
               {"lorem ipsum dolor sit amet".toUpperCase()}
             </p>
-            <BaseDivider className="my-4" />
-            <div className="grid grid-cols-2 gap-3 my-2">
+            <BaseDivider className="my-3" />
+            <div className="grid grid-cols-2 gap-3 mb-2">
               <BaseButton
                 className={
                   "text-lg font-bold " +

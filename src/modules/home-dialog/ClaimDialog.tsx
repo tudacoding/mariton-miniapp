@@ -21,7 +21,7 @@ export default function ClaimDialog() {
       />
       <div className="top-0 p-[30px] w-full">
         <p className="text-t-button text-center font-extrabold text-[24px]">
-          LEVEL UP
+          CLAIM
         </p>
         <div className="py-10 flex w-full justify-center">
           <img src={levelUp} alt="" className="" />

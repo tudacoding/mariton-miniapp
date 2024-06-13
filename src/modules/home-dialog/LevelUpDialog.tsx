@@ -22,11 +22,37 @@ export default function LevelUpDialog() {
         <p className="text-t-button text-center font-extrabold text-[24px]">
           LEVEL UP
         </p>
-        <div className="py-10 flex w-full justify-center">
+        <div className="py-5 flex w-full justify-center">
           <img src={levelUp} alt="" className="" />
         </div>
-        <BaseDivider />
-        <div className="pt-8 text-t-title text-base text-center">
+        <div className="mx-[60px] grid grid-cols-2 gap-3 pb-4">
+          <BaseButton
+            className="!text-t-button !rounded-3xl font-extrabold"
+            onClick={() => {
+              handleDialog({
+                isVisible: true,
+                children: <LevelUpDialog />,
+                classWrapperDialog: "!p-0 !overflow-visible",
+              });
+            }}
+          >
+            TON
+          </BaseButton>
+          <BaseButton
+            className="!text-t-button !rounded-3xl font-extrabold"
+            onClick={() => {
+              handleDialog({
+                isVisible: true,
+                children: <LevelUpDialog />,
+                classWrapperDialog: "!p-0 !overflow-visible",
+              });
+            }}
+          >
+            MRT
+          </BaseButton>
+        </div>
+        <BaseDivider className="!h-[1px]"/>
+        <div className="py-8 text-t-title text-base text-center">
           <p className=" font-bold">Update your level to 2</p>
           <p className="flex flex-row justify-center  gap-1">
             <span className="pr-1">Cost</span>
@@ -39,7 +65,6 @@ export default function LevelUpDialog() {
             <span>MRT/H</span>
           </p>
         </div>
-        <div className="h-[60px]"></div>
       </div>
       <div className="absolute bottom-[-30px] flex flex-row justify-center w-full gap-4">
         <BaseButton

@@ -66,8 +66,8 @@ const ShopScreen = () => {
   return (
     <div className="h-screen">
       <ActionBar />
-      <div className="flex flex-col justify-center p-4">
-      <img src={bgShopComingSoon} alt="bg-shop" />
+      <div className="flex flex-col justify-center pt-[60px] overflow-auto">
+      <img src={bgShopComingSoon} alt="bg-shop" className=" p-4" />
         {/* <img src={headerBgShop} alt="bg-shop" />
         <div className="relative flex justify-center">
           <img src={bodyBgShop} alt="body-bg-shop" />

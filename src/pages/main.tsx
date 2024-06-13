@@ -15,7 +15,7 @@ const MainPage = () => {
     <div className="relative h-screen overflow-x-hidden">
       {account && !account.isUsedFirstSpin && <FirstCongrats />}
 
-      <div className="absolute inset-0 top-20">
+      <div className="absolute inset-0">
         <img src={land} alt="land" className="object-cover w-full h-full" />
       </div>
 

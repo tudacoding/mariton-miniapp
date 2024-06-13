@@ -17,7 +17,7 @@ export default function Boost() {
             src={boostBody}
             alt="bg-mission-body"
           />
-          <div className="grow overflow-auto mt-[100px] mb-10 px-6">
+          <div className="grow overflow-auto mt-[86px] mb-[30px] px-6">
             <BaseTitleDivider>Daily Misson</BaseTitleDivider>
             {items.map((_, index) => {
               return (
