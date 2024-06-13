@@ -47,7 +47,7 @@ export default function LeaderboardDialog() {
             </BaseButton>
           </div>
           <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset] h-[calc(100vh-450px)]">
-            {friends.map((item, index) => {
+            {friends.map((_, index) => {
               return (
                 <div key={index} className="pb-3">
                   <BaseCard

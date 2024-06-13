@@ -3,10 +3,8 @@ import homeButton from "@/assets/game/home-button.png";
 import faqButton from "@/assets/game/faq-button.png";
 import BaseImage from "@/components/BaseImage";
 import config from "@/config";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   return (
     <div className="w-full font-bold text-center items-end p-4 flex justify-between absolute bottom-0 left-1/2 transform -translate-x-1/2">
       <div
@@ -18,7 +16,8 @@ const Navbar = () => {
       </div>
       <div
         // onClick={() => navigate("/airdrop-home")}
-        className="flex flex-col items-center">
+        className="flex flex-col items-center"
+      >
         <BaseImage width={"50%"} src={homeButton} alt="home-button" />
         <div>Home</div>
       </div>
