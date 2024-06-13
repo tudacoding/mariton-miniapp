@@ -1,6 +1,6 @@
 # Mariton Miniapp
 
-Gamefi on TON Blockchain
+Gamefi on TON Blockchain 
 
 Currently, two official plugins are available:
 
