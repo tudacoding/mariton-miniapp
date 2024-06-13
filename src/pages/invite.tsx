@@ -1,5 +1,4 @@
 import HomeLayout from "@/modules/home/Layout";
-import boostBody from "@/assets/air/background-body.png";
 import coinPng from "@/assets/air/mariton-tk-ico.png";
 import copySvg from "@/assets/icons/copy.svg";
 import BaseButton from "@/components/BaseButton";
@@ -11,6 +10,7 @@ import boostLogo from "@/assets/air/air-logo-friend.png";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
 import LevelUpDialog from "@/modules/home-dialog/LevelUpDialog";
+import BackgroundAirdrop from "@/components/BackgroupAirdrop";
 
 export default function InvitePage() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
@@ -27,11 +27,9 @@ export default function InvitePage() {
     <HomeLayout>
       <div className="h-full flex">
         <div className="relative grow">
-          <img
-            className="w-full h-full absolute z-[-10]"
-            src={boostBody}
-            alt="bg-mission-body"
-          />
+          <div className="w-full h-full absolute z-[-10]">
+            <BackgroundAirdrop />
+          </div>
           <div className="w-full h-full px-6 pb-[30px] flex flex-col pt-[86px]">
             <BaseTitleDivider>Link invite</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
@@ -40,7 +38,7 @@ export default function InvitePage() {
                   Now you can import your SVG and use it
                 </p>
               </div>
-              <BaseButton className="flex flex-row justify-center items-center gap-1 !bg-b-secondary">
+              <BaseButton className="flex flex-row justify-center items-center gap-1 !bg-b-secondary !py-3">
                 <img src={copySvg} alt="React Logo" />
                 <span className="text-sm">Copy</span>
               </BaseButton>
@@ -57,7 +55,7 @@ export default function InvitePage() {
                 />
               </div>
               <div className="flex items-center">
-                <BaseButton className="!text-t-title font-bold !text-xs !bg-light !rounded-3xl !py-1">
+                <BaseButton className="!text-t-title font-bold !text-xs !bg-light !rounded-3xl !pt-1 !pb-0">
                   Claim
                 </BaseButton>
               </div>
@@ -69,7 +67,7 @@ export default function InvitePage() {
             <div className="grid grid-cols-2 gap-3 mb-2">
               <BaseButton
                 className={
-                  "text-lg font-bold " +
+                  "text-lg font-bold line-clamp-1 " +
                   (tab === "achievenment"
                     ? "!text-t-button"
                     : "!bg-card !text-t-description")

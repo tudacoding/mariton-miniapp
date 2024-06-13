@@ -61,7 +61,9 @@ const Pagination = () => {
       </button>
       <button className="join-item btn">Page {currentPage || 1}</button>
       <button
-        disabled={pagination && pagination.page * pagination.pageSize > pagination.total}
+        disabled={
+          pagination && pagination.page * pagination.pageSize > pagination.total
+        }
         onClick={() => {
           accountStore.setCurrentPage((currentPage || 1) + 1);
         }}
@@ -76,11 +78,9 @@ const Pagination = () => {
 const InventoryScreen = () => {
   const { inventory } = useGetInventory();
   return (
-    <div className="h-screen">
-      <div>
-        <ActionBar />
-      </div>
-      <div className="flex flex-col items-center p-2">
+    <div className="relative h-screen">
+      <ActionBar />
+      <div className="relative flex flex-col items-center p-2 mt-[60px]">
         <img src={headBgLottery}></img>
         <div className="relative w-full h-full flex justify-center">
           <img className="absolute" src={bodyBgLottery}></img>

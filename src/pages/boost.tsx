@@ -1,9 +1,9 @@
-import boostBody from "@/assets/air/background-body.png";
 import boostLogo from "@/assets/air/air-logo-friend.png";
 import HomeLayout from "@/modules/home/Layout";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
 import BaseCard from "@/components/BaseCard";
 import BaseButton from "@/components/BaseButton";
+import BackgroundAirdrop from "@/components/BackgroupAirdrop";
 
 export default function Boost() {
   const items = [1, 2, 4, 3];
@@ -12,11 +12,9 @@ export default function Boost() {
     <HomeLayout>
       <div className="h-full flex">
         <div className="relative grow flex">
-          <img
-            className="w-full h-full absolute z-[-10]"
-            src={boostBody}
-            alt="bg-mission-body"
-          />
+          <div className="w-full h-full absolute z-[-10]">
+            <BackgroundAirdrop />
+          </div>
           <div className="grow overflow-auto mt-[86px] mb-[30px] px-6">
             <BaseTitleDivider>Daily Misson</BaseTitleDivider>
             {items.map((_, index) => {
@@ -28,7 +26,7 @@ export default function Boost() {
                     description="Check in TW to increase 20% speed in 8h"
                     onClick={() => {}}
                     actionComponent={
-                      <BaseButton className="!py-[5px] !px-[14px] !rounded-2xl !text-xs !text-t-title font-bold">
+                      <BaseButton className="!pt-[5px] !pb-[2px] !px-[14px] !rounded-2xl !text-xs !text-t-title font-bold">
                         Next
                       </BaseButton>
                     }
