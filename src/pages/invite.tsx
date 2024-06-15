@@ -33,14 +33,14 @@ export default function InvitePage() {
           <div className="w-full h-full px-6 pb-[30px] flex flex-col pt-[86px]">
             <BaseTitleDivider>Link invite</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
-              <div className="py-3 px-4 text-t-description bg-card rounded-xl grow">
+              <div className="py-2 px-4 text-t-description bg-card rounded-xl grow">
                 <p className="line-clamp-1 text-sm">
                   Now you can import your SVG and use it
                 </p>
               </div>
-              <BaseButton className="flex flex-row justify-center items-center gap-1 !bg-b-secondary !py-3">
+              <BaseButton className="flex flex-row justify-center items-center gap-1 !bg-b-secondary !py-2">
                 <img src={copySvg} alt="React Logo" />
-                <span className="text-sm">Copy</span>
+                <span className="text-sm pt-0.5">Copy</span>
               </BaseButton>
             </div>
             <div className="rounded-xl bg-primary flex flex-row py-5 px-[14px] justify-between my-[6px]">

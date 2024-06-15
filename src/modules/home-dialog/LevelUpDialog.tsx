@@ -1,5 +1,5 @@
-import backgroundDialog from "@/assets/dialog-level/background-dialog.png";
-import levelUp from "@/assets/dialog-level/level-up.png";
+import backgroundDialog from "@/assets/level-up/background-dialog.png";
+import levelUp from "@/assets/level-up/GIFT-level.gif";
 import coinPng from "@/assets/air/mariton-tk-ico.png";
 import closeButton from "@/assets/game/close-button.png";
 import upgradeButton from "@/assets/game/upgrade-button.png";
@@ -22,8 +22,8 @@ export default function LevelUpDialog() {
         <p className="text-t-button text-center font-extrabold text-[24px]">
           LEVEL UP
         </p>
-        <div className="py-5 flex w-full justify-center">
-          <img src={levelUp} alt="" className="" />
+        <div className="py-2 flex w-full justify-center">
+          <img src={levelUp} alt="" className="" width={'70%'}/>
         </div>
         <div className="mx-[60px] grid grid-cols-2 gap-3 pb-4">
           <BaseButton

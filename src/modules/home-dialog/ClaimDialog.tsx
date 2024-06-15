@@ -1,5 +1,5 @@
-import backgroundDialog from "@/assets/dialog-level/background-dialog.png";
-import levelUp from "@/assets/dialog-level/level-up-2.png";
+import backgroundDialog from "@/assets/level-up/background-dialog.png";
+import levelUp from "@/assets/level-up/GIFT-claim.gif";
 import coinPng from "@/assets/air/mariton-tk-ico.png";
 import closeButton from "@/assets/game/close-button.png";
 import upgradeButton from "@/assets/game/upgrade-button.png";
@@ -23,10 +23,10 @@ export default function ClaimDialog() {
         <p className="text-t-button text-center font-extrabold text-[24px]">
           CLAIM
         </p>
-        <div className="py-10 flex w-full justify-center">
-          <img src={levelUp} alt="" className="" />
+        <div className="py-4 flex w-full justify-center">
+          <img src={levelUp} alt="" className="" width={'70%'} />
         </div>
-        <BaseDivider />
+        <BaseDivider className="!h-[1px]"/>
         <div className="pt-6 text-t-title text-base text-center">
           <p className=" font-bold">Storage Capacity</p>
           <div className="py-3">
