@@ -1,5 +1,6 @@
 export default {
-  apiUrl: "https://api.mariton.xyz/api",
+  // apiUrl: "https://api.mariton.xyz/api",
+  apiUrl: "http://localhost:1337/api",
   docs: "https://docs.mariton.xyz",
   faq: "https://docs.mariton.xyz",
   twitter: "https://x.com/Mariton_game",

@@ -7,11 +7,11 @@ import { Dispatch } from "@/store/store";
 import LevelUpDialog from "@/modules/home-dialog/LevelUpDialog";
 import LeaderboardDialog from "@/modules/home-dialog/LeaderboardDialog";
 import BaseButton from "@/components/BaseButton";
-import useAutomationMining from "@/hooks/useAutomationMining";
+import { useStartMining } from "@/hooks/useStartMining";
 
 export default function AirDopHome() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
-  const { amount } = useAutomationMining(0.1, 0);
+  const { amount } = useStartMining();
 
   return (
     <HomeLayout>
