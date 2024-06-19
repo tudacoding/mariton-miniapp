@@ -1,9 +1,11 @@
 export interface IMining {
     id: number;
     speed: number;
-    lastBoostTime: string;
-    minedTokens: string;
+    minedTokens: number;
+    totalMinedTokens: number;
     claimTime: string;
+    endMiningTime: string;
     createdAt: string;
     updatedAt: string;
+    lastBoostTime: string;
 }

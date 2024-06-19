@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
-import useAutomationMining from "./useAutomationMining";
 
 export function useStartMining() {
   const { miningStore } = useDispatch<Dispatch>();
@@ -15,9 +14,7 @@ export function useStartMining() {
     }
   }, [account?.id]);
 
-  const { amount } = useAutomationMining(mining.speed, mining.claimTime)
-
   return {
-    amount
+    mining
   };
 }

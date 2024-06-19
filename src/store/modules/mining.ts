@@ -21,6 +21,24 @@ const miningStore = createModel<RootModel>()({
             })
             dispatch.miningStore.setMining(res)
             return res
+        },
+        async claimToken(_, rootState) {
+            const mining = rootState.miningStore.mining
+            if (mining.id) {
+                const res = await MiningRepository.claimToken(mining.id)
+                dispatch.miningStore.setMining(res)
+                return res
+            }
+        },
+        async levelUpMining(_, rootState) {
+            const mining = rootState.miningStore.mining
+            if (mining.id) {
+                const res = await MiningRepository.levelUpMining(mining.id, {
+                    speed: 0.5
+                })
+                dispatch.miningStore.setMining(res)
+                return res
+            }
         }
     })
 })

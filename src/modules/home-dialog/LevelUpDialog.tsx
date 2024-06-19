@@ -7,10 +7,20 @@ import BaseDivider from "@/components/BaseDivider";
 import BaseButton from "@/components/BaseButton";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
+import { toast } from "react-toastify";
 
 export default function LevelUpDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
-
+  const { levelUpMining } = useDispatch<Dispatch>().miningStore;
+  const handleUpdate = async () => {
+    const mining = await levelUpMining({});
+    if (mining) {
+      toast.success('update success!')
+      handleDialog({
+        isVisible: false,
+      });
+    }
+  };
   return (
     <div className="h-fix w-fix relative">
       <img
@@ -23,7 +33,7 @@ export default function LevelUpDialog() {
           LEVEL UP
         </p>
         <div className="py-2 flex w-full justify-center">
-          <img src={levelUp} alt="" className="" width={'70%'}/>
+          <img src={levelUp} alt="" className="" width={"70%"} />
         </div>
         <div className="mx-[60px] grid grid-cols-2 gap-3 pb-4">
           <BaseButton
@@ -51,7 +61,7 @@ export default function LevelUpDialog() {
             MRT
           </BaseButton>
         </div>
-        <BaseDivider className="!h-[1px]"/>
+        <BaseDivider className="!h-[1px]" />
         <div className="py-8 text-t-title text-base text-center">
           <p className=" font-bold">Update your level to 2</p>
           <p className="flex flex-row justify-center  gap-1">
@@ -77,7 +87,7 @@ export default function LevelUpDialog() {
         >
           <img src={closeButton} alt="" className="object-contain" />
         </BaseButton>
-        <BaseButton className="!p-0 !bg-transparent">
+        <BaseButton className="!p-0 !bg-transparent" onClick={handleUpdate}>
           <img src={upgradeButton} alt="" className="object-contain" />
         </BaseButton>
       </div>
