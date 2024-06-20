@@ -8,7 +8,6 @@ export default function useAutomationMining() {
     const { mining } = useSelector((s: RootState) => s.miningStore);
     const { speed = 0, claimTime, endMiningTime, minedTokens, lastBoostTime } = mining ?? {}
     const [countTime, setCountTime] = useState(0)
-
     const resetMining = () => {
         setCountTime(0)
     }
@@ -16,20 +15,20 @@ export default function useAutomationMining() {
         clearInterval(interval)
     }
     const countStopMining = useMemo(() => {
-        if(!endMiningTime) return 0
+        if (!endMiningTime) return 0
         const currentTime = new Date().getTime();
         const countEndTime = new Date(endMiningTime).getTime();
         const time = countEndTime - currentTime;
         return time > 0 ? time : 0
     }, [endMiningTime])
-    
+
     const currentAmount = useMemo(() => {
         if (!claimTime) return 0;
 
-        const countCurrentTime = new Date().getTime();
+        const countEndTime = countStopMining ? new Date().getTime() : new Date(endMiningTime).getTime();
         const countStartTime = lastBoostTime ? new Date(lastBoostTime).getTime() : new Date(claimTime).getTime();
 
-        const elapsedTimeInSeconds = Math.floor((countCurrentTime - countStartTime) / 1000);
+        const elapsedTimeInSeconds = Math.floor((countEndTime - countStartTime) / 1000);
         const earnedTokens = elapsedTimeInSeconds * (speed / 3600);
         setCountTime(0)
         return earnedTokens + minedTokens;
@@ -46,7 +45,7 @@ export default function useAutomationMining() {
             return () => clearInterval(interval);
         }
     }, [countTime, claimTime, countStopMining]);
-    
+
     const amount = (currentAmount + ((countTime / 1000) * (speed / 3600))).toFixed(6)
     return { amount, resetMining, clearIntervalMining }
 }
