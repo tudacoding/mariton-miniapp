@@ -16,7 +16,7 @@ const BaseImage = (props: IBaseImage) => {
       width={props.width}
       src={props.src}
       alt={props.alt}
-      className={`cursor-pointer opacity-100 hover:opacity-50 ${props.className}`}
+      className={`cursor-pointer opacity-100 active:opacity-50 ${props.className}`}
     ></img>
   );
 };

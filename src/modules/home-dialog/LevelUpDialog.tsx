@@ -1,26 +1,92 @@
 import backgroundDialog from "@/assets/level-up/background-dialog.png";
 import levelUp from "@/assets/level-up/GIFT-level.gif";
-import coinPng from "@/assets/air/mariton-tk-ico.png";
+import mrtPng from "@/assets/air/mariton-tk-ico.png";
+import tonPng from "@/assets/game/lottery-item/ton.png";
 import closeButton from "@/assets/game/close-button.png";
 import upgradeButton from "@/assets/game/upgrade-button.png";
 import BaseDivider from "@/components/BaseDivider";
 import BaseButton from "@/components/BaseButton";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
 import { toast } from "react-toastify";
+import { useMemo, useState } from "react";
+import { IMining, LevelUpType } from "@/types/models/mining";
+import { twMerge } from "tailwind-merge";
+function InforAfterLevelUp({
+  mining,
+  type,
+  isTonUpdated,
+}: {
+  mining: IMining;
+  type: LevelUpType;
+  isTonUpdated: boolean;
+}) {
+  const {
+    level = 0,
+    speed = 0,
+    mrtNextCost = 0,
+    mrtNextSpeedIncreased = 0,
+  } = mining?.miningLevel ?? {};
+  const isTon = type === "TON";
+  const newSpeed = isTon ? speed * 2 : mrtNextSpeedIncreased + speed;
 
+  return (
+    <div className="py-8 text-t-title text-base text-center">
+      <p className=" font-bold">
+        {isTon
+          ? "Update level with TON"
+          : `Update your level to ${Number(level) + 1}`}
+      </p>
+      {isTon && isTonUpdated ? (
+        <p className="text-red-600">For each level, can only be updated once</p>
+      ) : (
+        <>
+          <p className="flex flex-row justify-center gap-1">
+            <span className="pr-1">Cost</span>
+            <span className="font-bold text-t-button">
+              {isTon ? "5" : mrtNextCost}
+            </span>
+            <img
+              src={isTon ? tonPng : mrtPng}
+              alt=""
+              width={20}
+              className="object-contain"
+            />
+          </p>
+          <p>
+            <span>New speed: </span>
+            <span className="font-bold">{newSpeed.toFixed(3)} </span>
+            <span>MRT/H</span>
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
 export default function LevelUpDialog() {
+  const { mining } = useSelector((s: RootState) => s.miningStore);
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
   const { levelUpMining } = useDispatch<Dispatch>().miningStore;
+  const [selectedType, setSelectedType] = useState<LevelUpType>("MRT");
   const handleUpdate = async () => {
-    const mining = await levelUpMining({});
+    const mining = await levelUpMining({
+      type: selectedType,
+    });
     if (mining) {
-      toast.success('update success!')
+      toast.success("update success!");
       handleDialog({
         isVisible: false,
       });
     }
   };
+  const isTonUpdated = useMemo(() => {
+    if (mining?.miningLevel) {
+      const { log, level } = mining?.miningLevel ?? {};
+      return log?.[level]?.isTonUpdated;
+    }
+    return false;
+  }, [mining.miningLevel]);
+
   return (
     <div className="h-fix w-fix relative">
       <img
@@ -37,44 +103,34 @@ export default function LevelUpDialog() {
         </div>
         <div className="mx-[60px] grid grid-cols-2 gap-3 pb-4">
           <BaseButton
-            className="!text-t-button !rounded-3xl font-extrabold"
-            onClick={() => {
-              handleDialog({
-                isVisible: true,
-                children: <LevelUpDialog />,
-                classWrapperDialog: "!p-0 !overflow-visible",
-              });
-            }}
+            className={twMerge(
+              "rounded-3xl font-extrabold",
+              selectedType === "TON"
+                ? "text-t-button"
+                : "bg-card text-t-description"
+            )}
+            onClick={() => setSelectedType("TON")}
           >
             TON
           </BaseButton>
           <BaseButton
-            className="!text-t-button !rounded-3xl font-extrabold"
-            onClick={() => {
-              handleDialog({
-                isVisible: true,
-                children: <LevelUpDialog />,
-                classWrapperDialog: "!p-0 !overflow-visible",
-              });
-            }}
+            className={twMerge(
+              "rounded-3xl font-extrabold",
+              selectedType === "MRT"
+                ? "text-t-button"
+                : "bg-card text-t-description"
+            )}
+            onClick={() => setSelectedType("MRT")}
           >
             MRT
           </BaseButton>
         </div>
         <BaseDivider className="!h-[1px]" />
-        <div className="py-8 text-t-title text-base text-center">
-          <p className=" font-bold">Update your level to 2</p>
-          <p className="flex flex-row justify-center  gap-1">
-            <span className="pr-1">Cost</span>
-            <span className="font-bold text-t-button">2.5</span>
-            <img src={coinPng} alt="" className="object-contain" />
-          </p>
-          <p>
-            <span>New speed: </span>
-            <span className="font-bold">0.5 </span>
-            <span>MRT/H</span>
-          </p>
-        </div>
+        <InforAfterLevelUp
+          mining={mining}
+          type={selectedType}
+          isTonUpdated={isTonUpdated}
+        />
       </div>
       <div className="absolute bottom-[-30px] flex flex-row justify-center w-full gap-4">
         <BaseButton
@@ -87,7 +143,11 @@ export default function LevelUpDialog() {
         >
           <img src={closeButton} alt="" className="object-contain" />
         </BaseButton>
-        <BaseButton className="!p-0 !bg-transparent" onClick={handleUpdate}>
+        <BaseButton
+          className="!p-0 !bg-transparent"
+          onClick={handleUpdate}
+          disabled={isTonUpdated && selectedType === "TON"}
+        >
           <img src={upgradeButton} alt="" className="object-contain" />
         </BaseButton>
       </div>

@@ -1,6 +1,5 @@
 export interface IMining {
     id: number;
-    speed: number;
     minedTokens: number;
     totalMinedTokens: number;
     claimTime: string;
@@ -8,4 +7,13 @@ export interface IMining {
     createdAt: string;
     updatedAt: string;
     lastBoostTime: string;
+    miningLevel: {
+        log: { [level: string]: { isTonUpdated: boolean } }
+        speed: number,
+        level: number,
+        mrtNextCost: number,
+        mrtNextSpeedIncreased: number
+    }
 }
+
+export type LevelUpType = 'TON' | 'MRT'

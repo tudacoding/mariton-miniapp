@@ -1,7 +1,7 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from "..";
 import MiningRepository from "@/api/repository/minning";
-import { IMining } from "@/types/models/mining";
+import { IMining, LevelUpType } from "@/types/models/mining";
 interface State {
     mining: IMining
 }
@@ -30,11 +30,11 @@ const miningStore = createModel<RootModel>()({
                 return res
             }
         },
-        async levelUpMining(_, rootState) {
+        async levelUpMining({ type }: { type: LevelUpType }, rootState) {
             const mining = rootState.miningStore.mining
             if (mining.id) {
                 const res = await MiningRepository.levelUpMining(mining.id, {
-                    speed: 0.5
+                    type
                 })
                 dispatch.miningStore.setMining(res)
                 return res

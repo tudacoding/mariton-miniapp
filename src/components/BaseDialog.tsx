@@ -6,7 +6,7 @@ export default function BaseDialog() {
     (s: RootState) => s.actionsStore
   );
   return (
-    <dialog id="base_dialog" className={"modal " + classDialog}>
+    <dialog id="base_dialog" className={"modal bg-[#0006] " + classDialog}>
       <div
         className={
           "modal-box bg-transparent !shadow-none " + classWrapperDialog

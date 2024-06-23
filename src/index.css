@@ -8,7 +8,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: #EAE6C2;
+  color: #eae6c2;
   background-color: #342812;
 
   font-synthesis: none;
@@ -19,7 +19,7 @@
 
 @font-face {
   font-family: "Lalezar";
-  src: url('./assets/fonts/Lalezar-Regular.ttf');
+  src: url("./assets/fonts/Lalezar-Regular.ttf");
 }
 @layer components {
   .font-semibold-all * {

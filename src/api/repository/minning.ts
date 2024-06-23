@@ -1,14 +1,11 @@
 import config from "@/config";
+import { LevelUpType } from "@/types/models/mining";
 import axios from "axios";
 interface IPropsStartMining {
     account: string | number,
-    speed?: number,
-    minedTokens?: string,
-    claimTime?: string,
-    lastBoostTime?: string
 }
 interface IPropsLevelUpMining {
-    speed?: number,
+    type?: LevelUpType,
 }
 const MiningRepository = {
     startMining: async (data: IPropsStartMining) => {

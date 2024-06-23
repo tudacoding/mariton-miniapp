@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
 import LevelUpDialog from "@/modules/home-dialog/LevelUpDialog";
 import BackgroundAirdrop from "@/components/BackgroupAirdrop";
+import { twMerge } from "tailwind-merge";
 
 export default function InvitePage() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
@@ -66,23 +67,23 @@ export default function InvitePage() {
             <BaseDivider className="my-3" />
             <div className="grid grid-cols-2 gap-3 mb-2">
               <BaseButton
-                className={
-                  "text-lg font-bold line-clamp-1 " +
-                  (tab === "achievenment"
-                    ? "!text-t-button"
-                    : "!bg-card !text-t-description")
-                }
+                className={twMerge(
+                  "text-lg font-bold line-clamp-1 ",
+                  tab === "achievenment"
+                    ? "text-t-button"
+                    : "bg-card text-t-description"
+                )}
                 onClick={() => setTab("achievenment")}
               >
                 Achievenment
               </BaseButton>
               <BaseButton
-                className={
-                  "text-lg font-bold " +
-                  (tab === "friends"
-                    ? "!text-t-button"
-                    : "!bg-card !text-t-description")
-                }
+                className={twMerge(
+                  "text-lg font-bold line-clamp-1 ",
+                  tab === "friends"
+                    ? "text-t-button"
+                    : "bg-card text-t-description"
+                )}
                 onClick={() => setTab("friends")}
               >
                 Friends (8)
