@@ -12,7 +12,8 @@ export interface IMining {
         speed: number,
         level: number,
         mrtNextCost: number,
-        mrtNextSpeedIncreased: number
+        mrtNextSpeedIncreased: number,
+        tonNextCost: number
     }
 }
 

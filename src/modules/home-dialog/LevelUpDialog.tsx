@@ -25,26 +25,32 @@ function InforAfterLevelUp({
     level = 0,
     speed = 0,
     mrtNextCost = 0,
+    tonNextCost = 0,
     mrtNextSpeedIncreased = 0,
   } = mining?.miningLevel ?? {};
   const isTon = type === "TON";
   const newSpeed = isTon ? speed * 2 : mrtNextSpeedIncreased + speed;
 
   return (
-    <div className="py-8 text-t-title text-base text-center">
+    <div className="py-6 text-t-title text-base text-center">
       <p className=" font-bold">
         {isTon
-          ? "Update level with TON"
+          ? "Speed up with TON"
           : `Update your level to ${Number(level) + 1}`}
       </p>
       {isTon && isTonUpdated ? (
-        <p className="text-red-600">For each level, can only be updated once</p>
+        <>
+          <p>Increase current speed by 2x with TON</p>
+          <p className="text-red-600">
+            Each level can only upgrade speed once.
+          </p>
+        </>
       ) : (
         <>
           <p className="flex flex-row justify-center gap-1">
             <span className="pr-1">Cost</span>
             <span className="font-bold text-t-button">
-              {isTon ? "5" : mrtNextCost}
+              {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
             </span>
             <img
               src={isTon ? tonPng : mrtPng}
@@ -73,7 +79,7 @@ export default function LevelUpDialog() {
       type: selectedType,
     });
     if (mining) {
-      toast.success("update success!");
+      toast.success("Upgraded successfully!");
       handleDialog({
         isVisible: false,
       });

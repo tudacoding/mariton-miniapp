@@ -1,16 +1,18 @@
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
+import { twMerge } from "tailwind-merge";
 
 export default function BaseDialog() {
   const { childrenDialog, classWrapperDialog, classDialog } = useSelector(
     (s: RootState) => s.actionsStore
   );
   return (
-    <dialog id="base_dialog" className={"modal bg-[#0006] " + classDialog}>
+    <dialog id="base_dialog" className={twMerge("modal bg-[#0006]", classDialog)}>
       <div
-        className={
-          "modal-box bg-transparent !shadow-none " + classWrapperDialog
-        }
+        className={twMerge(
+          "modal-box bg-transparent !shadow-none",
+          classWrapperDialog
+        )}
       >
         {childrenDialog}
       </div>

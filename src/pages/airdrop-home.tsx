@@ -56,8 +56,7 @@ export default function AirDopHome() {
                   handleDialog({
                     isVisible: true,
                     children: <LeaderboardDialog />,
-                    classWrapperDialog: "!p-0 !overflow-visible",
-                    classDialog: "top-[-20px]",
+                    classWrapperDialog: "p-0 !overflow-visible pb-4",
                   });
                 }}
               >
@@ -78,12 +77,12 @@ export default function AirDopHome() {
                     handleDialog({
                       isVisible: true,
                       children: <LevelUpDialog />,
-                      classWrapperDialog: "!p-0 !overflow-visible",
+                      classWrapperDialog: "p-0 !overflow-visible pb-6",
                     });
                   }}
                   className="!bg-base !rounded-full text-white font-bold text-[22px] !pb-3 leading-none w-[200px]"
                 >
-                  LEVEL UP
+                  LEVEL {mining?.miningLevel?.level}
                 </BaseButton>
               </div>
             </div>
