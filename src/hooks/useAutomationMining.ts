@@ -26,10 +26,10 @@ export default function useAutomationMining() {
     const currentAmount = useMemo(() => {
         if (!claimTime) return 0;
 
-        const countEndTime = countStopMining ? new Date().getTime() : new Date(endMiningTime).getTime();
         const countStartTime = lastBoostTime ? new Date(lastBoostTime).getTime() : new Date(claimTime).getTime();
+        const countEndTime = countStopMining ? new Date().getTime() : new Date(endMiningTime).getTime();
 
-        const elapsedTimeInSeconds = Math.floor((countEndTime - countStartTime) / 1000);
+        const elapsedTimeInSeconds = Math.floor((countEndTime > countStartTime ? countEndTime - countStartTime : 0) / 1000);
         const earnedTokens = elapsedTimeInSeconds * (speed / 3600);
         setCountTime(0)
         return earnedTokens + minedTokens;
