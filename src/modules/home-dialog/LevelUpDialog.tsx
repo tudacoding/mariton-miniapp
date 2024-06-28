@@ -107,10 +107,10 @@ export default function LevelUpDialog() {
         <div className="py-2 flex w-full justify-center">
           <img src={levelUp} alt="" className="" width={"70%"} />
         </div>
-        <div className="mx-[60px] grid grid-cols-2 gap-3 pb-4">
+        <div className="mx-auto flex justify-center gap-3 pb-4">
           <BaseButton
             className={twMerge(
-              "rounded-3xl font-extrabold",
+              "rounded-3xl font-extrabold w-[100px]",
               selectedType === "TON"
                 ? "text-t-button"
                 : "bg-card text-t-description"
@@ -121,7 +121,7 @@ export default function LevelUpDialog() {
           </BaseButton>
           <BaseButton
             className={twMerge(
-              "rounded-3xl font-extrabold",
+              "rounded-3xl font-extrabold w-[100px]",
               selectedType === "MRT"
                 ? "text-t-button"
                 : "bg-card text-t-description"

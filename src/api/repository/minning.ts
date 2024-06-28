@@ -12,6 +12,10 @@ const MiningRepository = {
         const res = await axios.post(`${config.apiUrl}/mining/start-mining`, data);
         return res.data || {};
     },
+    endMining: async (id: number) => {
+        const res = await axios.put(`${config.apiUrl}/mining/end-mining/${id}`);
+        return res.data || {};
+    },
     claimToken: async (id: number) => {
         const res = await axios.put(`${config.apiUrl}/mining/claim-token/${id}`)
         return res.data || {}

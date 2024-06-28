@@ -9,6 +9,7 @@ import LeaderboardDialog from "@/modules/home-dialog/LeaderboardDialog";
 import BaseButton from "@/components/BaseButton";
 import { useStartMining } from "@/hooks/useStartMining";
 import MiningTokenCount from "@/modules/airdrop/MiningTokenCount";
+import useEndMining from "@/hooks/useEndMining";
 
 export default function AirDopHome() {
   const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
@@ -32,6 +33,8 @@ export default function AirDopHome() {
     }, 1500);
     await claimToken({});
   };
+
+  useEndMining();
   return (
     <HomeLayout>
       <div className="h-full flex flex-col">
@@ -56,7 +59,8 @@ export default function AirDopHome() {
                   handleDialog({
                     isVisible: true,
                     children: <LeaderboardDialog />,
-                    classWrapperDialog: "p-0 !overflow-visible pb-4",
+                    classWrapperDialog:
+                      "p-0 !overflow-visible pb-4 max-w-[330px]",
                   });
                 }}
               >
@@ -77,7 +81,8 @@ export default function AirDopHome() {
                     handleDialog({
                       isVisible: true,
                       children: <LevelUpDialog />,
-                      classWrapperDialog: "p-0 !overflow-visible pb-6",
+                      classWrapperDialog:
+                        "p-0 !overflow-visible pb-6 max-w-[330px]",
                     });
                   }}
                   className="!bg-base !rounded-full text-white font-bold text-[22px] !pb-3 leading-none w-[200px]"
