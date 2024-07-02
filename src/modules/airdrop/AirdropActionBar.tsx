@@ -8,7 +8,7 @@ const AirdropActionBar = ({ className = "" }: { className?: string }) => {
   const { mining } = useSelector((s: RootState) => s.miningStore);
   return (
     <div
-      className={`top-0 z-20 font-bold flex justify-between py-3` + className}
+      className={`top-0 z-20 font-bold flex justify-between py-2` + className}
     >
       <div className="flex justify-start items-center">
         <BaseImage width={"80%"} src={backButton} alt="add-button" path="/" />

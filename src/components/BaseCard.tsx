@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface IBaseCard {
   title: string;
@@ -6,6 +7,8 @@ interface IBaseCard {
   avatar?: string;
   onClick?: () => void;
   actionComponent?: ReactElement;
+  highlight?: boolean;
+  selected?: boolean;
 }
 export default function BaseCard({
   title,
@@ -13,10 +16,14 @@ export default function BaseCard({
   avatar,
   onClick = () => {},
   actionComponent,
+  highlight,
 }: IBaseCard) {
   return (
     <div
-      className="w-full rounded-xl bg-card p-[14px] flex flex-row gap-3"
+      className={twMerge(
+        "w-full rounded-xl bg-card p-[14px] flex flex-row gap-3",
+        highlight && ""
+      )}
       onClick={onClick}
     >
       <div className="h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden">

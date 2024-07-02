@@ -16,12 +16,16 @@ const MiningRepository = {
         const res = await axios.put(`${config.apiUrl}/mining/end-mining/${id}`);
         return res.data || {};
     },
-    claimToken: async (id: number) => {
-        const res = await axios.put(`${config.apiUrl}/mining/claim-token/${id}`)
+    claimTokens: async (id: number) => {
+        const res = await axios.put(`${config.apiUrl}/mining/claim-tokens/${id}`)
+        return res.data || {}
+    },
+    claimRefTokens: async (id: number) => {
+        const res = await axios.put(`${config.apiUrl}/mining/claim-ref-tokens/${id}`)
         return res.data || {}
     },
     levelUpMining: async (id: number, data: IPropsLevelUpMining) => {
-        const res = await axios.put(`${config.apiUrl}/mining/level-up/${id}`, data)
+        const res = await axios.put(`${config.apiUrl}/mining/level-ups/${id}`, data)
         return res.data || {}
     }
 };

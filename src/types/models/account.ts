@@ -11,3 +11,9 @@ export default interface Account {
   ref?: string;
   completedMission: string;
 }
+export interface IRef {
+  username: string;
+  avatar: string;
+  refString: string;
+  first_name: string;
+}

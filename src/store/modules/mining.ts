@@ -3,15 +3,20 @@ import { RootModel } from "..";
 import MiningRepository from "@/api/repository/minning";
 import { IMining, LevelUpType } from "@/types/models/mining";
 interface State {
-    mining: IMining
+    mining: IMining,
+    sending: boolean;
 }
 const miningStore = createModel<RootModel>()({
     state: {
-        mining: {}
+        mining: {},
+        sending: false
     } as State,
     reducers: {
         setMining(state, mining) {
             return { ...state, mining }
+        },
+        setSending(state, sending) {
+            return { ...state, sending }
         }
     },
     effects: (dispatch) => ({
@@ -22,12 +27,21 @@ const miningStore = createModel<RootModel>()({
             dispatch.miningStore.setMining(res)
             return res
         },
-        async claimToken(_, rootState) {
+        async claimTokens(_, rootState) {
+            const { setMining, setSending } = dispatch.miningStore
+            setSending(true)
             const mining = rootState.miningStore.mining
             if (mining.id) {
-                const res = await MiningRepository.claimToken(mining.id)
+                const res = await MiningRepository.claimTokens(mining.id)
+                setMining(res)
+            }
+            setSending(false)
+        },
+        async claimRefTokens(_, rootState) {
+            const mining = rootState.miningStore.mining
+            if (mining.id) {
+                const res = await MiningRepository.claimRefTokens(mining.id)
                 dispatch.miningStore.setMining(res)
-                return res
             }
         },
         async levelUpMining({ type }: { type: LevelUpType }, rootState) {

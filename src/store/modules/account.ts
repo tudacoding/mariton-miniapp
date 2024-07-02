@@ -3,7 +3,7 @@ import { createModel } from "@rematch/core";
 import AccountRepository from "@/api/repository/account";
 
 import type { RootModel } from "..";
-import Account from "@/types/models/account";
+import Account, { IRef } from "@/types/models/account";
 import SpinRepository from "@/api/repository/spin";
 import { get } from "lodash-es";
 
@@ -14,9 +14,13 @@ interface State {
   currentPage: number;
   countRef: number;
   listMissions: Array<any>;
+  refs: Array<IRef>;
 }
 const accountStore = createModel<RootModel>()({
-  state: {} as State,
+  state: {
+    countRef: 0,
+    refs: [] as IRef[]
+  } as State,
   reducers: {
     setAccount(state, data) {
       return {
@@ -46,6 +50,12 @@ const accountStore = createModel<RootModel>()({
       return {
         ...state,
         countRef: data,
+      };
+    },
+    setRefs(state, refs) {
+      return {
+        ...state,
+        refs,
       };
     },
     setMissions(state, data) {
@@ -85,6 +95,7 @@ const accountStore = createModel<RootModel>()({
       });
       dispatch.accountStore.setMissions(listMissions.data);
       dispatch.accountStore.setCountRef(get(res, "meta.pagination.total"));
+      dispatch.accountStore.setRefs(res.data);
       return get(res, "meta.pagination.total");
     },
   }),

@@ -13,7 +13,7 @@ import useEndMining from "@/hooks/useEndMining";
 
 export default function AirDopHome() {
   const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
-  const { claimToken } = useDispatch<Dispatch>().miningStore;
+  const { claimTokens } = useDispatch<Dispatch>().miningStore;
   const { mining } = useStartMining();
   const {
     speed = 0,
@@ -31,7 +31,7 @@ export default function AirDopHome() {
         classDialog: "h-full !bg-transparent",
       });
     }, 1500);
-    await claimToken({});
+    await claimTokens({});
   };
 
   useEndMining();

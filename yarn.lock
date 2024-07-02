@@ -761,6 +761,11 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.8.tgz#8268a8c57a3e4abd25c165ecd36237db7948a55e"
   integrity sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==
 
+"@types/telegram-web-app@^7.2.1":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@types/telegram-web-app/-/telegram-web-app-7.2.1.tgz#655c4acf6d00a096e5ed2a67e09465da1cccead4"
+  integrity sha512-aXUUyTE8vVwolOta84wPybKNAeZq6rPVYCn/mnewN+tqF5QBqoQFnvqUATn7yNFH2+hpYF2Z2fKU6lnMQ8EC3A==
+
 "@types/use-sync-external-store@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz#b6725d5f4af24ace33b36fafd295136e75509f43"

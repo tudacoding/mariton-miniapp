@@ -11,14 +11,17 @@ export function useGetFirstRegister() {
   const { accountStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const navigate = useNavigate();
+
   useEffect(() => {
     async function checkConnection() {
       // if (account) return;
       await accountStore.getFirstRegister({
         address: get(wallet, "account.address"),
         publicKey: get(wallet, "account.publicKey"),
+        telegramUserId: get(window, "Telegram.WebApp.initDataUnsafe.user.id"),
       });
     }
+    console.log(get(window, "Telegram"));
     if (get(wallet, "account.address")) {
       checkConnection();
     } else {

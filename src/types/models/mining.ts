@@ -7,6 +7,7 @@ export interface IMining {
     createdAt: string;
     updatedAt: string;
     lastBoostTime: string;
+    refTokens: number;
     miningLevel: {
         log: { [level: string]: { isTonUpdated: boolean } }
         speed: number,

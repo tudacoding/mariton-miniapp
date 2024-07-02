@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function useAutomationMining() {
     let interval: NodeJS.Timeout;
-    const { mining } = useSelector((s: RootState) => s.miningStore);
+    const { mining, sending } = useSelector((s: RootState) => s.miningStore);
     const { miningLevel, claimTime, endMiningTime, minedTokens, lastBoostTime } = mining ?? {}
     const { speed = 0 } = miningLevel ?? {}
     const [countTime, setCountTime] = useState(0)
@@ -47,6 +47,6 @@ export default function useAutomationMining() {
         }
     }, [countTime, claimTime, countStopMining]);
 
-    const amount = (currentAmount + ((countTime / 1000) * (speed / 3600))).toFixed(6)
+    const amount = (sending ? 0 : (currentAmount + (countTime / 1000) * (speed / 3600))).toFixed(6)
     return { amount, resetMining, clearIntervalMining }
 }

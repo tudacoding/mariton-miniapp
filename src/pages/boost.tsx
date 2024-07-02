@@ -51,10 +51,10 @@ export default function Boost() {
             className={twMerge(
               "grow overflow-auto px-6",
               // " mt-[86px]  mb-[30px]"
-              "mb-6 mt-3"
+              "mb-5 mt-4"
             )}
           >
-            <BaseTitleDivider>Daily Misson</BaseTitleDivider>
+            <BaseTitleDivider className="pt-0">Daily Misson</BaseTitleDivider>
             {checkins.map(({ description, onClick }, index) => {
               return (
                 <div key={index} className="pb-3">
@@ -72,7 +72,7 @@ export default function Boost() {
                 </div>
               );
             })}
-            <BaseTitleDivider>One-time Misson</BaseTitleDivider>
+            <BaseTitleDivider className="pt-1">One-time Misson</BaseTitleDivider>
             {oneTimeBoosts.map(({ description, onClick }, index) => {
               return (
                 <div key={index} className="pb-3">
