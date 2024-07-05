@@ -1,15 +1,27 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from "..";
 import MiningRepository from "@/api/repository/minning";
-import { IMining, LevelUpType } from "@/types/models/mining";
+import { IFriend, IMining, LevelUpType } from "@/types/models/mining";
+import FriendRepository from "@/api/repository/friend";
+import { get } from "lodash-es";
 interface State {
     mining: IMining,
     sending: boolean;
+    friends: {
+        id: number;
+        attributes: IFriend;
+    }[];
+    countFriends: number;
 }
 const miningStore = createModel<RootModel>()({
     state: {
         mining: {},
-        sending: false
+        friends: [] as {
+            id: number;
+            attributes: IFriend;
+        }[],
+        sending: false,
+        countFriends: 0
     } as State,
     reducers: {
         setMining(state, mining) {
@@ -17,12 +29,16 @@ const miningStore = createModel<RootModel>()({
         },
         setSending(state, sending) {
             return { ...state, sending }
-        }
+        },
+        setFriends(state, data) {
+            return { ...state, ...data }
+        },
     },
     effects: (dispatch) => ({
-        async startMining(accountId) {
+        async startMining({ id, telegramUserId }) {
             const res = await MiningRepository.startMining({
-                account: accountId
+                account: id,
+                telegramUserId
             })
             dispatch.miningStore.setMining(res)
             return res
@@ -50,6 +66,23 @@ const miningStore = createModel<RootModel>()({
                 const res = await MiningRepository.levelUpMining(mining.id, {
                     type
                 })
+                dispatch.miningStore.setMining(res)
+                return res
+            }
+        },
+        async getFriends(_, rootState) {
+            const mining = rootState.miningStore.mining
+            const res = await FriendRepository.fetchFriends(mining.telegramUserId)
+            if (res.data) {
+                dispatch.miningStore.setFriends({
+                    friends: res.data,
+                    countFriends: get(res, "meta.pagination.total")
+                })
+            }
+        },
+        async completeMissionFriend({ id, data }) {
+            const res = await MiningRepository.completeMissionFriend(id, data)
+            if (res.id) {
                 dispatch.miningStore.setMining(res)
                 return res
             }

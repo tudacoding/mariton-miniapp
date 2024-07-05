@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
+import { get } from "lodash-es";
 
 export function useStartMining() {
   const { miningStore } = useDispatch<Dispatch>();
@@ -10,7 +11,9 @@ export function useStartMining() {
 
   useEffect(() => {
     if (!mining?.id && account?.id) {
-      miningStore.startMining(account?.id)
+      const telegramUserId = get(window, "Telegram.WebApp.initDataUnsafe.user.id");
+
+      miningStore.startMining({id: account?.id, telegramUserId})
     }
   }, [account?.id]);
 

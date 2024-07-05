@@ -18,7 +18,6 @@ export function useGetFirstRegister() {
       await accountStore.getFirstRegister({
         address: get(wallet, "account.address"),
         publicKey: get(wallet, "account.publicKey"),
-        telegramUserId: get(window, "Telegram.WebApp.initDataUnsafe.user.id"),
       });
     }
     console.log(get(window, "Telegram"));

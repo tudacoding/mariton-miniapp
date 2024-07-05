@@ -3,21 +3,19 @@ import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import boostLogo from "@/assets/air/air-logo-friend.png";
 
-export default function ListRefs() {
-  const { refs } = useSelector((s: RootState) => s.accountStore);
+export default function ListFriend() {
+  const { friends } = useSelector((s: RootState) => s.miningStore);
   return (
     <div>
-      {refs.map(({ username, avatar }, index) => {
+      {friends.map(({ attributes }, index) => {
+        const { first_name, last_name, avatar } = attributes;
         return (
           <div key={index} className="pb-3">
             <BaseCard
               avatar={avatar ?? boostLogo}
-              title={username}
-              description={""}
+              title={`${first_name} ${last_name}`}
+              description={"Sent a friend request"}
               onClick={() => {}}
-              actionComponent={
-                <div className="border border-0.5 border-solid rounded-full h-6 w-6 border-t-description"></div>
-              }
             ></BaseCard>
           </div>
         );

@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { store } from "@/store/store";
 import { Provider } from "react-redux";
 import BaseDialog from "./components/BaseDialog";
+import { useEffect } from "react";
+import interceptorSetup from "./api/interceptor";
 
 const pages = import.meta.glob("./pages/*.tsx", { eager: true });
 
@@ -38,6 +40,9 @@ const router = createBrowserRouter(
 );
 
 function App() {
+  useEffect(() => {
+    interceptorSetup();
+  }, []);
   return (
     <>
       <Provider store={store}>

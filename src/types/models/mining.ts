@@ -7,15 +7,29 @@ export interface IMining {
     createdAt: string;
     updatedAt: string;
     lastBoostTime: string;
-    refTokens: number;
+    friendClaimTokens: number;
+    telegramUserId: number;
     miningLevel: {
         log: { [level: string]: { isTonUpdated: boolean } }
         speed: number,
         level: number,
         mrtNextCost: number,
         mrtNextSpeedIncreased: number,
-        tonNextCost: number
+        tonNextCost: number,
+        missionFriendsLevel: number;
     }
 }
 
 export type LevelUpType = 'TON' | 'MRT'
+
+export interface IFriend {
+    avatar: string;
+    id: number;
+    username: string;
+    first_name: string;
+    last_name: string;
+    user_id: number;
+    invitebyId: number;
+    createdAt: string;
+    updatedAt: string;
+}

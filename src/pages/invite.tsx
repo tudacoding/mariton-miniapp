@@ -2,7 +2,7 @@ import HomeLayout from "@/modules/home/Layout";
 import coinPng from "@/assets/air/mariton-tk-ico.png";
 import copySvg from "@/assets/icons/copy.svg";
 import BaseButton from "@/components/BaseButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
 import BaseDivider from "@/components/BaseDivider";
 import claimTokenGif from "@/assets/level-up/claim-token.gif";
@@ -13,18 +13,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { toast } from "react-toastify";
 import useCopy from "@/hooks/useCopy";
-import ListRefs from "@/modules/invite/ListRefs";
 import ListAchievenments from "@/modules/invite/ListAchievenments";
+import { useTonWallet } from "@tonconnect/ui-react";
+import ListFriend from "@/modules/invite/ListFriends";
 
 export default function InvitePage() {
+  const wallet = useTonWallet();
   const [tab, setTab] = useState<"achievenment" | "friends">("achievenment");
-  const { account, countRef } = useSelector((s: RootState) => s.accountStore);
-  const { mining } = useSelector((s: RootState) => s.miningStore);
-  const ref = account ? `${config.botTele}${account.ref}` : "";
+  const { mining, countFriends } = useSelector((s: RootState) => s.miningStore);
+  const ref = mining ? `${config.botTele}invite_${mining.telegramUserId}` : "";
   const [copy] = useCopy(ref);
-  const { claimRefTokens } = useDispatch<Dispatch>().miningStore;
+  const { claimRefTokens, getFriends } = useDispatch<Dispatch>().miningStore;
   const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
-
+  
   const handleClaimToken = () => {
     handleDialog({
       isVisible: true,
@@ -36,8 +37,11 @@ export default function InvitePage() {
         classDialog: "h-full !bg-transparent",
       });
     }, 1500);
-    claimRefTokens({})
-  }
+    claimRefTokens({});
+  };
+  useEffect(() => {
+    getFriends({});
+  }, [wallet]);
   return (
     <HomeLayout>
       <div className="h-full flex">
@@ -76,7 +80,7 @@ export default function InvitePage() {
             <div className="rounded-xl bg-primary flex flex-row py-5 px-[14px] justify-between my-[6px]">
               <div className="flex flex-row gap-1 items-center justify-center">
                 <span className="text-2xl text-t-button font-bold leading-none">
-                  {(mining?.refTokens ?? 0).toFixed(6)}
+                  {(mining?.friendClaimTokens ?? 0).toFixed(6)}
                 </span>
                 <img
                   src={coinPng}
@@ -119,11 +123,11 @@ export default function InvitePage() {
                 )}
                 onClick={() => setTab("friends")}
               >
-                Friends ({countRef})
+                Friends ({countFriends})
               </BaseButton>
             </div>
             <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset]">
-              {tab === "friends" ? <ListRefs /> : <ListAchievenments />}
+              {tab === "friends" ? <ListFriend /> : <ListAchievenments />}
             </div>
           </div>
         </div>
