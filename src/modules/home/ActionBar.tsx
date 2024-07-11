@@ -12,11 +12,10 @@ const ActionBar = (props: IProps) => {
   const location = useLocation();
   return (
     <div
-      className={`w-full font-bold text-center items-end p-4 flex justify-between ${
-        props.isUseAbsolute
-          ? "absolute top-0 left-1/2 transform -translate-x-1/2"
-          : ""
-      }`}
+      className={`w-full font-bold text-center items-end p-4 flex justify-between ${props.isUseAbsolute
+        ? "absolute top-0 left-1/2 transform -translate-x-1/2"
+        : ""
+        }`}
     >
       {location.pathname !== "/" ? (
         <div onClick={() => navigate("/")} className="flex justify-start">
@@ -27,7 +26,9 @@ const ActionBar = (props: IProps) => {
           <BaseImage width={"80%"} src={walletButton} alt="wallet-button" />
         </div>
       )}
-
+      <div onClick={() => navigate("/test")} className="flex justify-center">
+        <BaseImage width={"80%"} src={walletButton} alt="test-button" />
+      </div>
       <div className="flex justify-end">
         <TonConnectButton />
       </div>
