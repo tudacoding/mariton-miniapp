@@ -33,5 +33,9 @@ const MiningRepository = {
         const res = await axios.put(`${config.apiUrl}/mining/complete-mission-friend/${id}`, data)
         return res.data || {}
     },
+    signSignature: async (data: any) => {
+        const res = await axios.post(`${config.apiUrl}/mining/sign-signature`, data);
+        return res.data || {};
+    }
 };
 export default MiningRepository;

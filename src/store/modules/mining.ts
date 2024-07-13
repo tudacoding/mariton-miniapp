@@ -86,7 +86,13 @@ const miningStore = createModel<RootModel>()({
                 dispatch.miningStore.setMining(res)
                 return res
             }
+        },
+        async signSignature({ data }, rootState) {
+            const { account } = rootState.accountStore
+            const res = await MiningRepository.signSignature({ wallet: account.wallet, tokens: 5 })
+            return res
         }
+
     })
 })
 export default miningStore;
