@@ -78,6 +78,7 @@ const miningStore = createModel<RootModel>()({
         },
         async getFriends(_, rootState) {
             const mining = rootState.miningStore.mining
+            if (!mining.telegramUserId) return;
             const res = await FriendRepository.fetchFriends(mining.telegramUserId)
             if (res.data) {
                 dispatch.miningStore.setFriends({
@@ -93,9 +94,9 @@ const miningStore = createModel<RootModel>()({
                 return res
             }
         },
-        async signSignature({ data }, rootState) {
+        async signSignature({ amount }, rootState) {
             const { account } = rootState.accountStore
-            const res = await MiningRepository.signSignature({ wallet: account.wallet, tokens: 5 })
+            const res = await MiningRepository.signSignature({ wallet: account.wallet, tokens: amount })
             return res
         },
         async getLeaderboard() {

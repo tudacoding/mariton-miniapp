@@ -3,16 +3,20 @@ import Wallet from "@/assets/icons/Wallet";
 import BaseButton from "@/components/BaseButton";
 import BaseDivider from "@/components/BaseDivider";
 import closeButton from "@/assets/game/close-button.png";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
 import { useMaritonToken } from "@/hooks/useMaritonToken";
 import mrtPng from "@/assets/air/mariton-tk-ico.png";
 import tonPng from "@/assets/game/lottery-item/ton.png";
-import { beginCell } from "@ton/core";
+import { beginCell, toNano } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
 import { twJoin } from "tailwind-merge";
 import { useNavigate } from "react-router-dom";
 import HomeLayout from "@/modules/home/Layout";
+import BaseInput from "@/components/BaseInput";
+import { useState } from "react";
+import { s } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
+import { set } from "lodash-es";
 
 function CardToken({ title, ton = 0.0, mrt = 0.0 }: any) {
   return (
@@ -54,29 +58,17 @@ function CardToken({ title, ton = 0.0, mrt = 0.0 }: any) {
     </div>
   );
 }
-function ActionCard({ title, onClick }: any) {
-  return (
-    <div
-      className={twJoin(
-        "rounded-xl bg-[#B19B5E] flex flex-col justify-center text-center py-[20px] items-center gap-2",
-        "bg-b-primary active:opacity-75 duration-100 active:scale-[0.95]"
-      )}
-      onClick={onClick}
-    >
-      <Wallet />
-      <span>{title}</span>
-    </div>
-  );
-}
 export default function WalletPage() {
   const { miningStore } = useDispatch<Dispatch>();
-  const { claimMRT } = useMaritonToken();
+  const { mining } = useSelector((s: RootState) => s.miningStore);
+  const { claimMRT, tonBalance, mrtBalance } = useMaritonToken();
   const nav = useNavigate();
-  const { tonBalance, mrtBalance } = { tonBalance: 0.0, mrtBalance: 0.0 };
   const claimTokenToTonWallet = async () => {
     console.log("claimTokenToTonWallet");
 
-    const signature = await miningStore.signSignature({});
+    const signature = await miningStore.signSignature({
+      amount: mrtInGame,
+    });
     const buffer = Buffer.from(signature.signature, "hex");
     const signatureCell = beginCell().storeBuffer(buffer).endCell();
 
@@ -89,7 +81,9 @@ export default function WalletPage() {
     const res = await claimMRT(buildMessage);
     return res;
   };
-
+  const [ton, setTon] = useState(0);
+  const [mrt, setMrt] = useState(0);
+  const [mrtInGame, setMrtInGame] = useState(0);
   return (
     <HomeLayout hideNavbar>
       <div className="h-full flex">
@@ -100,13 +94,89 @@ export default function WalletPage() {
             alt="bg-mission-body"
           />
           <div className={"grow overflow-auto px-6 mb-5 mt-6 pt-4"}>
-            <CardToken title={"TON WALLET"} ton={tonBalance} mrt={mrtBalance} />
-            <BaseDivider className="my-6 h-[1px]" />
-            <CardToken title={"MARITON WALLET"} />
+            <p className="text-t-button text-center font-extrabold text-[24px] mb-6 leading-[18px]">
+              DEPOSIT
+            </p>
+            <div className="flex flex-row gap-3 pb-2">
+              {/* ton */}
+              <BaseInput
+                name="ton"
+                value={ton}
+                onChange={(event) => {
+                  setTon(Number(event.target.value));
+                }}
+              />
+              <BaseButton
+                className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
+                onClick={() => {
+                  setTon(tonBalance);
+                }}
+              >
+                <span className="text-sm pt-0.5">Max</span>
+              </BaseButton>
+              <BaseButton
+                className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
+                onClick={() => {}}
+              >
+                <span className="text-sm pt-0.5">Deposit</span>
+              </BaseButton>
+            </div>
 
-            <div className="grid grid-cols-2 gap-5 py-5 w-full">
-              <ActionCard title="Deposit" onClick={claimTokenToTonWallet} />
-              <ActionCard title="Withdraw" />
+            {/* mrt */}
+            <div className="flex flex-row gap-3 pb-2">
+              <BaseInput
+                name="mrt"
+                value={mrt}
+                onChange={(event) => {
+                  setMrt(Number(event.target.value));
+                }}
+              />
+
+              <BaseButton
+                className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
+                onClick={() => {
+                  setMrt(mrtBalance);
+                }}
+              >
+                <span className="text-sm pt-0.5">Max</span>
+              </BaseButton>
+              <BaseButton
+                className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
+                onClick={() => {}}
+              >
+                <span className="text-sm pt-0.5">Deposit</span>
+              </BaseButton>
+            </div>
+            <BaseDivider className="my-6 h-[1px]" />
+            <p className="text-t-button text-center font-extrabold text-[24px] mb-6 leading-[18px]">
+              CLAIM MRT
+            </p>
+
+            <div className="flex flex-row gap-3 pb-2">
+              <BaseInput
+                name="mrtInGame"
+                value={mrtInGame}
+                onChange={(event) => {
+                  setMrtInGame(Number(event.target.value));
+                }}
+              />
+
+              <BaseButton
+                className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
+                onClick={() => {
+                  setMrtInGame(Number(mining.totalMinedTokens));
+                }}
+              >
+                <span className="text-sm pt-0.5">Max</span>
+              </BaseButton>
+              <BaseButton
+                className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
+                onClick={() => {
+                  claimTokenToTonWallet();
+                }}
+              >
+                <span className="text-sm pt-0.5">Claim</span>
+              </BaseButton>
             </div>
           </div>
           <div className="absolute bottom-[-30px] flex flex-row justify-center w-full gap-4">
