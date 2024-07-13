@@ -2,16 +2,16 @@ import closeButton from "@/assets/game/close-button.png";
 import BaseDivider from "@/components/BaseDivider";
 import boostBody from "@/assets/air/air-body.png";
 import BaseButton from "@/components/BaseButton";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
 import { useState } from "react";
 import BaseCard from "@/components/BaseCard";
 import boostLogo from "@/assets/air/air-logo-friend.png";
 
 export default function LeaderboardDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
+  const { leaderboard } = useSelector((state: RootState) => state.miningStore);
   const [tab, setTab] = useState<"ref" | "mint">("ref");
-  const friends = [1, 2, 4, 3, 6, 7, 8];
 
   return (
     <div className="h-full w-full relative">
@@ -47,18 +47,25 @@ export default function LeaderboardDialog() {
             </BaseButton>
           </div>
           <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset] h-[calc(100vh-300px)]">
-            {friends.map((_, index) => {
-              return (
-                <div key={index} className="pb-3">
-                  <BaseCard
-                    avatar={boostLogo}
-                    title="item 1"
-                    description="Check in TW to increase 20% speed in 8h"
-                    onClick={() => {}}
-                  ></BaseCard>
-                </div>
-              );
-            })}
+            {leaderboard?.[tab === "mint" ? "refs" : "mints"]?.map(
+              (item, index) => {
+                const description =
+                  tab === "mint"
+                    ? `${item.totalFriends} ref`
+                    : `${item.totalTokens} mint`;
+
+                return (
+                  <div key={index} className="pb-3">
+                    <BaseCard
+                      avatar={item.telegramAvatar ?? boostLogo}
+                      title={item.telegramName ?? "user"}
+                      description={description}
+                      onClick={() => {}}
+                    ></BaseCard>
+                  </div>
+                );
+              }
+            )}
           </div>
         </div>
         <div className="h-[20px]"></div>

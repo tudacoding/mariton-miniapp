@@ -26,7 +26,7 @@ export default function BaseCard({
       )}
       onClick={onClick}
     >
-      <div className="h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden">
+      <div className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden">
         <img className="h-full w-full object-cover" alt="" src={avatar} />
       </div>
       <div className="grow">

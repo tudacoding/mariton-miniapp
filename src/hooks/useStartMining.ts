@@ -11,9 +11,15 @@ export function useStartMining() {
 
   useEffect(() => {
     if (!mining?.id && account?.id) {
-      const telegramUserId = get(window, "Telegram.WebApp.initDataUnsafe.user.id");
+      const { first_name, last_name, id, avatar } = get(window, "Telegram.WebApp.initDataUnsafe.user", {}) as any;
 
-      miningStore.startMining({id: account?.id, telegramUserId})
+      miningStore.startMining({
+        id: account?.id,
+        telegramUserId: id,
+        telegramName: first_name + " " + last_name,
+        telegramAvatar: avatar
+      });
+      miningStore.getLeaderboard();
     }
   }, [account?.id]);
 

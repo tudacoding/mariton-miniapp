@@ -1,7 +1,7 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from "..";
 import MiningRepository from "@/api/repository/minning";
-import { IFriend, IMining, LevelUpType } from "@/types/models/mining";
+import { IFriend, ILeaderboard, IMining, LevelUpType } from "@/types/models/mining";
 import FriendRepository from "@/api/repository/friend";
 import { get } from "lodash-es";
 interface State {
@@ -12,6 +12,7 @@ interface State {
         attributes: IFriend;
     }[];
     countFriends: number;
+    leaderboard: ILeaderboard;
 }
 const miningStore = createModel<RootModel>()({
     state: {
@@ -32,6 +33,11 @@ const miningStore = createModel<RootModel>()({
         },
         setFriends(state, data) {
             return { ...state, ...data }
+        },
+        setLeaderboard(state, leaderboard) {
+            return {
+                ...state, leaderboard
+            }
         },
     },
     effects: (dispatch) => ({
@@ -91,6 +97,10 @@ const miningStore = createModel<RootModel>()({
             const { account } = rootState.accountStore
             const res = await MiningRepository.signSignature({ wallet: account.wallet, tokens: 5 })
             return res
+        },
+        async getLeaderboard() {
+            const res = await MiningRepository.getLeaderboard()
+            dispatch.miningStore.setLeaderboard(res)
         }
 
     })

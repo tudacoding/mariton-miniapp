@@ -9,6 +9,10 @@ export interface IMining {
     lastBoostTime: string;
     friendClaimTokens: number;
     telegramUserId: number;
+    telegramName: string;
+    telegramAvatar: string;
+    totalTokens: number;
+    totalFriends: number;
     miningLevel: {
         log: { [level: string]: { isTonUpdated: boolean } }
         speed: number,
@@ -32,4 +36,8 @@ export interface IFriend {
     invitebyId: number;
     createdAt: string;
     updatedAt: string;
+}
+export interface ILeaderboard {
+    refs: IMining[],
+    mints: IMining[]
 }
