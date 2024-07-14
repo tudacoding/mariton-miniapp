@@ -1,3 +1,5 @@
+import Account from "./account";
+
 export interface IMining {
     id: number;
     minedTokens: number;
@@ -8,9 +10,6 @@ export interface IMining {
     updatedAt: string;
     lastBoostTime: string;
     friendClaimTokens: number;
-    telegramUserId: number;
-    telegramName: string;
-    telegramAvatar: string;
     totalTokens: number;
     totalFriends: number;
     miningLevel: {
@@ -21,7 +20,8 @@ export interface IMining {
         mrtNextSpeedIncreased: number,
         tonNextCost: number,
         missionFriendsLevel: number;
-    }
+    },
+    account: Account;
 }
 
 export type LevelUpType = 'TON' | 'MRT'

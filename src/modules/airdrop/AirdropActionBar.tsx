@@ -6,7 +6,7 @@ import { RootState } from "@/store/store";
 import { useNavigate } from "react-router-dom";
 
 const AirdropActionBar = ({ className = "" }: { className?: string }) => {
-  const { mining } = useSelector((s: RootState) => s.miningStore);
+  const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
   const nav = useNavigate();
 
   return (
@@ -24,7 +24,7 @@ const AirdropActionBar = ({ className = "" }: { className?: string }) => {
       >
         <BaseImage width={"80%"} src={walletButton} alt="wallet-button" />
         <div className="absolute w-4/5 px-3">
-          <span>{(mining?.totalMinedTokens ?? 0).toFixed(3)}</span>
+          <span>{(tokensWallet?.mrtTokens ?? 0).toFixed(3)}</span>
         </div>
       </div>
     </div>

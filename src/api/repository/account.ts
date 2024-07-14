@@ -17,7 +17,8 @@ const AccountRepository = {
       address,
       publicKey,
       telegramUserId,
-      telegramName, telegramAvatar
+      telegramName,
+      telegramAvatar
     });
     return res.data || {};
   },

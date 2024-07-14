@@ -2,8 +2,7 @@ import config from "@/config";
 import { LevelUpType } from "@/types/models/mining";
 import axios from "axios";
 interface IPropsStartMining {
-    account: string | number,
-    telegramUserId: string | number
+    account: string | number
 }
 interface IPropsLevelUpMining {
     type?: LevelUpType,

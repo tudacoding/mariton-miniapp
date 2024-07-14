@@ -1,5 +1,4 @@
 import background from "@/assets/air/background-body-short.png";
-import Wallet from "@/assets/icons/Wallet";
 import BaseButton from "@/components/BaseButton";
 import BaseDivider from "@/components/BaseDivider";
 import closeButton from "@/assets/game/close-button.png";
@@ -8,15 +7,12 @@ import { Dispatch, RootState } from "@/store/store";
 import { useMaritonToken } from "@/hooks/useMaritonToken";
 import mrtPng from "@/assets/air/mariton-tk-ico.png";
 import tonPng from "@/assets/game/lottery-item/ton.png";
-import { beginCell, toNano } from "@ton/core";
+import { beginCell } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
-import { twJoin } from "tailwind-merge";
 import { useNavigate } from "react-router-dom";
 import HomeLayout from "@/modules/home/Layout";
 import BaseInput from "@/components/BaseInput";
 import { useState } from "react";
-import { s } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
-import { set } from "lodash-es";
 
 function CardToken({ title, ton = 0.0, mrt = 0.0 }: any) {
   return (
@@ -79,11 +75,12 @@ export default function WalletPage() {
       signature: signatureCell,
     };
     const res = await claimMRT(buildMessage);
+    if(res) setMrtInGame(undefined);
     return res;
   };
   const [ton, setTon] = useState(0);
   const [mrt, setMrt] = useState(0);
-  const [mrtInGame, setMrtInGame] = useState(0);
+  const [mrtInGame, setMrtInGame] = useState<number>();
   return (
     <HomeLayout hideNavbar>
       <div className="h-full flex">
@@ -155,6 +152,7 @@ export default function WalletPage() {
             <div className="flex flex-row gap-3 pb-2">
               <BaseInput
                 name="mrtInGame"
+                type="number"
                 value={mrtInGame}
                 onChange={(event) => {
                   setMrtInGame(Number(event.target.value));

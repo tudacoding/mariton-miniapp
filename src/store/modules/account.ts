@@ -3,7 +3,7 @@ import { createModel } from "@rematch/core";
 import AccountRepository from "@/api/repository/account";
 
 import type { RootModel } from "..";
-import Account from "@/types/models/account";
+import Account, { ITokensWallet } from "@/types/models/account";
 import SpinRepository from "@/api/repository/spin";
 import { get } from "lodash-es";
 
@@ -14,6 +14,7 @@ interface State {
   currentPage: number;
   countRef: number;
   listMissions: Array<any>;
+  tokensWallet: ITokensWallet;
 }
 const accountStore = createModel<RootModel>()({
   state: {
@@ -56,11 +57,24 @@ const accountStore = createModel<RootModel>()({
         listMissions: data,
       };
     },
+    setTokensWallet(state, data: ITokensWallet) {
+      return {
+        ...state,
+        tokensWallet: { ...state.tokensWallet, ...data },
+      }
+    }
   },
   effects: (dispatch) => ({
     async getFirstRegister(params) {
-      const res = await AccountRepository.getFirstRegister(params);
-      if (res) dispatch.accountStore.setAccount(res);
+      const res: Account = await AccountRepository.getFirstRegister(params);
+      if (res) {
+        dispatch.accountStore.setAccount(res);
+        dispatch.accountStore.setTokensWallet({
+          tonTokens: res.tonTokens,
+          mrtTokens: res.mrtTokens,
+          totalMrtTokensClaimed: res.totalMrtTokensClaimed,
+        });
+      }
       return res;
     },
     async completeMission(params) {
