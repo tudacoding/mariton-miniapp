@@ -12,7 +12,7 @@ export interface IMining {
     friendClaimTokens: number;
     totalTokens: number;
     totalFriends: number;
-    miningLevel: {
+    speedLevel: {
         log: { [level: string]: { isTonUpdated: boolean } }
         speed: number,
         level: number,

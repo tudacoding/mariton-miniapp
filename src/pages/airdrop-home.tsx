@@ -19,7 +19,7 @@ export default function AirDopHome() {
     speed = 0,
     mrtNextCost = 0,
     mrtNextSpeedIncreased = 0,
-  } = mining?.miningLevel ?? {};
+  } = mining?.speedLevel ?? {};
   const handleClaimToken = async () => {
     handleDialog({
       isVisible: true,
@@ -48,7 +48,7 @@ export default function AirDopHome() {
             <div className="rounded-2xl overflow-hidden grow relative flex justify-center items-center">
               <img className="w-full h-full object-cover" src={mainBanner} />
               <span className="absolute top-0 left-0 text-t-dark font-semibold text-xs my-1.5 mx-2 bg-black/10 px-1 rounded-2xl ">
-                CURRENT SPEED {mining?.miningLevel?.speed?.toFixed(2) ?? 0.0}{" "}
+                CURRENT SPEED {mining?.speedLevel?.speed?.toFixed(2) ?? 0.0}{" "}
                 MRT/H
               </span>
             </div>
@@ -87,7 +87,7 @@ export default function AirDopHome() {
                   }}
                   className="!bg-base !rounded-full text-white font-bold text-[22px] !pb-3 leading-none w-[200px]"
                 >
-                  LEVEL {mining?.miningLevel?.level}
+                  LEVEL {mining?.speedLevel?.level}
                 </BaseButton>
               </div>
             </div>

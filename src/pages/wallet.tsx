@@ -78,8 +78,8 @@ export default function WalletPage() {
     if(res) setMrtInGame(undefined);
     return res;
   };
-  const [ton, setTon] = useState(0);
-  const [mrt, setMrt] = useState(0);
+  const [ton, setTon] = useState<number>();
+  const [mrt, setMrt] = useState<number>();
   const [mrtInGame, setMrtInGame] = useState<number>();
   return (
     <HomeLayout hideNavbar>

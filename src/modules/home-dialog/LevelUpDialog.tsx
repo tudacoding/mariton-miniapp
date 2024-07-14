@@ -27,7 +27,7 @@ function InforAfterLevelUp({
     mrtNextCost = 0,
     tonNextCost = 0,
     mrtNextSpeedIncreased = 0,
-  } = mining?.miningLevel ?? {};
+  } = mining?.speedLevel ?? {};
   const isTon = type === "TON";
   const newSpeed = isTon ? speed * 2 : mrtNextSpeedIncreased + speed;
 
@@ -86,12 +86,12 @@ export default function LevelUpDialog() {
     }
   };
   const isTonUpdated = useMemo(() => {
-    if (mining?.miningLevel) {
-      const { log, level } = mining?.miningLevel ?? {};
+    if (mining?.speedLevel) {
+      const { log, level } = mining?.speedLevel ?? {};
       return log?.[level]?.isTonUpdated;
     }
     return false;
-  }, [mining.miningLevel]);
+  }, [mining.speedLevel]);
 
   return (
     <div className="h-fix w-fix relative">

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 export default function ListAchievenments() {
   const { mining } = useSelector((state: RootState) => state.miningStore);
   const { completeMissionFriend } = useDispatch<Dispatch>().miningStore;
-  const level = mining?.miningLevel?.missionFriendsLevel ?? 0;
+  const level = mining?.speedLevel?.missionFriendsLevel ?? 0;
   const completeMission = async (levelUpgrade: number) => {
     if (level >= levelUpgrade) return;
     const res = await completeMissionFriend({
