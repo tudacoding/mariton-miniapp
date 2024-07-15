@@ -7,17 +7,21 @@ import background from "@/assets/air/background-body-short.png";
 import { twMerge } from "tailwind-merge";
 
 export default function Boost() {
-  const checkins = [
+  const checkinBoosts = [
     {
-      description: "Send h to contact to increase 10% h in 12h",
+      description: "Boost +10% speed for 12h",
+      title: "Daily Check in",
       onClick: () => {},
     },
     {
-      description: "Check in rich to increase 20% speed in 24h ",
+      description:
+        "Minimum 01 TON balance in your Wallet to get 20% bonus speed for 24h",
       onClick: () => {},
+      title: "Junior Rich Mariton",
     },
     {
-      description: "Check in TW to increase 20% speed in 8h",
+      description: "Boost +10% speed for 8h",
+      title: "Mariton Ambassador",
       onClick: () => {},
     },
   ];
@@ -55,12 +59,12 @@ export default function Boost() {
             )}
           >
             <BaseTitleDivider className="pt-0">Daily Misson</BaseTitleDivider>
-            {checkins.map(({ description, onClick }, index) => {
+            {checkinBoosts.map(({ title, description, onClick }, index) => {
               return (
                 <div key={index} className="pb-3">
                   <BaseCard
                     avatar={boostLogo}
-                    title="Daily check in"
+                    title={title}
                     description={description}
                     onClick={onClick}
                     actionComponent={
@@ -72,7 +76,9 @@ export default function Boost() {
                 </div>
               );
             })}
-            <BaseTitleDivider className="pt-1">One-time Misson</BaseTitleDivider>
+            <BaseTitleDivider className="pt-1">
+              One-time Misson
+            </BaseTitleDivider>
             {oneTimeBoosts.map(({ description, onClick }, index) => {
               return (
                 <div key={index} className="pb-3">

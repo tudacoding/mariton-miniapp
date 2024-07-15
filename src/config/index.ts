@@ -1,6 +1,8 @@
+const isTestnet = true;
+
 export default {
-  // apiUrl: "https://api.mariton.xyz/api",
-  apiUrl: "http://localhost:1337/api",
+  apiUrl: "https://api.mariton.xyz/api",
+  // apiUrl: "http://localhost:1337/api",
   docs: "https://docs.mariton.xyz",
   faq: "https://docs.mariton.xyz",
   twitter: "https://x.com/Mariton_game",
@@ -8,5 +10,5 @@ export default {
   likePost: 'https://x.com/Mariton_game/status/1790663138108723575',
   retweet: 'https://x.com/Mariton_game/status/1790663138108723575',
   annoucementTelegram: 'https://t.me/MaritonAnn',
-  botTele: 'https://t.me/mariton_bot?start='
+  botTele: isTestnet ? 'https://t.me/testnet_mariton_bot?start=' : 'https://t.me/mariton_bot?start=',
 };
