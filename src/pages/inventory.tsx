@@ -9,11 +9,9 @@ import ImageLotteryItem from "@/components/ImageLotteryItem";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import BaseButton from "@/components/BaseButton";
-import { beginCell, toNano } from "@ton/core";
+import { beginCell } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
 import { useMaritonToken } from "@/hooks/useMaritonToken";
-import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
-import { mnemonicToWalletKey, sign } from "@ton/crypto";
 import { useNavigate } from "react-router-dom";
 
 const LotteryItem = (props: any) => {
@@ -86,17 +84,7 @@ const InventoryScreen = () => {
   const { inventory } = useGetInventory();
   const { miningStore } = useDispatch<Dispatch>();
   const { claimMRT } = useMaritonToken();
-  const { account } = useGetFirstRegister();
-  const nav = useNavigate()
-  const {
-    wallet,
-    tonBalance,
-    mrtBalance,
-    mintMRT,
-    MintClose,
-    withdrawTon,
-    loaded,
-  } = useMaritonToken();
+  const nav = useNavigate();
 
   return (
     <div className="relative h-screen">
@@ -105,7 +93,7 @@ const InventoryScreen = () => {
         <BaseButton
           onClick={async () => {
             const signature = await miningStore.signSignature({});
-            const buffer = Buffer.from(signature.signature, 'hex');
+            const buffer = Buffer.from(signature.signature, "hex");
             const signatureCell = beginCell().storeBuffer(buffer).endCell();
 
             const buildMessage: ClaimMRT = {
@@ -120,9 +108,13 @@ const InventoryScreen = () => {
         >
           Claim
         </BaseButton>
-        <BaseButton onClick={()=>{
-          nav('/test')
-        }}>Mint MRT</BaseButton>
+        <BaseButton
+          onClick={() => {
+            nav("/test");
+          }}
+        >
+          Mint MRT
+        </BaseButton>
         <img src={headBgLottery}></img>
         <div className="relative w-full h-full flex justify-center">
           <img className="absolute" src={bodyBgLottery}></img>

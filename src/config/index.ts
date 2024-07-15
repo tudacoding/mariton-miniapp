@@ -1,7 +1,7 @@
 const isTestnet = true;
 
 export default {
-  apiUrl: "https://api.mariton.xyz/api",
+  apiUrl: "https://mariton-backend.onrender.com/api",
   // apiUrl: "http://localhost:1337/api",
   docs: "https://docs.mariton.xyz",
   faq: "https://docs.mariton.xyz",
