@@ -4,10 +4,7 @@ import {
     Address, 
     Builder, 
     beginCell, 
-    ComputeError, 
-    TupleItem, 
     TupleReader, 
-    Dictionary, 
     contractAddress, 
     ContractProvider, 
     Sender, 
@@ -17,7 +14,6 @@ import {
     ABIGetter,
     ABIReceiver,
     TupleBuilder,
-    DictionaryValue
 } from '@ton/core';
 
 export type StateInit = {
@@ -41,29 +37,8 @@ export function loadStateInit(slice: Slice) {
     return { $$type: 'StateInit' as const, code: _code, data: _data };
 }
 
-function loadTupleStateInit(source: TupleReader) {
-    let _code = source.readCell();
-    let _data = source.readCell();
-    return { $$type: 'StateInit' as const, code: _code, data: _data };
-}
 
-function storeTupleStateInit(source: StateInit) {
-    let builder = new TupleBuilder();
-    builder.writeCell(source.code);
-    builder.writeCell(source.data);
-    return builder.build();
-}
 
-function dictValueParserStateInit(): DictionaryValue<StateInit> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeStateInit(src)).endCell());
-        },
-        parse: (src) => {
-            return loadStateInit(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type Context = {
     $$type: 'Context';
@@ -92,33 +67,8 @@ export function loadContext(slice: Slice) {
     return { $$type: 'Context' as const, bounced: _bounced, sender: _sender, value: _value, raw: _raw };
 }
 
-function loadTupleContext(source: TupleReader) {
-    let _bounced = source.readBoolean();
-    let _sender = source.readAddress();
-    let _value = source.readBigNumber();
-    let _raw = source.readCell();
-    return { $$type: 'Context' as const, bounced: _bounced, sender: _sender, value: _value, raw: _raw };
-}
 
-function storeTupleContext(source: Context) {
-    let builder = new TupleBuilder();
-    builder.writeBoolean(source.bounced);
-    builder.writeAddress(source.sender);
-    builder.writeNumber(source.value);
-    builder.writeSlice(source.raw);
-    return builder.build();
-}
 
-function dictValueParserContext(): DictionaryValue<Context> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeContext(src)).endCell());
-        },
-        parse: (src) => {
-            return loadContext(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type SendParameters = {
     $$type: 'SendParameters';
@@ -156,39 +106,8 @@ export function loadSendParameters(slice: Slice) {
     return { $$type: 'SendParameters' as const, bounce: _bounce, to: _to, value: _value, mode: _mode, body: _body, code: _code, data: _data };
 }
 
-function loadTupleSendParameters(source: TupleReader) {
-    let _bounce = source.readBoolean();
-    let _to = source.readAddress();
-    let _value = source.readBigNumber();
-    let _mode = source.readBigNumber();
-    let _body = source.readCellOpt();
-    let _code = source.readCellOpt();
-    let _data = source.readCellOpt();
-    return { $$type: 'SendParameters' as const, bounce: _bounce, to: _to, value: _value, mode: _mode, body: _body, code: _code, data: _data };
-}
 
-function storeTupleSendParameters(source: SendParameters) {
-    let builder = new TupleBuilder();
-    builder.writeBoolean(source.bounce);
-    builder.writeAddress(source.to);
-    builder.writeNumber(source.value);
-    builder.writeNumber(source.mode);
-    builder.writeCell(source.body);
-    builder.writeCell(source.code);
-    builder.writeCell(source.data);
-    return builder.build();
-}
 
-function dictValueParserSendParameters(): DictionaryValue<SendParameters> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeSendParameters(src)).endCell());
-        },
-        parse: (src) => {
-            return loadSendParameters(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type JettonData = {
     $$type: 'JettonData';
@@ -229,26 +148,7 @@ function loadTupleJettonData(source: TupleReader) {
     return { $$type: 'JettonData' as const, totalSupply: _totalSupply, mintable: _mintable, owner: _owner, content: _content, walletCode: _walletCode };
 }
 
-function storeTupleJettonData(source: JettonData) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.totalSupply);
-    builder.writeBoolean(source.mintable);
-    builder.writeAddress(source.owner);
-    builder.writeCell(source.content);
-    builder.writeCell(source.walletCode);
-    return builder.build();
-}
 
-function dictValueParserJettonData(): DictionaryValue<JettonData> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeJettonData(src)).endCell());
-        },
-        parse: (src) => {
-            return loadJettonData(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type JettonWalletData = {
     $$type: 'JettonWalletData';
@@ -277,33 +177,8 @@ export function loadJettonWalletData(slice: Slice) {
     return { $$type: 'JettonWalletData' as const, balance: _balance, owner: _owner, master: _master, walletCode: _walletCode };
 }
 
-function loadTupleJettonWalletData(source: TupleReader) {
-    let _balance = source.readBigNumber();
-    let _owner = source.readAddress();
-    let _master = source.readAddress();
-    let _walletCode = source.readCell();
-    return { $$type: 'JettonWalletData' as const, balance: _balance, owner: _owner, master: _master, walletCode: _walletCode };
-}
 
-function storeTupleJettonWalletData(source: JettonWalletData) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.balance);
-    builder.writeAddress(source.owner);
-    builder.writeAddress(source.master);
-    builder.writeCell(source.walletCode);
-    return builder.build();
-}
 
-function dictValueParserJettonWalletData(): DictionaryValue<JettonWalletData> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeJettonWalletData(src)).endCell());
-        },
-        parse: (src) => {
-            return loadJettonWalletData(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type TokenTransfer = {
     $$type: 'TokenTransfer';
@@ -343,39 +218,8 @@ export function loadTokenTransfer(slice: Slice) {
     return { $$type: 'TokenTransfer' as const, queryId: _queryId, amount: _amount, destination: _destination, response_destination: _response_destination, custom_payload: _custom_payload, forward_ton_amount: _forward_ton_amount, forward_payload: _forward_payload };
 }
 
-function loadTupleTokenTransfer(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _amount = source.readBigNumber();
-    let _destination = source.readAddress();
-    let _response_destination = source.readAddress();
-    let _custom_payload = source.readCellOpt();
-    let _forward_ton_amount = source.readBigNumber();
-    let _forward_payload = source.readCell();
-    return { $$type: 'TokenTransfer' as const, queryId: _queryId, amount: _amount, destination: _destination, response_destination: _response_destination, custom_payload: _custom_payload, forward_ton_amount: _forward_ton_amount, forward_payload: _forward_payload };
-}
 
-function storeTupleTokenTransfer(source: TokenTransfer) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeNumber(source.amount);
-    builder.writeAddress(source.destination);
-    builder.writeAddress(source.response_destination);
-    builder.writeCell(source.custom_payload);
-    builder.writeNumber(source.forward_ton_amount);
-    builder.writeSlice(source.forward_payload);
-    return builder.build();
-}
 
-function dictValueParserTokenTransfer(): DictionaryValue<TokenTransfer> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeTokenTransfer(src)).endCell());
-        },
-        parse: (src) => {
-            return loadTokenTransfer(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type TokenTransferInternal = {
     $$type: 'TokenTransferInternal';
@@ -412,37 +256,8 @@ export function loadTokenTransferInternal(slice: Slice) {
     return { $$type: 'TokenTransferInternal' as const, queryId: _queryId, amount: _amount, from: _from, response_destination: _response_destination, forward_ton_amount: _forward_ton_amount, forward_payload: _forward_payload };
 }
 
-function loadTupleTokenTransferInternal(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _amount = source.readBigNumber();
-    let _from = source.readAddress();
-    let _response_destination = source.readAddress();
-    let _forward_ton_amount = source.readBigNumber();
-    let _forward_payload = source.readCell();
-    return { $$type: 'TokenTransferInternal' as const, queryId: _queryId, amount: _amount, from: _from, response_destination: _response_destination, forward_ton_amount: _forward_ton_amount, forward_payload: _forward_payload };
-}
 
-function storeTupleTokenTransferInternal(source: TokenTransferInternal) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeNumber(source.amount);
-    builder.writeAddress(source.from);
-    builder.writeAddress(source.response_destination);
-    builder.writeNumber(source.forward_ton_amount);
-    builder.writeSlice(source.forward_payload);
-    return builder.build();
-}
 
-function dictValueParserTokenTransferInternal(): DictionaryValue<TokenTransferInternal> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeTokenTransferInternal(src)).endCell());
-        },
-        parse: (src) => {
-            return loadTokenTransferInternal(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type TokenNotification = {
     $$type: 'TokenNotification';
@@ -473,33 +288,8 @@ export function loadTokenNotification(slice: Slice) {
     return { $$type: 'TokenNotification' as const, queryId: _queryId, amount: _amount, from: _from, forward_payload: _forward_payload };
 }
 
-function loadTupleTokenNotification(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _amount = source.readBigNumber();
-    let _from = source.readAddress();
-    let _forward_payload = source.readCell();
-    return { $$type: 'TokenNotification' as const, queryId: _queryId, amount: _amount, from: _from, forward_payload: _forward_payload };
-}
 
-function storeTupleTokenNotification(source: TokenNotification) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeNumber(source.amount);
-    builder.writeAddress(source.from);
-    builder.writeSlice(source.forward_payload);
-    return builder.build();
-}
 
-function dictValueParserTokenNotification(): DictionaryValue<TokenNotification> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeTokenNotification(src)).endCell());
-        },
-        parse: (src) => {
-            return loadTokenNotification(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type TokenBurn = {
     $$type: 'TokenBurn';
@@ -530,33 +320,8 @@ export function loadTokenBurn(slice: Slice) {
     return { $$type: 'TokenBurn' as const, queryId: _queryId, amount: _amount, owner: _owner, response_destination: _response_destination };
 }
 
-function loadTupleTokenBurn(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _amount = source.readBigNumber();
-    let _owner = source.readAddress();
-    let _response_destination = source.readAddress();
-    return { $$type: 'TokenBurn' as const, queryId: _queryId, amount: _amount, owner: _owner, response_destination: _response_destination };
-}
 
-function storeTupleTokenBurn(source: TokenBurn) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeNumber(source.amount);
-    builder.writeAddress(source.owner);
-    builder.writeAddress(source.response_destination);
-    return builder.build();
-}
 
-function dictValueParserTokenBurn(): DictionaryValue<TokenBurn> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeTokenBurn(src)).endCell());
-        },
-        parse: (src) => {
-            return loadTokenBurn(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type TokenBurnNotification = {
     $$type: 'TokenBurnNotification';
@@ -587,33 +352,8 @@ export function loadTokenBurnNotification(slice: Slice) {
     return { $$type: 'TokenBurnNotification' as const, queryId: _queryId, amount: _amount, owner: _owner, response_destination: _response_destination };
 }
 
-function loadTupleTokenBurnNotification(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _amount = source.readBigNumber();
-    let _owner = source.readAddress();
-    let _response_destination = source.readAddressOpt();
-    return { $$type: 'TokenBurnNotification' as const, queryId: _queryId, amount: _amount, owner: _owner, response_destination: _response_destination };
-}
 
-function storeTupleTokenBurnNotification(source: TokenBurnNotification) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeNumber(source.amount);
-    builder.writeAddress(source.owner);
-    builder.writeAddress(source.response_destination);
-    return builder.build();
-}
 
-function dictValueParserTokenBurnNotification(): DictionaryValue<TokenBurnNotification> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeTokenBurnNotification(src)).endCell());
-        },
-        parse: (src) => {
-            return loadTokenBurnNotification(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type TokenExcesses = {
     $$type: 'TokenExcesses';
@@ -635,27 +375,8 @@ export function loadTokenExcesses(slice: Slice) {
     return { $$type: 'TokenExcesses' as const, queryId: _queryId };
 }
 
-function loadTupleTokenExcesses(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    return { $$type: 'TokenExcesses' as const, queryId: _queryId };
-}
 
-function storeTupleTokenExcesses(source: TokenExcesses) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    return builder.build();
-}
 
-function dictValueParserTokenExcesses(): DictionaryValue<TokenExcesses> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeTokenExcesses(src)).endCell());
-        },
-        parse: (src) => {
-            return loadTokenExcesses(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type TokenUpdateContent = {
     $$type: 'TokenUpdateContent';
@@ -677,27 +398,8 @@ export function loadTokenUpdateContent(slice: Slice) {
     return { $$type: 'TokenUpdateContent' as const, content: _content };
 }
 
-function loadTupleTokenUpdateContent(source: TupleReader) {
-    let _content = source.readCell();
-    return { $$type: 'TokenUpdateContent' as const, content: _content };
-}
 
-function storeTupleTokenUpdateContent(source: TokenUpdateContent) {
-    let builder = new TupleBuilder();
-    builder.writeCell(source.content);
-    return builder.build();
-}
 
-function dictValueParserTokenUpdateContent(): DictionaryValue<TokenUpdateContent> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeTokenUpdateContent(src)).endCell());
-        },
-        parse: (src) => {
-            return loadTokenUpdateContent(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type Deploy = {
     $$type: 'Deploy';
@@ -719,27 +421,8 @@ export function loadDeploy(slice: Slice) {
     return { $$type: 'Deploy' as const, queryId: _queryId };
 }
 
-function loadTupleDeploy(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    return { $$type: 'Deploy' as const, queryId: _queryId };
-}
 
-function storeTupleDeploy(source: Deploy) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    return builder.build();
-}
 
-function dictValueParserDeploy(): DictionaryValue<Deploy> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeDeploy(src)).endCell());
-        },
-        parse: (src) => {
-            return loadDeploy(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type DeployOk = {
     $$type: 'DeployOk';
@@ -761,27 +444,8 @@ export function loadDeployOk(slice: Slice) {
     return { $$type: 'DeployOk' as const, queryId: _queryId };
 }
 
-function loadTupleDeployOk(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    return { $$type: 'DeployOk' as const, queryId: _queryId };
-}
 
-function storeTupleDeployOk(source: DeployOk) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    return builder.build();
-}
 
-function dictValueParserDeployOk(): DictionaryValue<DeployOk> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeDeployOk(src)).endCell());
-        },
-        parse: (src) => {
-            return loadDeployOk(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type FactoryDeploy = {
     $$type: 'FactoryDeploy';
@@ -806,29 +470,8 @@ export function loadFactoryDeploy(slice: Slice) {
     return { $$type: 'FactoryDeploy' as const, queryId: _queryId, cashback: _cashback };
 }
 
-function loadTupleFactoryDeploy(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _cashback = source.readAddress();
-    return { $$type: 'FactoryDeploy' as const, queryId: _queryId, cashback: _cashback };
-}
 
-function storeTupleFactoryDeploy(source: FactoryDeploy) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeAddress(source.cashback);
-    return builder.build();
-}
 
-function dictValueParserFactoryDeploy(): DictionaryValue<FactoryDeploy> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeFactoryDeploy(src)).endCell());
-        },
-        parse: (src) => {
-            return loadFactoryDeploy(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type ChangeOwner = {
     $$type: 'ChangeOwner';
@@ -853,29 +496,8 @@ export function loadChangeOwner(slice: Slice) {
     return { $$type: 'ChangeOwner' as const, queryId: _queryId, newOwner: _newOwner };
 }
 
-function loadTupleChangeOwner(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _newOwner = source.readAddress();
-    return { $$type: 'ChangeOwner' as const, queryId: _queryId, newOwner: _newOwner };
-}
 
-function storeTupleChangeOwner(source: ChangeOwner) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeAddress(source.newOwner);
-    return builder.build();
-}
 
-function dictValueParserChangeOwner(): DictionaryValue<ChangeOwner> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeChangeOwner(src)).endCell());
-        },
-        parse: (src) => {
-            return loadChangeOwner(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type ChangeOwnerOk = {
     $$type: 'ChangeOwnerOk';
@@ -900,29 +522,8 @@ export function loadChangeOwnerOk(slice: Slice) {
     return { $$type: 'ChangeOwnerOk' as const, queryId: _queryId, newOwner: _newOwner };
 }
 
-function loadTupleChangeOwnerOk(source: TupleReader) {
-    let _queryId = source.readBigNumber();
-    let _newOwner = source.readAddress();
-    return { $$type: 'ChangeOwnerOk' as const, queryId: _queryId, newOwner: _newOwner };
-}
 
-function storeTupleChangeOwnerOk(source: ChangeOwnerOk) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.queryId);
-    builder.writeAddress(source.newOwner);
-    return builder.build();
-}
 
-function dictValueParserChangeOwnerOk(): DictionaryValue<ChangeOwnerOk> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeChangeOwnerOk(src)).endCell());
-        },
-        parse: (src) => {
-            return loadChangeOwnerOk(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type Mint = {
     $$type: 'Mint';
@@ -947,29 +548,8 @@ export function loadMint(slice: Slice) {
     return { $$type: 'Mint' as const, amount: _amount, receiver: _receiver };
 }
 
-function loadTupleMint(source: TupleReader) {
-    let _amount = source.readBigNumber();
-    let _receiver = source.readAddress();
-    return { $$type: 'Mint' as const, amount: _amount, receiver: _receiver };
-}
 
-function storeTupleMint(source: Mint) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.amount);
-    builder.writeAddress(source.receiver);
-    return builder.build();
-}
 
-function dictValueParserMint(): DictionaryValue<Mint> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeMint(src)).endCell());
-        },
-        parse: (src) => {
-            return loadMint(src.loadRef().beginParse());
-        }
-    }
-}
 
 export type MintPublic = {
     $$type: 'MintPublic';
@@ -991,27 +571,8 @@ export function loadMintPublic(slice: Slice) {
     return { $$type: 'MintPublic' as const, amount: _amount };
 }
 
-function loadTupleMintPublic(source: TupleReader) {
-    let _amount = source.readBigNumber();
-    return { $$type: 'MintPublic' as const, amount: _amount };
-}
 
-function storeTupleMintPublic(source: MintPublic) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.amount);
-    return builder.build();
-}
 
-function dictValueParserMintPublic(): DictionaryValue<MintPublic> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeMintPublic(src)).endCell());
-        },
-        parse: (src) => {
-            return loadMintPublic(src.loadRef().beginParse());
-        }
-    }
-}
 
  type MaritonToken_init_args = {
     $$type: 'MaritonToken_init_args';

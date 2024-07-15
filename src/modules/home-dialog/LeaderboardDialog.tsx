@@ -57,8 +57,8 @@ export default function LeaderboardDialog() {
                 return (
                   <div key={index} className="pb-3">
                     <BaseCard
-                      avatar={item.telegramAvatar ?? boostLogo}
-                      title={item.telegramName ?? "user"}
+                      avatar={(item as any).telegramAvatar ?? boostLogo}
+                      title={(item as any).telegramName ?? "user"}
                       description={description}
                       onClick={() => {}}
                     ></BaseCard>
