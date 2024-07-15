@@ -56,14 +56,14 @@ import { useState } from "react";
 // }
 export default function WalletPage() {
   const { miningStore } = useDispatch<Dispatch>();
-  const { mining } = useSelector((s: RootState) => s.miningStore);
+  const { account } = useSelector((s: RootState) => s.accountStore);
   const { claimMRT, tonBalance, mrtBalance } = useMaritonToken();
   const nav = useNavigate();
   const claimTokenToTonWallet = async () => {
     console.log("claimTokenToTonWallet");
 
     const signature = await miningStore.signSignature({
-      amount: mrtInGame,
+      amount: Number(mrtInGame),
     });
     const buffer = Buffer.from(signature.signature, "hex");
     const signatureCell = beginCell().storeBuffer(buffer).endCell();
@@ -75,12 +75,12 @@ export default function WalletPage() {
       signature: signatureCell,
     };
     const res = await claimMRT(buildMessage);
-    if(res) setMrtInGame(undefined);
+    if (res) setMrtInGame(undefined);
     return res;
   };
-  const [ton, setTon] = useState<number>();
-  const [mrt, setMrt] = useState<number>();
-  const [mrtInGame, setMrtInGame] = useState<number>();
+  const [ton, setTon] = useState<string | number>();
+  const [mrt, setMrt] = useState<string | number>();
+  const [mrtInGame, setMrtInGame] = useState<string | number>();
   return (
     <HomeLayout hideNavbar>
       <div className="h-full flex">
@@ -100,7 +100,7 @@ export default function WalletPage() {
                 name="ton"
                 value={ton}
                 onChange={(event) => {
-                  setTon(Number(event.target.value));
+                  setTon(event.target.value);
                 }}
               />
               <BaseButton
@@ -125,7 +125,7 @@ export default function WalletPage() {
                 name="mrt"
                 value={mrt}
                 onChange={(event) => {
-                  setMrt(Number(event.target.value));
+                  setMrt(event.target.value);
                 }}
               />
 
@@ -155,14 +155,14 @@ export default function WalletPage() {
                 type="number"
                 value={mrtInGame}
                 onChange={(event) => {
-                  setMrtInGame(Number(event.target.value));
+                  setMrtInGame(event.target.value);
                 }}
               />
 
               <BaseButton
                 className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
                 onClick={() => {
-                  setMrtInGame(Number(mining.totalMinedTokens));
+                  setMrtInGame(account.mrtTokens);
                 }}
               >
                 <span className="text-sm pt-0.5">Max</span>

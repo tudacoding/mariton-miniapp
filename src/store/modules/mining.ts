@@ -104,10 +104,12 @@ const miningStore = createModel<RootModel>()({
         async signSignature({ amount }, rootState) {
             const { account } = rootState.accountStore
             const res = await MiningRepository.signSignature({ wallet: account.wallet, tokens: amount })
-            dispatch.accountStore.setTokensWallet({
-                mrtTokens: res.account.mrtTokens,
-            })
-            return res
+            if (res) {
+                dispatch.accountStore.setTokensWallet({
+                    mrtTokens: res.account.mrtTokens,
+                })
+                return res
+            }
         },
         async getLeaderboard() {
             const res = await MiningRepository.getLeaderboard()
