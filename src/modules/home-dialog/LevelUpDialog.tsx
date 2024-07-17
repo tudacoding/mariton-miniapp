@@ -75,14 +75,18 @@ export default function LevelUpDialog() {
   const { levelUpMining } = useDispatch<Dispatch>().miningStore;
   const [selectedType, setSelectedType] = useState<LevelUpType>("MRT");
   const handleUpdate = async () => {
-    const mining = await levelUpMining({
+    const res = await levelUpMining({
       type: selectedType,
     });
-    if (mining) {
+    if (res.id) {
       toast.success("Upgraded successfully!");
       handleDialog({
         isVisible: false,
       });
+    } else if (res.data.type === "NOT_ENOUGH_MRT") {
+      console.log("Not enough MRT");
+    } else if (res.data.type === "NOT_ENOUGH_TON") {
+      console.log("Not enough TON");
     }
   };
   const isTonUpdated = useMemo(() => {

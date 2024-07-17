@@ -4,6 +4,7 @@ import MiningRepository from "@/api/repository/minning";
 import { IFriend, ILeaderboard, IMining, LevelUpType } from "@/types/models/mining";
 import FriendRepository from "@/api/repository/friend";
 import { get } from "lodash-es";
+import BoostRepository from "@/api/repository/boost";
 interface State {
     mining: IMining,
     sending: boolean;
@@ -45,8 +46,10 @@ const miningStore = createModel<RootModel>()({
             const res = await MiningRepository.startMining({
                 account: id,
             })
-            dispatch.miningStore.setMining(res)
-            return res
+            if (res.id) {
+                dispatch.miningStore.setMining(res)
+                return res
+            }
         },
         async claimTokens(_, rootState) {
             const { setMining, setSending } = dispatch.miningStore
@@ -79,7 +82,7 @@ const miningStore = createModel<RootModel>()({
                 const res = await MiningRepository.levelUpMining(mining.id, {
                     type
                 })
-                dispatch.miningStore.setMining(res)
+                if (res.id) dispatch.miningStore.setMining(res)
                 return res
             }
         },
@@ -104,7 +107,7 @@ const miningStore = createModel<RootModel>()({
         async signSignature({ amount }, rootState) {
             const { account } = rootState.accountStore
             const res = await MiningRepository.signSignature({ wallet: account.wallet, tokens: amount })
-            if (res) {
+            if (res.id) {
                 dispatch.accountStore.setTokensWallet({
                     mrtTokens: res.account.mrtTokens,
                 })
@@ -114,6 +117,24 @@ const miningStore = createModel<RootModel>()({
         async getLeaderboard() {
             const res = await MiningRepository.getLeaderboard()
             dispatch.miningStore.setLeaderboard(res)
+        },
+        boostDaily: async ({ userId, type }: { userId: number, type: 'CHECKIN' | 'JUNIOR_RICH' | 'UPDATE_TWITTER' }) => {
+            let res;
+            switch (type) {
+                case 'CHECKIN':
+                    res = await BoostRepository.dailyCheckIn(userId);
+                    break;
+                case 'JUNIOR_RICH':
+                    res = await BoostRepository.juniorRichMariton(userId);
+                    break;
+                case 'UPDATE_TWITTER':
+                    res = await BoostRepository.updateTwitter(userId);
+                    break;
+            }
+            if (res.id) {
+                dispatch.miningStore.setMining(res)
+                return res
+            }
         }
 
     })

@@ -5,24 +5,47 @@ import BaseCard from "@/components/BaseCard";
 import BaseButton from "@/components/BaseButton";
 import background from "@/assets/air/background-body-short.png";
 import { twMerge } from "tailwind-merge";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
+import { toast } from "react-toastify";
 
 export default function Boost() {
+  const { miningStore } = useDispatch<Dispatch>();
+  const { account } = useSelector((s: RootState) => s.accountStore);
   const checkinBoosts = [
     {
       description: "Boost +10% speed for 12h",
       title: "Daily Check in",
-      onClick: () => {},
+      onClick: async (userId: number) => {
+        const res = await miningStore.boostDaily({
+          userId,
+          type: "CHECKIN",
+        });
+        if (res) toast.success("Boost +10% speed for 12h");
+      },
     },
     {
       description:
         "Minimum 01 TON balance in your Wallet to get 20% bonus speed for 24h",
-      onClick: () => {},
+      onClick: async (userId: number) => {
+        const res = await miningStore.boostDaily({
+          userId,
+          type: "JUNIOR_RICH",
+        });
+        if (res) toast.success("Boost +20% speed for 24h");
+      },
       title: "Junior Rich Mariton",
     },
     {
       description: "Boost +10% speed for 8h",
       title: "Mariton Ambassador",
-      onClick: () => {},
+      onClick: async (userId: number) => {
+        const res = await miningStore.boostDaily({
+          userId,
+          type: "UPDATE_TWITTER",
+        });
+        if (res) toast.success("Boost +10% speed for 8h");
+      },
     },
   ];
   const oneTimeBoosts = [
@@ -66,7 +89,9 @@ export default function Boost() {
                     avatar={boostLogo}
                     title={title}
                     description={description}
-                    onClick={onClick}
+                    onClick={() => {
+                      if (account.id) onClick(account.id);
+                    }}
                     actionComponent={
                       <BaseButton className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold">
                         Next

@@ -22,7 +22,7 @@ export default function InvitePage() {
   const [tab, setTab] = useState<"achievenment" | "friends">("achievenment");
   const { mining, countFriends } = useSelector((s: RootState) => s.miningStore);
   const { account } = useSelector((s: RootState) => s.accountStore);
-  const ref = mining ? `${config.botTele}invite_${account.telegramUserId}` : "";
+  const ref = mining ? `${config.botTele}invite_${account?.telegramUserId}` : "";
   const [copy] = useCopy(ref);
   const { claimRefTokens, getFriends } = useDispatch<Dispatch>().miningStore;
   const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
