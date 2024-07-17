@@ -30,7 +30,7 @@ export default function Boost() {
       onClick: async (userId: number) => {
         const res = await miningStore.boostDaily({
           userId,
-          type: "JUNIOR_RICH",
+          type: "JUNIOR_RICH_MARITON",
         });
         if (res) toast.success("Boost +20% speed for 24h");
       },

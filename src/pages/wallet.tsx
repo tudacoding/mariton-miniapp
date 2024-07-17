@@ -13,7 +13,9 @@ import { useNavigate } from "react-router-dom";
 import HomeLayout from "@/modules/home/Layout";
 import BaseInput from "@/components/BaseInput";
 import { useState } from "react";
-import { useTonConnectUI } from "@tonconnect/ui-react";
+import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
+import { JettonMaster } from "@ton/ton";
+import { useTonClient } from "@/hooks/useTonClient";
 const DEPOSIT_WALLET = "0QAszBVzU37ZyRzA0I5Dn-RZoY6qg2FtGWN4Q356vsR_3jX_";
 const addressMrt = "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp";
 // function CardToken({ title, ton = 0.0, mrt = 0.0 }: any) {
@@ -58,11 +60,13 @@ const addressMrt = "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp";
 // }
 export default function WalletPage() {
   const [tonConnectUI] = useTonConnectUI();
-  const { miningStore } = useDispatch<Dispatch>();
+  const { miningStore, accountStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const [ton, setTon] = useState<string | number>();
   const [mrt, setMrt] = useState<string | number>();
   const [mrtInGame, setMrtInGame] = useState<string | number>();
+  const wallet = useTonWallet();
+  const client = useTonClient();
 
   const { claimMRT, tonBalance, mrtBalance } = useMaritonToken();
   const nav = useNavigate();
@@ -85,10 +89,15 @@ export default function WalletPage() {
     if (res) setMrtInGame(undefined);
     return res;
   };
-  const depositTokenTon = async (transactionId: string) => {
+  const depositTokenTon = async () => {
+    const res = await accountStore.createTransaction({
+      type: "TON",
+      amount: Number(toNano(Number(ton))),
+    });
+    if (!res) return;
     const bodyTon = beginCell()
       .storeUint(0, 32)
-      .storeStringTail(transactionId)
+      .storeStringTail(res.transactionId)
       .endCell();
 
     try {
@@ -107,29 +116,42 @@ export default function WalletPage() {
       console.log(error);
     }
   };
-  const depositTokenMrt = async (transactionId: string) => {
+  const depositTokenMrt = async () => {
+    if (!wallet || !client) return;
+    const res = await accountStore.createTransaction({
+      type: "MRT",
+      amount: Number(toNano(Number(mrt))),
+    });
+    if (!res) return;
     const forwardPayload = beginCell()
       .storeUint(0, 32)
-      .storeStringTail(transactionId)
+      .storeStringTail(res.transactionId)
       .endCell();
     const body = beginCell()
       .storeUint(0xf8a7ea5, 32)
       .storeUint(0, 64)
       .storeCoins(toNano(Number(mrt)))
       .storeAddress(Address.parse(DEPOSIT_WALLET))
-      .storeAddress(Address.parse(DEPOSIT_WALLET))
+      .storeAddress(Address.parse(wallet.account.address))
       .storeBit(0)
-      .storeCoins(toNano(0.05))
+      .storeCoins(toNano("0.01"))
       .storeBit(1)
       .storeRef(forwardPayload)
       .endCell();
+
+    let jettonMasterCustom = client.open(
+      JettonMaster.create(Address.parse(addressMrt))
+    );
+    let jettonWalletMRT = await jettonMasterCustom.getWalletAddress(
+      Address.parse(wallet.account.address)
+    );
     try {
       const response = await tonConnectUI.sendTransaction({
         validUntil: Math.floor(Date.now() / 1000) + 600,
         messages: [
           {
-            address: addressMrt,
-            amount: toNano(Number(0.05)).toString(),
+            address: jettonWalletMRT.toString(),
+            amount: toNano(Number(0.1)).toString(),
             payload: body.toBoc().toString("base64"),
           },
         ],
@@ -173,7 +195,7 @@ export default function WalletPage() {
               <BaseButton
                 className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
                 onClick={() => {
-                  depositTokenTon("b1ae397c-0d5f-4236-baf4-675b98f0d813");
+                  depositTokenTon();
                 }}
               >
                 <span className="text-sm pt-0.5">Deposit</span>
@@ -201,7 +223,7 @@ export default function WalletPage() {
               <BaseButton
                 className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
                 onClick={() => {
-                  depositTokenMrt("b1ae397c-0d5f-4236-baf4-675b98f0d812");
+                  depositTokenMrt();
                 }}
               >
                 <span className="text-sm pt-0.5">Deposit</span>

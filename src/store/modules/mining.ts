@@ -118,19 +118,8 @@ const miningStore = createModel<RootModel>()({
             const res = await MiningRepository.getLeaderboard()
             dispatch.miningStore.setLeaderboard(res)
         },
-        boostDaily: async ({ userId, type }: { userId: number, type: 'CHECKIN' | 'JUNIOR_RICH' | 'UPDATE_TWITTER' }) => {
-            let res;
-            switch (type) {
-                case 'CHECKIN':
-                    res = await BoostRepository.dailyCheckIn(userId);
-                    break;
-                case 'JUNIOR_RICH':
-                    res = await BoostRepository.juniorRichMariton(userId);
-                    break;
-                case 'UPDATE_TWITTER':
-                    res = await BoostRepository.updateTwitter(userId);
-                    break;
-            }
+        boostDaily: async ({ userId, type }: { userId: number, type: 'CHECKIN' | 'JUNIOR_RICH_MARITON' | 'UPDATE_TWITTER' }) => {
+            let res = await BoostRepository.boostCheckIn(userId, type)
             if (res.id) {
                 dispatch.miningStore.setMining(res)
                 return res

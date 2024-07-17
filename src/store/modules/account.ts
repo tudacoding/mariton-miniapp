@@ -6,6 +6,7 @@ import type { RootModel } from "..";
 import Account, { ITokensWallet } from "@/types/models/account";
 import SpinRepository from "@/api/repository/spin";
 import { get } from "lodash-es";
+import DepositRepository from "@/api/repository/deposit";
 
 interface State {
   account: Account;
@@ -103,6 +104,18 @@ const accountStore = createModel<RootModel>()({
       dispatch.accountStore.setCountRef(get(res, "meta.pagination.total"));
       return get(res, "meta.pagination.total");
     },
+    async createTransaction({ type, amount }, rootState) {
+      const account = rootState.accountStore.account;
+      if (account.id) {
+        const res = await DepositRepository.createTransaction({
+          wallet: account.wallet,
+          publicKey: account.publicKey,
+          type,
+          amount
+        });
+        if (res.id) return res
+      }
+    }
   }),
 });
 export default accountStore;
