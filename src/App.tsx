@@ -8,7 +8,6 @@ import { Provider } from "react-redux";
 import BaseDialog from "./components/BaseDialog";
 import useInitApp from "./hooks/useInitApp";
 import SplashPopup from "./components/SplashPopup";
-import HomeLayout from "./modules/home/Layout";
 
 const pages = import.meta.glob("./pages/*.tsx", { eager: true });
 
