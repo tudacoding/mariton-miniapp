@@ -1,6 +1,6 @@
 import closeButton from "@/assets/game/close-button.png";
 import BaseDivider from "@/components/BaseDivider";
-import boostBody from "@/assets/air/air-body.png";
+import boostBody from "@/assets/air/background-body.png";
 import BaseButton from "@/components/BaseButton";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";

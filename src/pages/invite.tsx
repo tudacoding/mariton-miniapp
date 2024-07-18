@@ -1,12 +1,11 @@
 import HomeLayout from "@/modules/home/Layout";
-import coinPng from "@/assets/air/mariton-tk-ico.png";
-import copySvg from "@/assets/icons/copy.svg";
+// import coinPng from "@/assets/air/mariton-tk-ico.png";
 import BaseButton from "@/components/BaseButton";
 import { useEffect, useState } from "react";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
 import BaseDivider from "@/components/BaseDivider";
 import claimTokenGif from "@/assets/level-up/claim-token.gif";
-import background from "@/assets/air/background-body-short.png";
+import background from "@/assets/air/short-background-body.png";
 import config from "@/config";
 import { twMerge } from "tailwind-merge";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,17 +15,21 @@ import useCopy from "@/hooks/useCopy";
 import ListAchievenments from "@/modules/invite/ListAchievenments";
 import { useTonWallet } from "@tonconnect/ui-react";
 import ListFriend from "@/modules/invite/ListFriends";
+import Copy from "@/assets/icons/Copy";
+import MaritonToken from "@/assets/icons/MaritonToken";
 
 export default function InvitePage() {
   const wallet = useTonWallet();
   const [tab, setTab] = useState<"achievenment" | "friends">("achievenment");
   const { mining, countFriends } = useSelector((s: RootState) => s.miningStore);
   const { account } = useSelector((s: RootState) => s.accountStore);
-  const ref = mining ? `${config.botTele}invite_${account?.telegramUserId}` : "";
+  const ref = mining
+    ? `${config.botTele}invite_${account?.telegramUserId}`
+    : "";
   const [copy] = useCopy(ref);
   const { claimRefTokens, getFriends } = useDispatch<Dispatch>().miningStore;
   const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
-  
+
   const handleClaimToken = () => {
     handleDialog({
       isVisible: true,
@@ -47,20 +50,13 @@ export default function InvitePage() {
     <HomeLayout>
       <div className="h-full flex">
         <div className="relative grow">
-          {/* <div className="w-full h-full absolute z-[-10]">
-            <BackgroundAirdrop />
-          </div> */}
           <img
             className="w-full h-full absolute z-[-10]"
             src={background}
             alt="bg-mission-body"
           />
           <div
-            className={twMerge(
-              "w-full h-full px-6 flex flex-col",
-              // "pb-[30px] pt-[86px]",
-              "pb-5 pt-3"
-            )}
+            className={twMerge("w-full h-full px-6 flex flex-col", "pb-5 pt-3")}
           >
             <BaseTitleDivider className="pt-1">Link invite</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
@@ -68,13 +64,13 @@ export default function InvitePage() {
                 <p className="line-clamp-1 text-sm">{ref}</p>
               </div>
               <BaseButton
-                className="flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
+                className=" flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
                 onClick={() => {
                   copy();
                   toast.success("Copy link successfully!");
                 }}
               >
-                <img src={copySvg} alt="React Logo" />
+                <Copy />
                 <span className="text-sm pt-0.5">Copy</span>
               </BaseButton>
             </div>
@@ -83,11 +79,7 @@ export default function InvitePage() {
                 <span className="text-2xl text-t-button font-bold leading-none">
                   {(mining?.friendClaimTokens ?? 0).toFixed(6)}
                 </span>
-                <img
-                  src={coinPng}
-                  alt="bg-mission-body"
-                  className="object-contain"
-                />
+                <MaritonToken />
               </div>
               <div className="flex items-center">
                 <BaseButton

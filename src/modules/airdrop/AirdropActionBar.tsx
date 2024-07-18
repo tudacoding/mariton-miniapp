@@ -1,5 +1,6 @@
-import walletButton from "@/assets/game/wallet-button.png";
-import backButton from "@/assets/game/back-button-appbar.png";
+// import backButton from "@/assets/game/back-button-appbar.png";
+import mrtTokenBar from "@/assets/images/mrt-token-bar.png";
+import tonTokenBar from "@/assets/images/ton-token-bar.png";
 import BaseImage from "@/components/BaseImage";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -11,20 +12,42 @@ const AirdropActionBar = ({ className = "" }: { className?: string }) => {
 
   return (
     <div
-      className={`top-0 z-20 font-bold flex justify-between py-2` + className}
+      className={
+        `top-0 z-20 font-bold flex justify-between py-2 gap-8` + className
+      }
     >
-      <div className="flex justify-start items-center">
-        <BaseImage width={"80%"} src={backButton} alt="add-button" path="/" />
-      </div>
       <div
-        className="flex items-center justify-end relative"
+        className="relative w-fit"
         onClick={() => {
-          nav("/wallet");
+          nav("/wallet-ton");
         }}
       >
-        <BaseImage width={"80%"} src={walletButton} alt="wallet-button" />
-        <div className="absolute w-4/5 px-3">
-          <span>{(tokensWallet?.mrtTokens ?? 0).toFixed(3)}</span>
+        <BaseImage
+          className="w-[150px] h-auto"
+          src={tonTokenBar}
+          alt="mrt-token-bar"
+        />
+        <div className="absolute w-full h-full top-0 py-[10px] pl-[50px]">
+          <span className="text-t-title">
+            {(tokensWallet?.tonTokens ?? 0).toFixed(3)}
+          </span>
+        </div>
+      </div>
+      <div
+        className="relative w-fit"
+        onClick={() => {
+          nav("/wallet-mrt");
+        }}
+      >
+        <BaseImage
+          className="w-[150px] h-auto"
+          src={mrtTokenBar}
+          alt="mrt-token-bar"
+        />
+        <div className="absolute w-full h-full top-0 py-[10px] pl-[50px]">
+          <span className="text-t-title">
+            {(tokensWallet?.mrtTokens ?? 0).toFixed(3)}
+          </span>
         </div>
       </div>
     </div>

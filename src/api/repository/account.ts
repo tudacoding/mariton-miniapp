@@ -12,6 +12,10 @@ interface IProps {
 }
 
 const AccountRepository = {
+  getAccount: async ({ id }: any) => {
+    const res = await axios.get(`${config.apiUrl}/accounts/${id}`);
+    return res.data || {};
+  },
   getFirstRegister: async ({ address, publicKey, telegramAvatar, telegramUserId, telegramName }: IProps) => {
     const res = await axios.post(`${config.apiUrl}/game/first-register`, {
       address,

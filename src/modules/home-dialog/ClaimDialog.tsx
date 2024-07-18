@@ -1,6 +1,6 @@
-import backgroundDialog from "@/assets/level-up/background-dialog.png";
+import backgroundDialog from "@/assets/air/short-background-body.png";
 import levelUp from "@/assets/level-up/GIFT-claim.gif";
-import coinPng from "@/assets/air/mariton-tk-ico.png";
+// import coinPng from "@/assets/air/mariton-tk-ico.png";
 import closeButton from "@/assets/game/close-button.png";
 import upgradeButton from "@/assets/game/upgrade-button.png";
 import BaseDivider from "@/components/BaseDivider";
@@ -8,6 +8,7 @@ import BaseProgress from "@/components/BaseProgress";
 import BaseButton from "@/components/BaseButton";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
+import MaritonToken from "@/assets/icons/MaritonToken";
 
 export default function ClaimDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
@@ -24,9 +25,9 @@ export default function ClaimDialog() {
           CLAIM
         </p>
         <div className="py-4 flex w-full justify-center">
-          <img src={levelUp} alt="" className="" width={'70%'} />
+          <img src={levelUp} alt="" className="" width={"70%"} />
         </div>
-        <BaseDivider className="!h-[1px]"/>
+        <BaseDivider className="!h-[1px]" />
         <div className="pt-6 text-t-title text-base text-center">
           <p className=" font-bold">Storage Capacity</p>
           <div className="py-3">
@@ -34,7 +35,8 @@ export default function ClaimDialog() {
           </div>
           <p className="flex flex-row justify-center gap-1">
             <span className="font-bold text-2xl text-t-button">0.131256</span>
-            <img src={coinPng} alt="" className="object-contain" />
+            <MaritonToken />
+            {/* <img src={coinPng} alt="" className="object-contain" /> */}
           </p>
         </div>
         <div className="h-[60px]"></div>

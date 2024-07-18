@@ -42,7 +42,7 @@ export function useMaritonToken() {
       if (!tokenContract) return;
       if (!claimContract) return;
       if (loaded) return;
-      toast.loading("loading info 🥚🥚..");
+      // toast.loading("loading info 🥚🥚..");
       //Check MRT token:
       try {
         const tonBalance = await client.getBalance(wallet);

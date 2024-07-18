@@ -1,7 +1,5 @@
-import backgroundDialog from "@/assets/level-up/background-dialog.png";
+import backgroundDialog from "@/assets/air/short-background-body.png";
 import levelUp from "@/assets/level-up/GIFT-level.gif";
-import mrtPng from "@/assets/air/mariton-tk-ico.png";
-import tonPng from "@/assets/game/lottery-item/ton.png";
 import closeButton from "@/assets/game/close-button.png";
 import upgradeButton from "@/assets/game/upgrade-button.png";
 import BaseDivider from "@/components/BaseDivider";
@@ -12,6 +10,8 @@ import { toast } from "react-toastify";
 import { useMemo, useState } from "react";
 import { IMining, LevelUpType } from "@/types/models/mining";
 import { twMerge } from "tailwind-merge";
+import MaritonToken from "@/assets/icons/MaritonToken";
+import TonToken from "@/assets/icons/TonToken";
 function InforAfterLevelUp({
   mining,
   type,
@@ -47,18 +47,13 @@ function InforAfterLevelUp({
         </>
       ) : (
         <>
-          <p className="flex flex-row justify-center gap-1">
+          <div className="flex flex-row justify-center gap-1 items-center">
             <span className="pr-1">Cost</span>
             <span className="font-bold text-t-button">
               {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
             </span>
-            <img
-              src={isTon ? tonPng : mrtPng}
-              alt=""
-              width={20}
-              className="object-contain"
-            />
-          </p>
+            {!isTon ? <MaritonToken /> : <TonToken />}
+          </div>
           <p>
             <span>New speed: </span>
             <span className="font-bold">{newSpeed.toFixed(3)} </span>

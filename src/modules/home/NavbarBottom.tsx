@@ -1,10 +1,11 @@
-import newsButton from "@/assets/game/news-button.png";
-import homeButton from "@/assets/game/home-button.png";
-import faqButton from "@/assets/game/faq-button.png";
+import newsButton from "@/assets/images/bottom-bar/news-button.png";
+import homeButton from "@/assets/images/bottom-bar/air-home.png";
+import faqButton from "@/assets/images/bottom-bar/faq-button.png";
 import BaseImage from "@/components/BaseImage";
 import config from "@/config";
+import { twMerge } from "tailwind-merge";
 
-const Navbar = () => {
+const HomeNavbar = () => {
   const routers = [
     {
       title: "News",
@@ -26,7 +27,7 @@ const Navbar = () => {
     },
   ];
   return (
-    <div className="w-full font-bold text-center items-end p-4 flex justify-between absolute bottom-0 left-1/2 transform -translate-x-1/2">
+    <div className="w-full font-bold text-center items-end p-4 absolute bottom-0 left-1/2 transform -translate-x-1/2 grid grid-cols-3 gap-2">
       {routers.map((item, index) => {
         return (
           <div
@@ -34,7 +35,11 @@ const Navbar = () => {
             className="flex flex-col items-center opacity-1"
             onClick={item.onClick}
           >
-            <BaseImage width={"50%"} src={item.image} alt={item.alt} />
+            <BaseImage
+              src={item.image}
+              alt={item.alt}
+              className={twMerge("w-1/2", index === 1 && "w-[55%] py-1")}
+            />
             <div className={"text-t-blur"}>{item.title}</div>
           </div>
         );
@@ -43,4 +48,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default HomeNavbar;

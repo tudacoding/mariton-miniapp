@@ -3,19 +3,23 @@ import boostLogo from "@/assets/air/air-logo-friend.png";
 import Success from "@/assets/icons/Success";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import Loading from "@/assets/icons/Loading";
 
 export default function ListAchievenments() {
+  const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
   const { mining } = useSelector((state: RootState) => state.miningStore);
   const { completeMissionFriend } = useDispatch<Dispatch>().miningStore;
   const level = mining?.speedLevel?.missionFriendsLevel ?? 0;
   const completeMission = async (levelUpgrade: number) => {
     if (level >= levelUpgrade) return;
+    setLoadingButtonId(levelUpgrade - 1);
     const res = await completeMissionFriend({
       id: mining.id,
       data: { levelUpgrade },
     });
+    setLoadingButtonId(null);
     if (res) toast.success("Mission completed");
   };
   const achievenments = useMemo(() => {
@@ -82,7 +86,9 @@ export default function ListAchievenments() {
               description={description}
               onClick={onClick}
               actionComponent={
-                selected ? (
+                loadingButtonId === index ? (
+                  <Loading className="text-primary w-6 h-6"/>
+                ) : selected ? (
                   <div className="h-6 w-6">
                     <Success />
                   </div>

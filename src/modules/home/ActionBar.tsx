@@ -1,4 +1,3 @@
-import walletButton from "@/assets/game/wallet-button.png";
 import backButton from "@/assets/game/back-button-appbar.png";
 import BaseImage from "@/components/BaseImage";
 import { TonConnectButton } from "@tonconnect/ui-react";
@@ -14,7 +13,7 @@ const ActionBar = () => {
         ) : (
           <BaseImage
             width={"80%"}
-            src={walletButton}
+            src={''}
             alt="wallet-button"
             path="/inventory"
           />

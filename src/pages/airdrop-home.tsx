@@ -1,5 +1,5 @@
 import HomeLayout from "@/modules/home/Layout";
-import background from "@/assets/air/background-body-short.png";
+import background from "@/assets/air/short-background-body.png";
 import claimTokenGif from "@/assets/level-up/claim-token.gif";
 import mainBanner from "@/assets/air/background-homefix.gif";
 import { useDispatch } from "react-redux";
@@ -67,7 +67,9 @@ export default function AirDopHome() {
                 Leaderboard
               </BaseButton>
               <BaseButton
-                className={"text-lg font-bold !text-t-button !bg-card"}
+                className={
+                  "text-lg font-bold !text-t-button bg-card active:bg-primary"
+                }
                 onClick={handleClaimToken}
               >
                 Claim

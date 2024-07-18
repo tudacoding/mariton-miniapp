@@ -10,7 +10,7 @@ export default function interceptorSetup() {
         (response) => response,
         (error) => {
             const isErrorCustom = error?.response?.data?.error
-            toast.error(error?.response?.data?.error?.message || error?.response?.data?.message || "Something went wrong");
+            toast.error(error?.response?.data?.error?.message || error?.response?.data?.error || error?.response?.data?.message || "Something went wrong");
             return isErrorCustom ? {
                 data: {
                     ...error?.response?.data?.error

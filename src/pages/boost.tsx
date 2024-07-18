@@ -3,13 +3,16 @@ import HomeLayout from "@/modules/home/Layout";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
 import BaseCard from "@/components/BaseCard";
 import BaseButton from "@/components/BaseButton";
-import background from "@/assets/air/background-body-short.png";
+import background from "@/assets/air/short-background-body.png";
 import { twMerge } from "tailwind-merge";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { toast } from "react-toastify";
+import Loading from "@/assets/icons/Loading";
+import { useState } from "react";
 
 export default function Boost() {
+  const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const checkinBoosts = [
@@ -21,6 +24,7 @@ export default function Boost() {
           userId,
           type: "CHECKIN",
         });
+        setLoadingButtonId(null);
         if (res) toast.success("Boost +10% speed for 12h");
       },
     },
@@ -89,13 +93,21 @@ export default function Boost() {
                     avatar={boostLogo}
                     title={title}
                     description={description}
-                    onClick={() => {
-                      if (account.id) onClick(account.id);
+                    onClick={async () => {
+                      if (account.id) {
+                        setLoadingButtonId(index);
+                        await onClick(account.id);
+                        setLoadingButtonId(null);
+                      }
                     }}
                     actionComponent={
-                      <BaseButton className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold">
-                        Next
-                      </BaseButton>
+                      loadingButtonId === index ? (
+                        <Loading className="text-primary w-6 h-6 mx-3"/>
+                      ) : (
+                        <BaseButton className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold">
+                          Next
+                        </BaseButton>
+                      )
                     }
                   ></BaseCard>
                 </div>

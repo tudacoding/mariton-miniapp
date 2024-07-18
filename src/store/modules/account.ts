@@ -7,6 +7,7 @@ import Account, { ITokensWallet } from "@/types/models/account";
 import SpinRepository from "@/api/repository/spin";
 import { get } from "lodash-es";
 import DepositRepository from "@/api/repository/deposit";
+import { toast } from "react-toastify";
 
 interface State {
   account: Account;
@@ -106,7 +107,7 @@ const accountStore = createModel<RootModel>()({
     },
     async createTransaction({ type, amount }, rootState) {
       const account = rootState.accountStore.account;
-      if (account.id) {
+      if (account?.id) {
         const res = await DepositRepository.createTransaction({
           wallet: account.wallet,
           publicKey: account.publicKey,
@@ -115,6 +116,28 @@ const accountStore = createModel<RootModel>()({
         });
         if (res.id) return res
       }
+    },
+    async getStatusTransaction({ id }, rootState) {
+      const account = rootState.accountStore.account;
+      if (account?.id) {
+        const accountId = account?.id
+        const interval = setInterval(async () => {
+          const res = await DepositRepository.getStatusTransaction(id);
+          if (res && res.data.attributes?.status === 'success') {
+            const account = await AccountRepository.getAccount({ id: accountId });
+            if (account) {
+              dispatch.accountStore.setAccount(account.data?.attributes);
+              dispatch.accountStore.setTokensWallet({
+                tonTokens: account.data?.attributes.tonTokens,
+                mrtTokens: account.data?.attributes.mrtTokens,
+              })
+            }
+            clearInterval(interval);
+            toast.success('Successful transaction!');
+          }
+        }, 5000)
+      }
+
     }
   }),
 });

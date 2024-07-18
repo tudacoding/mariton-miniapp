@@ -1,8 +1,9 @@
 import BaseImage from "@/components/BaseImage";
-import homeButton from "@/assets/air/air-home.png";
-import boostButton from "@/assets/air/air-boost.png";
-import inviteButton from "@/assets/air/air-invite.png";
-import comingButton from "@/assets/air/air-coming.png";
+import homeButton from "@/assets/images/bottom-bar/air-home.png";
+import boostButton from "@/assets/images/bottom-bar/air-boost.png";
+import inviteButton from "@/assets/images/bottom-bar/air-invite.png";
+import comingButton from "@/assets/images/bottom-bar/air-coming.png";
+import miningButton from "@/assets/images/bottom-bar/air-mining.png";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AirNavbar = () => {
@@ -15,9 +16,15 @@ const AirNavbar = () => {
   const routers = [
     {
       title: "Home",
-      link: "/airdrop-home",
+      link: "/",
       image: homeButton,
       alt: "home-button",
+    },
+    {
+      title: "Mining",
+      link: "/airdrop-home",
+      image: miningButton,
+      alt: "mining",
     },
     {
       title: "Boost",
@@ -39,7 +46,7 @@ const AirNavbar = () => {
     },
   ];
   return (
-    <div className="w-full font-bold text-center pb-2 pt-3 flex justify-between z-[1000]">
+    <div className="w-full font-bold text-center pb-2 pt-3 grid grid-cols-5">
       {routers.map((item, index) => {
         return (
           <div
