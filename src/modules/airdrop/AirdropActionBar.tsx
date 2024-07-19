@@ -17,7 +17,7 @@ const AirdropActionBar = ({ className = "" }: { className?: string }) => {
       }
     >
       <div
-        className="relative w-fit"
+        className="relative w-fit cursor-pointer"
         onClick={() => {
           nav("/wallet-ton");
         }}
@@ -34,7 +34,7 @@ const AirdropActionBar = ({ className = "" }: { className?: string }) => {
         </div>
       </div>
       <div
-        className="relative w-fit"
+        className="relative w-fit cursor-pointer"
         onClick={() => {
           nav("/wallet-mrt");
         }}

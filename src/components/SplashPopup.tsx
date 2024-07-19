@@ -7,9 +7,9 @@ export default function SplashPopup() {
   return (
     <dialog
       id="splash_dialog"
-      className={twMerge("modal bg-[#0006]", classDialog)}
+      className={twMerge("modal bg-[#0006] border-none", classDialog)}
     >
-      <img className="w-screen h-screen" src={splashImg}></img>
+      <img className="w-screen h-screen max-w-[400px]" src={splashImg}></img>
     </dialog>
   );
 }

@@ -60,7 +60,7 @@ export default function InvitePage() {
           >
             <BaseTitleDivider className="pt-1">Link invite</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
-              <div className="py-2 px-4 text-t-description bg-card rounded-xl grow">
+              <div className="py-2 px-4 text-t-description bg-card rounded-xl grow max-w-[200px]">
                 <p className="line-clamp-1 text-sm">{ref}</p>
               </div>
               <BaseButton
