@@ -29,3 +29,12 @@ export interface ITokensWallet {
   mrtTokens?: number;
   totalMrtTokensClaimed?: number;
 }
+
+export interface IBoost {
+  createdAt: string;
+  updatedAt: string;
+  type?: any;
+  bonusSpeed?: number;
+  isActive?: any;
+  account: number;
+}

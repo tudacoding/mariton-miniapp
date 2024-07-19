@@ -12,15 +12,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { toast } from "react-toastify";
 import useCopy from "@/hooks/useCopy";
-import ListAchievenments from "@/modules/invite/ListAchievenments";
 import { useTonWallet } from "@tonconnect/ui-react";
 import ListFriend from "@/modules/invite/ListFriends";
 import Copy from "@/assets/icons/Copy";
 import MaritonToken from "@/assets/icons/MaritonToken";
+import ListAchievements from "@/modules/invite/ListAchievenments";
 
 export default function InvitePage() {
   const wallet = useTonWallet();
-  const [tab, setTab] = useState<"achievenment" | "friends">("achievenment");
+  const [tab, setTab] = useState<"achievement" | "friends">("achievement");
   const { mining, countFriends } = useSelector((s: RootState) => s.miningStore);
   const { account } = useSelector((s: RootState) => s.accountStore);
   const ref = mining
@@ -99,13 +99,13 @@ export default function InvitePage() {
               <BaseButton
                 className={twMerge(
                   "text-lg font-bold line-clamp-1 py-2 pb-1",
-                  tab === "achievenment"
+                  tab === "achievement"
                     ? "text-t-button"
                     : "bg-card text-t-description"
                 )}
-                onClick={() => setTab("achievenment")}
+                onClick={() => setTab("achievement")}
               >
-                Achievenment
+                Achievement
               </BaseButton>
               <BaseButton
                 className={twMerge(
@@ -120,7 +120,7 @@ export default function InvitePage() {
               </BaseButton>
             </div>
             <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset]">
-              {tab === "friends" ? <ListFriend /> : <ListAchievenments />}
+              {tab === "friends" ? <ListFriend /> : <ListAchievements />}
             </div>
           </div>
         </div>

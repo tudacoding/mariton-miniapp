@@ -9,21 +9,23 @@ import { Dispatch, RootState } from "@/store/store";
 import { toast } from "react-toastify";
 import Loading from "@/assets/icons/Loading";
 import { useState } from "react";
+import Success from "@/assets/icons/Success";
 
 export default function Boost() {
   const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
+  const { boosts } = useSelector((s: RootState) => s.miningStore);
   const checkinBoosts = [
     {
       description: "Boost +10% speed for 12h",
       title: "Daily Check in",
+      type: "CHECKIN",
       onClick: async (userId: number) => {
         const res = await miningStore.boostDaily({
           userId,
           type: "CHECKIN",
         });
-        setLoadingButtonId(null);
         if (res) toast.success("Boost +10% speed for 12h");
       },
     },
@@ -38,6 +40,7 @@ export default function Boost() {
         if (res) toast.success("Boost +20% speed for 24h");
       },
       title: "Junior Rich Mariton",
+      TYPE: "JUNIOR_RICH_MARITON",
     },
     {
       description: "Boost +10% speed for 8h",
@@ -49,6 +52,7 @@ export default function Boost() {
         });
         if (res) toast.success("Boost +10% speed for 8h");
       },
+      type: "UPDATE_TWITTER",
     },
   ];
   const oneTimeBoosts = [
@@ -69,9 +73,6 @@ export default function Boost() {
     <HomeLayout>
       <div className="h-full flex">
         <div className="relative grow flex">
-          {/* <div className="w-full h-full absolute z-[-10]">
-            <BackgroundAirdrop />
-          </div> */}
           <img
             className="w-full h-full absolute z-[-10]"
             src={background}
@@ -80,37 +81,41 @@ export default function Boost() {
           <div
             className={twMerge(
               "grow overflow-auto px-6",
-              // " mt-[86px]  mb-[30px]"
               "mb-5 mt-4"
             )}
           >
             <BaseTitleDivider className="pt-0">Daily Misson</BaseTitleDivider>
-            {checkinBoosts.map(({ title, description, onClick }, index) => {
-              return (
-                <div key={index} className="pb-3">
-                  <BaseCard
-                    title={title}
-                    description={description}
-                    onClick={async () => {
-                      if (account.id) {
-                        setLoadingButtonId(index);
-                        await onClick(account.id);
-                        setLoadingButtonId(null);
+            {checkinBoosts.map(
+              ({ title, description, onClick, type }, index) => {
+                const isActive = boosts.find((b) => b.type === type);
+                return (
+                  <div key={index} className="pb-3">
+                    <BaseCard
+                      title={title}
+                      description={description}
+                      onClick={async () => {
+                        if (!isActive && account.id) {
+                          setLoadingButtonId(index);
+                          await onClick(account.id);
+                          setLoadingButtonId(null);
+                        }
+                      }}
+                      actionComponent={
+                        isActive ? (
+                          <Success className="h-6 w-6 mx-3" />
+                        ) : loadingButtonId === index ? (
+                          <Loading className="text-primary w-6 h-6" />
+                        ) : (
+                          <BaseButton className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold">
+                            Next
+                          </BaseButton>
+                        )
                       }
-                    }}
-                    actionComponent={
-                      loadingButtonId === index ? (
-                        <Loading className="text-primary w-6 h-6 mx-3"/>
-                      ) : (
-                        <BaseButton className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold">
-                          Next
-                        </BaseButton>
-                      )
-                    }
-                  ></BaseCard>
-                </div>
-              );
-            })}
+                    ></BaseCard>
+                  </div>
+                );
+              }
+            )}
             <BaseTitleDivider className="pt-1">
               One-time Misson
             </BaseTitleDivider>

@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "@/assets/icons/Loading";
 
-export default function ListAchievenments() {
+export default function ListAchievements() {
   const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
   const { mining } = useSelector((state: RootState) => state.miningStore);
   const { completeMissionFriend } = useDispatch<Dispatch>().miningStore;
@@ -21,7 +21,7 @@ export default function ListAchievenments() {
     setLoadingButtonId(null);
     if (res) toast.success("Mission completed");
   };
-  const achievenments = useMemo(() => {
+  const achievements = useMemo(() => {
     return [
       {
         title: "1 Friend",
@@ -76,7 +76,7 @@ export default function ListAchievenments() {
   }, [level]);
   return (
     <div>
-      {achievenments.map(({ description, onClick, title, selected }, index) => {
+      {achievements.map(({ description, onClick, title, selected }, index) => {
         return (
           <div key={index} className="pb-3">
             <BaseCard

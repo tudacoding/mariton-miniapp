@@ -5,10 +5,15 @@ import { useSelector } from "react-redux";
 
 export default function useAutomationMining() {
     let interval: NodeJS.Timeout;
-    const { mining, sending } = useSelector((s: RootState) => s.miningStore);
+    const { mining, sending, boosts } = useSelector((s: RootState) => s.miningStore);
     const { speedLevel, claimTime, endMiningTime, minedTokens, lastBoostTime } = mining ?? {}
     const { speed = 0 } = speedLevel ?? {}
     const [countTime, setCountTime] = useState(0)
+    const currentSpeed = useMemo(() => {
+        return speed + boosts?.reduce((acc, boost) => {
+            return acc + (boost.bonusSpeed ?? 0)
+        }, 0)
+    }, [boosts, speed])
     const resetMining = () => {
         setCountTime(0)
     }
@@ -30,7 +35,7 @@ export default function useAutomationMining() {
         const countEndTime = countStopMining ? new Date().getTime() : new Date(endMiningTime).getTime();
 
         const elapsedTimeInSeconds = Math.floor((countEndTime > countStartTime ? countEndTime - countStartTime : 0) / 1000);
-        const earnedTokens = elapsedTimeInSeconds * (speed / 3600);
+        const earnedTokens = elapsedTimeInSeconds * (currentSpeed / 3600);
         setCountTime(0)
         return earnedTokens + minedTokens;
     }, [claimTime, minedTokens])
@@ -47,6 +52,6 @@ export default function useAutomationMining() {
         }
     }, [countTime, claimTime, countStopMining]);
 
-    const amount = (sending ? 0 : (currentAmount + (countTime / 1000) * (speed / 3600))).toFixed(6)
+    const amount = (sending ? 0 : (currentAmount + (countTime / 1000) * (currentSpeed / 3600))).toFixed(6)
     return { amount, resetMining, clearIntervalMining }
 }

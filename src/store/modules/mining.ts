@@ -5,6 +5,7 @@ import { IFriend, ILeaderboard, IMining, LevelUpType } from "@/types/models/mini
 import FriendRepository from "@/api/repository/friend";
 import { get } from "lodash-es";
 import BoostRepository from "@/api/repository/boost";
+import { IBoost } from "@/types/models/account";
 interface State {
     mining: IMining,
     sending: boolean;
@@ -14,7 +15,7 @@ interface State {
     }[];
     countFriends: number;
     leaderboard: ILeaderboard;
-    boosts: []
+    boosts: IBoost[];
 }
 const miningStore = createModel<RootModel>()({
     state: {
@@ -25,7 +26,7 @@ const miningStore = createModel<RootModel>()({
         }[],
         sending: false,
         countFriends: 0,
-        boosts: []
+        boosts: [] as IBoost[],
     } as State,
     reducers: {
         setMining(state, mining) {
@@ -129,14 +130,13 @@ const miningStore = createModel<RootModel>()({
             let res = await BoostRepository.boostCheckIn(userId, type)
             if (res.id) {
                 dispatch.miningStore.setMining(res)
+                dispatch.miningStore.fetchBoosts(userId)
                 return res
             }
         },
         fetchBoosts: async (account: number) => {
-            if(!account) return;
-            const res = await BoostRepository.fetchBoosts(account);
-            console.log(res);
-
+            if (!account) return;
+            const res = await BoostRepository.fetchActiveBoosts(account);
             dispatch.miningStore.setListBoosts(res)
             return res;
         }
