@@ -95,7 +95,7 @@ export default function WalletPage() {
     <HomeLayout hideBottom>
       <div className="relative h-fix">
         <BackgroundWallet />
-        <div className="px-5 pt-24 pb-14 flex flex-col gap-6">
+        <div className="px-4 pt-24 pb-14 flex flex-col gap-6">
           <FormCard
             title="MRT Deposit"
             type="MRT"
@@ -105,7 +105,7 @@ export default function WalletPage() {
             }}
           />
           <FormCard
-            title="Claim MRT"
+            title="Withdraw MRT"
             type="CLAIM_MRT"
             maxValue={account.mrtTokens}
             onSubmit={(value: number) => {

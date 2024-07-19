@@ -19,6 +19,7 @@ export default function FormCard({
   maxValue: number;
 }) {
   const [value, setValue] = useState<number | string>(0);
+  const numberValue = Number(value ?? 0);
   return (
     <div className="p-4  rounded-2xl bg-light">
       <div className="flex flex-row justify-center items-center gap-2">
@@ -37,7 +38,7 @@ export default function FormCard({
           <BaseAction>
             <Minus
               onClick={() => {
-                if (Number(value) > 0) setValue(Number(value ?? 0) - 1);
+                if (numberValue > 0) setValue(numberValue - 1);
               }}
             />
           </BaseAction>
@@ -46,7 +47,7 @@ export default function FormCard({
               className="bg-primary rounded-2xl py-1 pl-2 pr-10 w-[120px] text-white"
               value={value}
               onChange={(event) => {
-                const newValue = event.target.value.replace(/[^\d.]/g, '');
+                const newValue = event.target.value.replace(/[^\d.]/g, "");
                 setValue(newValue);
               }}
             />
@@ -60,13 +61,15 @@ export default function FormCard({
             </BaseAction>
           </div>
           <BaseAction>
-            <Plus onClick={() => setValue(Number(value ?? 0) + 1)} />
+            <Plus onClick={() => setValue(numberValue + 1)} />
           </BaseAction>
         </div>
         <BaseButton
+          disabled={numberValue === 0}
           onClick={() => {
-            onSubmit(Number(value));
+            if (numberValue) onSubmit(numberValue);
           }}
+          className="w-[80px] px-1"
         >
           {type === "CLAIM_MRT" ? "Withdraw" : "Deposit"}
         </BaseButton>
