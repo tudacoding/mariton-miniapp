@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { Dispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
 import { useMaritonToken } from "@/hooks/useMaritonToken";
 import { Address, beginCell, toNano } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
@@ -20,10 +20,11 @@ const addressMrt = "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp";
 export default function WalletPage() {
   const [tonConnectUI] = useTonConnectUI();
   const { miningStore, accountStore } = useDispatch<Dispatch>();
+  const { account } = useSelector((s: RootState) => s.accountStore);
   const wallet = useTonWallet();
   const client = useTonClient();
 
-  const { claimMRT } = useMaritonToken();
+  const { claimMRT, mrtBalance } = useMaritonToken();
   const nav = useNavigate();
   const claimTokenToTonWallet = async (token: number) => {
     console.log("claimTokenToTonWallet");
@@ -98,6 +99,7 @@ export default function WalletPage() {
           <FormCard
             title="MRT Deposit"
             type="MRT"
+            maxValue={mrtBalance}
             onSubmit={(value: number) => {
               return depositTokenMrt(value);
             }}
@@ -105,6 +107,7 @@ export default function WalletPage() {
           <FormCard
             title="Claim MRT"
             type="CLAIM_MRT"
+            maxValue={account.mrtTokens}
             onSubmit={(value: number) => {
               return claimTokenToTonWallet(value);
             }}
@@ -113,7 +116,7 @@ export default function WalletPage() {
         <div className="absolute bottom-[-30px] w-full flex justify-center">
           <BaseAction
             onClick={() => {
-              nav('/');
+              nav("/");
             }}
           >
             <img src={closeButton} />

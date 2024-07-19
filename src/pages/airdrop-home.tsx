@@ -9,7 +9,8 @@ import LeaderboardDialog from "@/modules/home-dialog/LeaderboardDialog";
 import BaseButton from "@/components/BaseButton";
 import { useStartMining } from "@/hooks/useStartMining";
 import MiningTokenCount from "@/modules/airdrop/MiningTokenCount";
-import useEndMining from "@/hooks/useEndMining";
+// import useEndMining from "@/hooks/useEndMining";
+import { useNavigate } from "react-router-dom";
 
 export default function AirDopHome() {
   const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
@@ -33,8 +34,8 @@ export default function AirDopHome() {
     }, 1500);
     await claimTokens({});
   };
-
-  useEndMining();
+  const nav = useNavigate();
+  // useEndMining();
   return (
     <HomeLayout>
       <div className="h-full flex flex-col">
@@ -82,7 +83,13 @@ export default function AirDopHome() {
                   onClick={() => {
                     handleDialog({
                       isVisible: true,
-                      children: <LevelUpDialog />,
+                      children: (
+                        <LevelUpDialog
+                          navigateWallet={(address: string) => {
+                            nav(address);
+                          }}
+                        />
+                      ),
                       classWrapperDialog:
                         "p-0 !overflow-visible pb-6 max-w-[330px]",
                     });

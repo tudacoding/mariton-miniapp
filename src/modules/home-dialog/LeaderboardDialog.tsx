@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { useState } from "react";
 import BaseCard from "@/components/BaseCard";
-import boostLogo from "@/assets/air/air-logo-friend.png";
 
 export default function LeaderboardDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
@@ -51,13 +50,12 @@ export default function LeaderboardDialog() {
               (item, index) => {
                 const description =
                   tab === "mint"
-                    ? `${item.totalFriends} ref`
-                    : `${item.totalTokens} mint`;
+                    ? `${item.totalRefs} ref`
+                    : `${(item.totalMrtTokensClaimed).toFixed(3)} mint`;
 
                 return (
                   <div key={index} className="pb-3">
                     <BaseCard
-                      avatar={(item as any).telegramAvatar ?? boostLogo}
                       title={(item as any).telegramName ?? "user"}
                       description={description}
                       onClick={() => {}}

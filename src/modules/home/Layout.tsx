@@ -17,9 +17,8 @@ export default function HomeLayout({
   hideTop = false,
 }: IHomeLayout) {
   const location = useLocation();
-
   return (
-    <div className="h-screen w-screen overflow-hidden">
+    <div className="h-screen w-full mx-auto flex flex-col items-center justify-start relative">
       {location?.pathname === "/" && (
         <div className="absolute inset-0 z-[-100]">
           <img

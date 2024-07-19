@@ -14,6 +14,7 @@ interface State {
     }[];
     countFriends: number;
     leaderboard: ILeaderboard;
+    boosts: []
 }
 const miningStore = createModel<RootModel>()({
     state: {
@@ -23,7 +24,8 @@ const miningStore = createModel<RootModel>()({
             attributes: IFriend;
         }[],
         sending: false,
-        countFriends: 0
+        countFriends: 0,
+        boosts: []
     } as State,
     reducers: {
         setMining(state, mining) {
@@ -40,6 +42,11 @@ const miningStore = createModel<RootModel>()({
                 ...state, leaderboard
             }
         },
+        setListBoosts(state, boosts) {
+            return {
+                ...state, boosts
+            }
+        }
     },
     effects: (dispatch) => ({
         async startMining({ id }) {
@@ -124,6 +131,14 @@ const miningStore = createModel<RootModel>()({
                 dispatch.miningStore.setMining(res)
                 return res
             }
+        },
+        fetchBoosts: async (account: number) => {
+            if(!account) return;
+            const res = await BoostRepository.fetchBoosts(account);
+            console.log(res);
+
+            dispatch.miningStore.setListBoosts(res)
+            return res;
         }
 
     })

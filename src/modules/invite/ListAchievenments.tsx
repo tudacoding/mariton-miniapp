@@ -1,5 +1,4 @@
 import BaseCard from "@/components/BaseCard";
-import boostLogo from "@/assets/air/air-logo-friend.png";
 import Success from "@/assets/icons/Success";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
@@ -81,7 +80,6 @@ export default function ListAchievenments() {
         return (
           <div key={index} className="pb-3">
             <BaseCard
-              avatar={boostLogo}
               title={title}
               description={description}
               onClick={onClick}

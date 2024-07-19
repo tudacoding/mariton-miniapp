@@ -8,6 +8,7 @@ import BaseAction from "@/components/BaseAction";
 import closeButton from "@/assets/game/close-button.png";
 import FormCard from "@/modules/wallet/FormCard";
 import BackgroundWallet from "@/modules/wallet/BackgroundWallet";
+import { useMaritonToken } from "@/hooks/useMaritonToken";
 
 const DEPOSIT_WALLET = "0QAszBVzU37ZyRzA0I5Dn-RZoY6qg2FtGWN4Q356vsR_3jX_";
 
@@ -15,6 +16,7 @@ export default function TonWalletPage() {
   const [tonConnectUI] = useTonConnectUI();
   const { accountStore } = useDispatch<Dispatch>();
   const nav = useNavigate();
+  const { tonBalance } = useMaritonToken();
 
   const depositTokenTon = async (token: number) => {
     const res = await accountStore.createTransaction({
@@ -49,8 +51,9 @@ export default function TonWalletPage() {
     <HomeLayout hideBottom>
       <div className="relative h-fix">
         <BackgroundWallet />
-        <div className="px-5 pt-24 pb-14 flex flex-col gap-6">
+        <div className="px-4 pt-24 pb-14 flex flex-col gap-6">
           <FormCard
+            maxValue={tonBalance}
             title="TON Deposit"
             type="TON"
             onSubmit={(value: number) => {

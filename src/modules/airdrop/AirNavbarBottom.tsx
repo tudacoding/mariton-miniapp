@@ -3,7 +3,7 @@ import homeButton from "@/assets/images/bottom-bar/air-home.png";
 import boostButton from "@/assets/images/bottom-bar/air-boost.png";
 import inviteButton from "@/assets/images/bottom-bar/air-invite.png";
 import comingButton from "@/assets/images/bottom-bar/air-coming.png";
-import miningButton from "@/assets/images/bottom-bar/air-mining.png";
+import miningButton from "@/assets/images/bottom-bar/mining.png";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AirNavbar = () => {

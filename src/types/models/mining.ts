@@ -38,6 +38,6 @@ export interface IFriend {
     updatedAt: string;
 }
 export interface ILeaderboard {
-    refs: IMining[],
-    mints: IMining[]
+    refs: Account[],
+    mints: Account[]
 }

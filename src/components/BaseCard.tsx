@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
+import BaseAvatar from "./BaseAvatar";
 
 interface IBaseCard {
   title: string;
@@ -13,7 +14,6 @@ interface IBaseCard {
 export default function BaseCard({
   title,
   description,
-  avatar,
   onClick = () => {},
   actionComponent,
   highlight,
@@ -26,9 +26,10 @@ export default function BaseCard({
       )}
       onClick={onClick}
     >
-      <div className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden">
+      {/* <div className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden">
         <img className="h-full w-full object-cover" alt="" src={avatar} />
-      </div>
+      </div> */}
+      <BaseAvatar name={title} />
       <div className="grow">
         <p className="text-t-title font-bold text-base leading-none pb-1">
           {title}

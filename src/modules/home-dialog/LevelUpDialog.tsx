@@ -12,6 +12,7 @@ import { IMining, LevelUpType } from "@/types/models/mining";
 import { twMerge } from "tailwind-merge";
 import MaritonToken from "@/assets/icons/MaritonToken";
 import TonToken from "@/assets/icons/TonToken";
+import BaseAction from "@/components/BaseAction";
 function InforAfterLevelUp({
   mining,
   type,
@@ -20,6 +21,7 @@ function InforAfterLevelUp({
   mining: IMining;
   type: LevelUpType;
   isTonUpdated: boolean;
+  notEnoughToken?: boolean;
 }) {
   const {
     level = 0,
@@ -30,25 +32,21 @@ function InforAfterLevelUp({
   } = mining?.speedLevel ?? {};
   const isTon = type === "TON";
   const newSpeed = isTon ? speed * 2 : mrtNextSpeedIncreased + speed;
-
   return (
-    <div className="py-6 text-t-title text-base text-center">
+    <div className="text-t-title text-base text-center">
       <p className=" font-bold">
         {isTon
           ? "Speed up with TON"
           : `Update your level to ${Number(level) + 1}`}
       </p>
       {isTon && isTonUpdated ? (
-        <>
-          <p>Increase current speed by 2x with TON</p>
-          <p className="text-red-600">
-            Each level can only upgrade speed once.
-          </p>
-        </>
+        <p className="text-red-600 !text-sm pt-1">
+          Each level can only upgrade speed once.
+        </p>
       ) : (
         <>
           <div className="flex flex-row justify-center gap-1 items-center">
-            <span className="pr-1">Cost</span>
+            <span className="pr-1">Cost:</span>
             <span className="font-bold text-t-button">
               {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
             </span>
@@ -64,11 +62,17 @@ function InforAfterLevelUp({
     </div>
   );
 }
-export default function LevelUpDialog() {
+export default function LevelUpDialog({
+  navigateWallet,
+}: {
+  navigateWallet: (address: string) => void;
+}) {
   const { mining } = useSelector((s: RootState) => s.miningStore);
+  const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
   const { levelUpMining } = useDispatch<Dispatch>().miningStore;
   const [selectedType, setSelectedType] = useState<LevelUpType>("MRT");
+
   const handleUpdate = async () => {
     const res = await levelUpMining({
       type: selectedType,
@@ -78,10 +82,6 @@ export default function LevelUpDialog() {
       handleDialog({
         isVisible: false,
       });
-    } else if (res.data.type === "NOT_ENOUGH_MRT") {
-      console.log("Not enough MRT");
-    } else if (res.data.type === "NOT_ENOUGH_TON") {
-      console.log("Not enough TON");
     }
   };
   const isTonUpdated = useMemo(() => {
@@ -92,6 +92,17 @@ export default function LevelUpDialog() {
     return false;
   }, [mining.speedLevel]);
 
+  const notEnoughToken = useMemo(() => {
+    if (selectedType === "TON") {
+      return (tokensWallet?.tonTokens ?? 0) < mining?.speedLevel?.tonNextCost;
+    }
+    return (tokensWallet?.mrtTokens ?? 0) < mining?.speedLevel?.mrtNextCost;
+  }, [selectedType, tokensWallet, mining.speedLevel]);
+
+  const disableButtonUpgrade = useMemo(() => {
+    if (notEnoughToken) return true;
+    return isTonUpdated && selectedType === "TON";
+  }, [isTonUpdated, selectedType, notEnoughToken]);
   return (
     <div className="h-fix w-fix relative">
       <img
@@ -131,30 +142,48 @@ export default function LevelUpDialog() {
           </BaseButton>
         </div>
         <BaseDivider className="!h-[1px]" />
-        <InforAfterLevelUp
-          mining={mining}
-          type={selectedType}
-          isTonUpdated={isTonUpdated}
-        />
+        <div className="py-6">
+          <InforAfterLevelUp
+            mining={mining}
+            type={selectedType}
+            isTonUpdated={isTonUpdated}
+            notEnoughToken={notEnoughToken}
+          />
+          {notEnoughToken && (
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-red-600 !text-sm">
+                Not enough {selectedType.toUpperCase()} token!
+              </p>
+              <BaseAction
+                onClick={() => {
+                  handleDialog({
+                    isVisible: false,
+                  });
+                  navigateWallet(
+                    selectedType === "MRT" ? "wallet-mrt" : "wallet-ton"
+                  );
+                }}
+                className="underline text-t-title"
+              >
+                Deposit
+              </BaseAction>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="absolute bottom-[-30px] flex flex-row justify-center w-full gap-4">
-        <BaseButton
-          className="!p-0 !bg-transparent"
+      <div className="absolute bottom-[-20px] flex flex-row justify-center w-full gap-6">
+        <BaseAction
           onClick={() =>
             handleDialog({
               isVisible: false,
             })
           }
         >
-          <img src={closeButton} alt="" className="object-contain" />
-        </BaseButton>
-        <BaseButton
-          className="!p-0 !bg-transparent"
-          onClick={handleUpdate}
-          disabled={isTonUpdated && selectedType === "TON"}
-        >
-          <img src={upgradeButton} alt="" className="object-contain" />
-        </BaseButton>
+          <img src={closeButton} alt="" className="object-contain h-[50px]" />
+        </BaseAction>
+        <BaseAction onClick={handleUpdate} disable={disableButtonUpgrade}>
+          <img src={upgradeButton} alt="" className="object-contain h-[50px]" />
+        </BaseAction>
       </div>
     </div>
   );

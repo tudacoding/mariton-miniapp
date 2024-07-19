@@ -1,4 +1,3 @@
-import boostLogo from "@/assets/air/air-logo-friend.png";
 import HomeLayout from "@/modules/home/Layout";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
 import BaseCard from "@/components/BaseCard";
@@ -90,7 +89,6 @@ export default function Boost() {
               return (
                 <div key={index} className="pb-3">
                   <BaseCard
-                    avatar={boostLogo}
                     title={title}
                     description={description}
                     onClick={async () => {
@@ -120,7 +118,6 @@ export default function Boost() {
               return (
                 <div key={index} className="pb-3">
                   <BaseCard
-                    avatar={boostLogo}
                     title="Daily check in"
                     description={description}
                     onClick={onClick}
