@@ -37,7 +37,7 @@ const actionsStore = createModel<RootModel>()({
             return { ...state, isVisibleSplash }
         },
     },
-    effects: (dispatch) => ({
+    effects: () => ({
         async openSplashPopup() {
             const dialog = document.getElementById("splash_dialog") as HTMLDialogElement
             dialog.showModal()
