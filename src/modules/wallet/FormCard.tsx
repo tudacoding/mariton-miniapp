@@ -46,14 +46,10 @@ export default function FormCard({
               className="bg-primary rounded-2xl py-1 pl-2 pr-10 w-[120px] text-white"
               value={value}
               onChange={(event) => {
-                setValue(event.target.value);
+                const newValue = event.target.value.replace(/[^\d.]/g, '');
+                setValue(newValue);
               }}
             />
-            {/* {type === "TON" ? (
-              <TonToken className="absolute top-[0] right-0 m-2 focus:!border-none focus:!shadow-none" />
-            ) : (
-              <MaritonToken className="absolute top-[0] right-0 m-2 focus:!border-none focus:!shadow-none" />
-            )} */}
             <BaseAction
               className="absolute top-0 right-0 text-t-description bg-light rounded-2xl px-1 text-[12px] font-semibold translate-x-[-20%] translate-y-[40%]"
               onClick={() => {
@@ -72,7 +68,7 @@ export default function FormCard({
             onSubmit(Number(value));
           }}
         >
-          {type === "CLAIM_MRT" ? "Claim" : "Deposit"}
+          {type === "CLAIM_MRT" ? "Withdraw" : "Deposit"}
         </BaseButton>
       </div>
     </div>

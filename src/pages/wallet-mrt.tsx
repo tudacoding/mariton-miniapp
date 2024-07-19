@@ -116,7 +116,7 @@ export default function WalletPage() {
         <div className="absolute bottom-[-30px] w-full flex justify-center">
           <BaseAction
             onClick={() => {
-              nav("/");
+              nav("/airdrop-home");
             }}
           >
             <img src={closeButton} />

@@ -1,8 +1,9 @@
 import { PropsWithChildren } from "react";
 import BaseDivider from "./BaseDivider";
 import { twMerge } from "tailwind-merge";
+import React from "react";
 
-export default function BaseTitleDivider({
+export default React.memo(function BaseTitleDivider({
   children,
   className,
 }: PropsWithChildren & { className?: string }) {
@@ -20,4 +21,4 @@ export default function BaseTitleDivider({
       <BaseDivider />
     </div>
   );
-}
+});
