@@ -26,6 +26,7 @@ export default function AirDopHome() {
       isVisible: true,
       children: <img src={claimTokenGif} />,
       classDialog: "h-full !bg-transparent",
+      showBackgroundDialog: false,
     });
     setTimeout(() => {
       closeDialog({

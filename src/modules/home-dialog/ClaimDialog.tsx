@@ -1,4 +1,3 @@
-import backgroundDialog from "@/assets/air/short-background-body.png";
 import levelUp from "@/assets/level-up/GIFT-claim.gif";
 // import coinPng from "@/assets/air/mariton-tk-ico.png";
 import closeButton from "@/assets/game/close-button.png";
@@ -14,12 +13,7 @@ export default function ClaimDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
 
   return (
-    <div className="h-fix w-fix relative">
-      <img
-        src={backgroundDialog}
-        alt=""
-        className="absolute h-full w-full z-[-5]"
-      />
+    <>
       <div className="top-0 p-[30px] w-full">
         <p className="text-t-button text-center font-extrabold text-[24px]">
           CLAIM
@@ -56,6 +50,6 @@ export default function ClaimDialog() {
           <img src={upgradeButton} alt="" className="object-contain" />
         </BaseButton>
       </div>
-    </div>
+    </>
   );
 }

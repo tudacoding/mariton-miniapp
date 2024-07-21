@@ -1,6 +1,5 @@
 import closeButton from "@/assets/game/close-button.png";
 import BaseDivider from "@/components/BaseDivider";
-import boostBody from "@/assets/air/background-body.png";
 import BaseButton from "@/components/BaseButton";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
@@ -13,8 +12,7 @@ export default function LeaderboardDialog() {
   const [tab, setTab] = useState<"ref" | "mint">("ref");
 
   return (
-    <div className="h-full w-full relative">
-      <img src={boostBody} alt="" className="absolute h-full w-full z-[-5]" />
+    <>
       <div className="top-0 p-[20px] w-full">
         <p className="text-t-button text-center font-extrabold text-[24px]">
           LEADERBOARD
@@ -51,7 +49,7 @@ export default function LeaderboardDialog() {
                 const description =
                   tab === "mint"
                     ? `${item.totalRefs} ref`
-                    : `${(item.totalMrtTokensClaimed).toFixed(3)} mint`;
+                    : `${item.totalMrtTokensClaimed.toFixed(3)} mint`;
 
                 return (
                   <div key={index} className="pb-3">
@@ -80,6 +78,6 @@ export default function LeaderboardDialog() {
           <img src={closeButton} alt="" className="object-contain" />
         </BaseButton>
       </div>
-    </div>
+    </>
   );
 }

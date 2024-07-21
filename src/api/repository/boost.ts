@@ -7,7 +7,7 @@ const BoostRepository = {
     },
     fetchActiveBoosts: async (account: number) => {
         const res = await axios.get(`${config.apiUrl}/daily/active-boost/${account}`);
-        return res.data || {};
+        return res.data || [];
     }
 };
 export default BoostRepository;

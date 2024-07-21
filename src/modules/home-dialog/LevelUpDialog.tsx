@@ -1,4 +1,3 @@
-import backgroundDialog from "@/assets/air/short-background-body.png";
 import levelUp from "@/assets/level-up/GIFT-level.gif";
 import closeButton from "@/assets/game/close-button.png";
 import upgradeButton from "@/assets/game/upgrade-button.png";
@@ -104,12 +103,7 @@ export default function LevelUpDialog({
     return isTonUpdated && selectedType === "TON";
   }, [isTonUpdated, selectedType, notEnoughToken]);
   return (
-    <div className="h-fix w-fix relative">
-      <img
-        src={backgroundDialog}
-        alt=""
-        className="absolute h-full w-full z-[-5]"
-      />
+    <>
       <div className="top-0 p-[30px] w-full">
         <p className="text-t-button text-center font-extrabold text-[24px]">
           LEVEL UP
@@ -185,6 +179,6 @@ export default function LevelUpDialog({
           <img src={upgradeButton} alt="" className="object-contain h-[50px]" />
         </BaseAction>
       </div>
-    </div>
+    </>
   );
 }
