@@ -58,7 +58,7 @@ export default function InvitePage() {
           <div
             className={twMerge("w-full h-full px-6 flex flex-col", "pb-5 pt-3")}
           >
-            <BaseTitleDivider className="pt-1">Link invite</BaseTitleDivider>
+            <BaseTitleDivider className="pt-1">Invite Link</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
               <div className="py-2 px-4 text-t-description bg-card rounded-xl grow max-w-[200px]">
                 <p className="line-clamp-1 text-sm">{ref}</p>

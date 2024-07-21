@@ -20,7 +20,7 @@ const HomeNavbar = () => {
       onClick: () => {},
     },
     {
-      title: "Invite",
+      title: "Docs",
       image: faqButton,
       alt: "faq-button",
       onClick: () => window.open(config.faq, "_blank"),

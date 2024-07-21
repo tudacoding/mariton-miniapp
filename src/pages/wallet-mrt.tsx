@@ -13,6 +13,7 @@ import BaseAction from "@/components/BaseAction";
 import closeButton from "@/assets/game/close-button.png";
 import FormCard from "@/modules/wallet/FormCard";
 import BackgroundWallet from "@/modules/wallet/BackgroundWallet";
+import BaseButton from "@/components/BaseButton";
 
 const DEPOSIT_WALLET = "0QAszBVzU37ZyRzA0I5Dn-RZoY6qg2FtGWN4Q356vsR_3jX_";
 const addressMrt = "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp";
@@ -105,13 +106,14 @@ export default function WalletPage() {
             }}
           />
           <FormCard
-            title="Withdraw MRT"
+            title="MRT Withdrawal"
             type="CLAIM_MRT"
-            maxValue={account.mrtTokens}
+            maxValue={account?.mrtTokens}
             onSubmit={(value: number) => {
               return claimTokenToTonWallet(value);
             }}
           />
+          <BaseButton className="mx-6" onClick={()=> nav('/history-claim')}>History claim</BaseButton>
         </div>
         <div className="absolute bottom-[-30px] w-full flex justify-center">
           <BaseAction

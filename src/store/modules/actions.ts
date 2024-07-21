@@ -17,7 +17,7 @@ const actionsStore = createModel<RootModel>()({
         childrenDialog: null,
         classWrapperDialog: '',
         classDialog: '',
-        isVisibleSplash: false,
+        isVisibleSplash: true,
         isVisible: false,
         showBackgroundDialog: true
     } as State,
@@ -26,10 +26,11 @@ const actionsStore = createModel<RootModel>()({
             const dialog = document.getElementById("base_dialog") as HTMLDialogElement
             if (data.isVisible) {
                 dialog?.showModal()
-                const { children, ...rest } = data
+                const { children, showBackgroundDialog, ...rest } = data
                 return {
                     ...state,
                     ...rest,
+                    showBackgroundDialog: showBackgroundDialog ?? true,
                     childrenDialog: data.children ?? null,
                 }
             }
@@ -45,12 +46,14 @@ const actionsStore = createModel<RootModel>()({
             return { ...state, isVisibleSplash }
         },
     },
-    effects: () => ({
-        async openSplashPopup() {
+    effects: (dispatch) => ({
+        async openSplashPopup(_, rootState) {
+            if (rootState.actionsStore.isVisibleSplash === false) return
             const dialog = document.getElementById("splash_dialog") as HTMLDialogElement
             dialog.showModal()
             await delay(2000)
             dialog.close()
+            dispatch.actionsStore.setSplashPopup(false)
         }
     })
 })

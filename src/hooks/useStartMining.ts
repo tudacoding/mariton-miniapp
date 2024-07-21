@@ -14,7 +14,7 @@ export function useStartMining() {
         id: account?.id,
       });
       miningStore.getLeaderboard();
-      // miningStore.fetchBoosts(account?.id)
+      miningStore.fetchBoosts(account?.id)
     }
   }, [account?.id]);
 

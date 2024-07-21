@@ -36,7 +36,7 @@ function InforAfterLevelUp({
       <p className=" font-bold">
         {isTon
           ? "Speed up with TON"
-          : `Update your level to ${Number(level) + 1}`}
+          : `Upgrade your level to ${Number(level) + 1}`}
       </p>
       {isTon && isTonUpdated ? (
         <p className="text-red-600 !text-sm pt-1">

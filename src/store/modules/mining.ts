@@ -130,7 +130,7 @@ const miningStore = createModel<RootModel>()({
             let res = await BoostRepository.boostCheckIn(userId, type)
             if (res.id) {
                 dispatch.miningStore.setMining(res)
-                dispatch.miningStore.fetchBoosts(userId)
+                await dispatch.miningStore.fetchBoosts(userId)
                 return res
             }
         },

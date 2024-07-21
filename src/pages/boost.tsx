@@ -43,7 +43,7 @@ export default function Boost() {
       TYPE: "JUNIOR_RICH_MARITON",
     },
     {
-      description: "Boost +10% speed for 8h",
+      description: "Add '💎 $MRT' to your Twitter name Add @MARITONonTON to your Twitter bio. Boost +10% speed for 8h",
       title: "Mariton Ambassador",
       onClick: async (userId: number) => {
         const res = await miningStore.boostDaily({
@@ -55,20 +55,20 @@ export default function Boost() {
       type: "UPDATE_TWITTER",
     },
   ];
-  const oneTimeBoosts = [
-    {
-      description: "Send h to contact to increase 10% h in 12h",
-      onClick: () => {},
-    },
-    {
-      description: "Check in rich to increase 20% speed in 24h",
-      onClick: () => {},
-    },
-    {
-      description: "Check in TW to increase 20% speed in 8h",
-      onClick: () => {},
-    },
-  ];
+  // const oneTimeBoosts = [
+  //   {
+  //     description: "Send h to contact to increase 10% h in 12h",
+  //     onClick: () => {},
+  //   },
+  //   {
+  //     description: "Check in rich to increase 20% speed in 24h",
+  //     onClick: () => {},
+  //   },
+  //   {
+  //     description: "Check in TW to increase 20% speed in 8h",
+  //     onClick: () => {},
+  //   },
+  // ];
   return (
     <HomeLayout>
       <div className="h-full flex">
@@ -116,10 +116,10 @@ export default function Boost() {
                 );
               }
             )}
-            <BaseTitleDivider className="pt-1">
+            {/* <BaseTitleDivider className="pt-1">
               One-time Misson
-            </BaseTitleDivider>
-            {oneTimeBoosts.map(({ description, onClick }, index) => {
+            </BaseTitleDivider> */}
+            {/* {oneTimeBoosts.map(({ description, onClick }, index) => {
               return (
                 <div key={index} className="pb-3">
                   <BaseCard
@@ -134,7 +134,7 @@ export default function Boost() {
                   ></BaseCard>
                 </div>
               );
-            })}
+            })} */}
           </div>
         </div>
       </div>
