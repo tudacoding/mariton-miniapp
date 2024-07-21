@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import BaseAvatar from "./BaseAvatar";
 
 interface IBaseCard {
-  title: string;
+  title: string | ReactElement;
   description?: string;
   avatar?: string;
   onClick?: () => void;
@@ -18,6 +18,7 @@ export default function BaseCard({
   actionComponent,
   highlight,
 }: IBaseCard) {
+  const isTitleString = typeof title === "string";
   return (
     <div
       className={twMerge(
@@ -29,11 +30,15 @@ export default function BaseCard({
       {/* <div className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden">
         <img className="h-full w-full object-cover" alt="" src={avatar} />
       </div> */}
-      <BaseAvatar name={title} />
+      <BaseAvatar name={isTitleString ? title : ""} />
       <div className="grow">
-        <p className="text-t-title font-bold text-base leading-none pb-1">
-          {title}
-        </p>
+        {isTitleString ? (
+          <p className="text-t-title font-bold text-base leading-none pb-1">
+            {title}
+          </p>
+        ) : (
+          title
+        )}
         <p className="text-t-description font-medium text-xs leading-none">
           {description}
         </p>
