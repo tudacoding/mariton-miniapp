@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { useState } from "react";
 import BaseCard from "@/components/BaseCard";
+import BaseAction from "@/components/BaseAction";
 
 export default function LeaderboardDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
@@ -67,8 +68,7 @@ export default function LeaderboardDialog() {
         <div className="h-[20px]"></div>
       </div>
       <div className="absolute bottom-[-30px] flex flex-row justify-center w-full gap-4">
-        <BaseButton
-          className="!p-0 !bg-transparent"
+        <BaseAction
           onClick={() =>
             handleDialog({
               isVisible: false,
@@ -76,7 +76,7 @@ export default function LeaderboardDialog() {
           }
         >
           <img src={closeButton} alt="" className="object-contain" />
-        </BaseButton>
+        </BaseAction>
       </div>
     </>
   );

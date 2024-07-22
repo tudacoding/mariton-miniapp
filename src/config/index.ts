@@ -1,8 +1,12 @@
 const isTestnet = true;
 
+export const DEPOSIT_WALLET = "0QAszBVzU37ZyRzA0I5Dn-RZoY6qg2FtGWN4Q356vsR_3jX_";
+export const ADDRESS_MRT = "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp";
+export const MRT_ADDRESS = "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp";
+export const CLAIM_ADDRESS = "EQAM3Wpq1IgEEffxq-riW0JU_mee_rIslQb3AWpmimV3aHj5"
 export default {
-  apiUrl: "https://mariton-backend.onrender.com/api",
-  // apiUrl: "http://localhost:1337/api",
+  // apiUrl: "https://mariton-backend.onrender.com/api",
+  apiUrl: "http://localhost:1337/api",
   docs: "https://docs.mariton.xyz",
   faq: "https://docs.mariton.xyz",
   twitter: "https://x.com/Mariton_game",

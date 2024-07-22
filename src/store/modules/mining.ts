@@ -129,7 +129,6 @@ const miningStore = createModel<RootModel>()({
         boostDaily: async ({ userId, type }: { userId: number, type: 'CHECKIN' | 'JUNIOR_RICH_MARITON' | 'UPDATE_TWITTER' }) => {
             let res = await BoostRepository.boostCheckIn(userId, type)
             if (res.id) {
-                dispatch.miningStore.setMining(res)
                 await dispatch.miningStore.fetchBoosts(userId)
                 return res
             }

@@ -16,7 +16,7 @@ export default function BaseButton({
       disabled={disabled}
       className={twMerge(
         "rounded-xl pb-2 px-3 text-t-light leading-none pt-3 font-lalezar",
-        disabled && "bg-b-primary/80 opacity-70",
+        disabled && "bg-b-primary/70 opacity-70",
         !disabled &&
           "bg-b-primary active:opacity-75 duration-100 active:scale-[0.95]",
         className

@@ -40,7 +40,7 @@ export default function Boost() {
         if (res) toast.success("Boost +20% speed for 24h");
       },
       title: "Junior Rich Mariton",
-      TYPE: "JUNIOR_RICH_MARITON",
+      type: "JUNIOR_RICH_MARITON",
     },
     {
       description: "Add '💎 $MRT' to your Twitter name Add @MARITONonTON to your Twitter bio. Boost +10% speed for 8h",

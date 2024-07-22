@@ -154,7 +154,7 @@ export default function LevelUpDialog({
                     isVisible: false,
                   });
                   navigateWallet(
-                    selectedType === "MRT" ? "wallet-mrt" : "wallet-ton"
+                    selectedType === "MRT" ? "/wallet-mrt" : "/wallet-ton"
                   );
                 }}
                 className="underline text-t-title"

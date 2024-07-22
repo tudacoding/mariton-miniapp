@@ -8,6 +8,7 @@ import { useTonAddress } from "@tonconnect/ui-react";
 import { toast } from "react-toastify";
 import { ClaimMRT, ClaimToken } from "../contract/claim";
 import { JettonWallet } from "@ton/ton";
+import { CLAIM_ADDRESS, MRT_ADDRESS } from "@/config";
 
 export function useMaritonToken() {
   const client = useTonClient();
@@ -18,10 +19,10 @@ export function useMaritonToken() {
   const userFriendlyAddress = useTonAddress();
   const wallet = address(userFriendlyAddress);
   const mrtAddress = Address.parse(
-    "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp"
+    MRT_ADDRESS
   );
   const claimAddress = Address.parse(
-    "EQByc9YFB3yeNTcSPo2WF5gvMYDKLsz9Sr2PpkVsoYlz-gyl"
+    CLAIM_ADDRESS
   );
 
   const tokenContract = useAsyncInitialize(async () => {

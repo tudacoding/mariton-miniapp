@@ -84,7 +84,8 @@ export default function InvitePage() {
               <div className="flex items-center">
                 <BaseButton
                   onClick={handleClaimToken}
-                  className="text-t-title font-bold text-xs bg-light rounded-3xl pt-1 pb-0 h-full"
+                  className={twMerge("text-t-title font-bold text-xs bg-light rounded-3xl pt-1 pb-0 h-full", mining?.friendClaimTokens <= 0 && "!opacity-50")}
+                  disabled={mining?.friendClaimTokens <= 0}
                 >
                   Claim
                 </BaseButton>

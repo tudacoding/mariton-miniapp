@@ -1,13 +1,12 @@
 import levelUp from "@/assets/level-up/GIFT-claim.gif";
-// import coinPng from "@/assets/air/mariton-tk-ico.png";
 import closeButton from "@/assets/game/close-button.png";
 import upgradeButton from "@/assets/game/upgrade-button.png";
 import BaseDivider from "@/components/BaseDivider";
 import BaseProgress from "@/components/BaseProgress";
-import BaseButton from "@/components/BaseButton";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@/store/store";
 import MaritonToken from "@/assets/icons/MaritonToken";
+import BaseAction from "@/components/BaseAction";
 
 export default function ClaimDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
@@ -36,8 +35,7 @@ export default function ClaimDialog() {
         <div className="h-[60px]"></div>
       </div>
       <div className="absolute bottom-[-30px] flex flex-row justify-center w-full gap-4">
-        <BaseButton
-          className="!p-0 !bg-transparent"
+        <BaseAction
           onClick={() =>
             handleDialog({
               isVisible: false,
@@ -45,10 +43,10 @@ export default function ClaimDialog() {
           }
         >
           <img src={closeButton} alt="" className="object-contain" />
-        </BaseButton>
-        <BaseButton className="!p-0 !bg-transparent">
+        </BaseAction>
+        <BaseAction>
           <img src={upgradeButton} alt="" className="object-contain" />
-        </BaseButton>
+        </BaseAction>
       </div>
     </>
   );
