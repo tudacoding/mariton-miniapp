@@ -2,11 +2,11 @@ import { MaritonToken, Mint } from "../contract/token";
 import { useTonClient } from "./useTonClient";
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonConnect } from "./useTonConnect";
-import { Address, OpenedContract, address, toNano, fromNano } from "@ton/core";
+import { Address, OpenedContract, address, toNano, fromNano, beginCell } from "@ton/core";
 import { useEffect, useState } from "react";
-import { useTonAddress } from "@tonconnect/ui-react";
+import { useTonAddress, useTonConnectUI } from "@tonconnect/ui-react";
 import { toast } from "react-toastify";
-import { ClaimMRT, ClaimToken } from "../contract/claim";
+import { ClaimMRT, ClaimToken, storeClaimMRT } from "../contract/claim";
 import { JettonWallet } from "@ton/ton";
 import { CLAIM_ADDRESS, MRT_ADDRESS } from "@/config";
 
@@ -16,6 +16,7 @@ export function useMaritonToken() {
   const [MRT, setMRT] = useState<number>(0);
   const [TON, setTON] = useState<number>(0);
   const { sender } = useTonConnect();
+  const [tonConnectUI] = useTonConnectUI();
   const userFriendlyAddress = useTonAddress();
   const wallet = address(userFriendlyAddress);
   const mrtAddress = Address.parse(
@@ -78,13 +79,21 @@ export function useMaritonToken() {
       );
     },
     claimMRT: async (message: ClaimMRT) => {
-      return await claimContract?.send(
-        sender,
-        {
-          value: toNano("0.1"),
-        },
-        message
-      );
+      const response = await tonConnectUI.sendTransaction({
+        validUntil: Math.floor(Date.now() / 1000) + 600,
+        messages: [
+          {
+            address: claimAddress.toString(),
+            amount: toNano(Number(0.1)).toString(),
+            payload: beginCell()
+              .store(storeClaimMRT(message))
+              .endCell()
+              .toBoc()
+              .toString("base64"),
+          },
+        ],
+      });
+      return response
     },
     MintClose: async () => {
       return await tokenContract?.send(

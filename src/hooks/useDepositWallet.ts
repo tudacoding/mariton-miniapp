@@ -26,8 +26,6 @@ export default function useDepositWallet() {
             signature: signatureCell,
         };
         const res = await claimMRT(buildMessage);
-        console.log(res);
-
         return res;
     }
     const claimTokenToTonWallet = async (token: number) => {
