@@ -28,19 +28,10 @@ export default function InvitePage() {
     : "";
   const [copy] = useCopy(ref);
   const { claimRefTokens, getFriends } = useDispatch<Dispatch>().miningStore;
-  const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
+  const { openAnimateAndClose } = useDispatch<Dispatch>().actionsStore;
 
   const handleClaimToken = () => {
-    handleDialog({
-      isVisible: true,
-      children: <img src={claimTokenGif} />,
-      classDialog: "h-full !bg-transparent",
-    });
-    setTimeout(() => {
-      closeDialog({
-        classDialog: "h-full !bg-transparent",
-      });
-    }, 1500);
+    openAnimateAndClose({ children: <img src={claimTokenGif} /> });
     claimRefTokens({});
   };
   useEffect(() => {
@@ -84,7 +75,10 @@ export default function InvitePage() {
               <div className="flex items-center">
                 <BaseButton
                   onClick={handleClaimToken}
-                  className={twMerge("text-t-title font-bold text-xs bg-light rounded-3xl pt-1 pb-0 h-full", mining?.friendClaimTokens <= 0 && "!opacity-50")}
+                  className={twMerge(
+                    "text-t-title font-bold text-xs bg-light rounded-3xl pt-1 pb-0 h-full",
+                    mining?.friendClaimTokens <= 0 && "!opacity-50"
+                  )}
                   disabled={mining?.friendClaimTokens <= 0}
                 >
                   Claim

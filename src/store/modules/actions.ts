@@ -54,6 +54,20 @@ const actionsStore = createModel<RootModel>()({
             await delay(2000)
             dialog.close()
             dispatch.actionsStore.setSplashPopup(false)
+        },
+        async openAnimateAndClose({
+            children
+        }, rootState) {
+            dispatch.actionsStore.handleDialog({
+                isVisible: true,
+                children,
+                classDialog: "h-full bg-transparent",
+                showBackgroundDialog: false,
+            });
+            await delay(1500)
+            dispatch.actionsStore.closeDialog({
+                classDialog: "h-full bg-transparent",
+            });
         }
     })
 })

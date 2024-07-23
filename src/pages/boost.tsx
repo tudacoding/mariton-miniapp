@@ -8,53 +8,64 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { toast } from "react-toastify";
 import Loading from "@/assets/icons/Loading";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Success from "@/assets/icons/Success";
+import CheckInIcon from "@/assets/icons/CheckinIcon";
+import RichJuniorIcon from "@/assets/icons/RichJuniorIcon";
+import MrtAmbasshador from "@/assets/icons/MrtAmbasshador";
 
 export default function Boost() {
   const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const { boosts } = useSelector((s: RootState) => s.miningStore);
-  const checkinBoosts = [
-    {
-      description: "Boost +10% speed for 12h",
-      title: "Daily Check in",
-      type: "CHECKIN",
-      onClick: async (userId: number) => {
-        const res = await miningStore.boostDaily({
-          userId,
-          type: "CHECKIN",
-        });
-        if (res) toast.success("Boost +10% speed for 12h");
+  const checkinBoosts = useMemo(() => {
+    return [
+      {
+        description: "Boost +10% speed for 12h",
+        title: "Daily Check in",
+        type: "CHECKIN",
+        icon: <CheckInIcon />,
+        onClick: async (userId: number) => {
+          console.log(userId);
+          
+          const res = await miningStore.boostDaily({
+            userId,
+            type: "CHECKIN",
+          });
+          if (res) toast.success("Boost +10% speed for 12h");
+        },
       },
-    },
-    {
-      description:
-        "Minimum 01 TON balance in your Wallet to get 20% bonus speed for 24h",
-      onClick: async (userId: number) => {
-        const res = await miningStore.boostDaily({
-          userId,
-          type: "JUNIOR_RICH_MARITON",
-        });
-        if (res) toast.success("Boost +20% speed for 24h");
+      {
+        description:
+          "Boost +20% bonus speed for 24h",
+        onClick: async (userId: number) => {
+          const res = await miningStore.boostDaily({
+            userId,
+            type: "JUNIOR_RICH_MARITON",
+          });
+          if (res) toast.success("Boost +20% speed for 24h");
+        },
+        title: "Junior Rich Mariton",
+        type: "JUNIOR_RICH_MARITON",
+        icon: <RichJuniorIcon />,
       },
-      title: "Junior Rich Mariton",
-      type: "JUNIOR_RICH_MARITON",
-    },
-    {
-      description: "Add '💎 $MRT' to your Twitter name Add @MARITONonTON to your Twitter bio. Boost +10% speed for 8h",
-      title: "Mariton Ambassador",
-      onClick: async (userId: number) => {
-        const res = await miningStore.boostDaily({
-          userId,
-          type: "UPDATE_TWITTER",
-        });
-        if (res) toast.success("Boost +10% speed for 8h");
+      {
+        description:
+          "Boost +10% speed for 8h",
+        title: "Mariton Ambassador",
+        onClick: async (userId: number) => {
+          const res = await miningStore.boostDaily({
+            userId,
+            type: "UPDATE_TWITTER",
+          });
+          if (res) toast.success("Boost +10% speed for 8h");
+        },
+        type: "UPDATE_TWITTER",
+        icon: <MrtAmbasshador />,
       },
-      type: "UPDATE_TWITTER",
-    },
-  ];
+    ];
+  }, []);
   // const oneTimeBoosts = [
   //   {
   //     description: "Send h to contact to increase 10% h in 12h",
@@ -78,15 +89,10 @@ export default function Boost() {
             src={background}
             alt="bg-mission-body"
           />
-          <div
-            className={twMerge(
-              "grow overflow-auto px-6",
-              "mb-5 mt-4"
-            )}
-          >
+          <div className={twMerge("grow overflow-auto px-6", "mb-5 mt-4")}>
             <BaseTitleDivider className="pt-0">Daily Misson</BaseTitleDivider>
             {checkinBoosts.map(
-              ({ title, description, onClick, type }, index) => {
+              ({ title, description, onClick, type, icon }, index) => {
                 const isActive = boosts.find((b) => b.type === type);
                 return (
                   <div key={index} className="pb-3">
@@ -100,6 +106,7 @@ export default function Boost() {
                           setLoadingButtonId(null);
                         }
                       }}
+                      avatar={icon}
                       actionComponent={
                         isActive ? (
                           <Success className="h-6 w-6 mx-3" />

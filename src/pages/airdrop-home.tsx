@@ -9,34 +9,22 @@ import LeaderboardDialog from "@/modules/home-dialog/LeaderboardDialog";
 import BaseButton from "@/components/BaseButton";
 import { useStartMining } from "@/hooks/useStartMining";
 import MiningTokenCount from "@/modules/airdrop/MiningTokenCount";
-// import useEndMining from "@/hooks/useEndMining";
 import { useNavigate } from "react-router-dom";
+import useCurrentSpeed from "@/hooks/useGetCurrentSpeed";
 
 export default function AirDopHome() {
-  const { handleDialog, closeDialog } = useDispatch<Dispatch>().actionsStore;
+  const { handleDialog, openAnimateAndClose } =
+    useDispatch<Dispatch>().actionsStore;
   const { claimTokens } = useDispatch<Dispatch>().miningStore;
   const { mining } = useStartMining();
-  const {
-    speed = 0,
-    mrtNextCost = 0,
-    mrtNextSpeedIncreased = 0,
-  } = mining?.speedLevel ?? {};
+  const { mrtNextCost = 0, mrtNextSpeedIncreased = 0 } =
+    mining?.speedLevel ?? {};
   const handleClaimToken = async () => {
-    handleDialog({
-      isVisible: true,
-      children: <img src={claimTokenGif} />,
-      classDialog: "h-full !bg-transparent",
-      showBackgroundDialog: false,
-    });
-    setTimeout(() => {
-      closeDialog({
-        classDialog: "h-full !bg-transparent",
-      });
-    }, 1500);
+    openAnimateAndClose({ children: <img src={claimTokenGif} /> });
     await claimTokens({});
   };
   const nav = useNavigate();
-  // useEndMining();
+  const currentSpeed = useCurrentSpeed();
   return (
     <HomeLayout>
       <div className="h-full flex flex-col">
@@ -50,8 +38,7 @@ export default function AirDopHome() {
             <div className="rounded-2xl overflow-hidden grow relative flex justify-center items-center">
               <img className="w-full h-full object-cover" src={mainBanner} />
               <span className="absolute top-0 left-0 text-t-dark font-semibold text-xs my-1.5 mx-2 bg-black/10 px-1 rounded-2xl ">
-                CURRENT SPEED {mining?.speedLevel?.speed?.toFixed(2) ?? 0.0}{" "}
-                MRT/H
+                CURRENT SPEED {currentSpeed} MRT/H
               </span>
             </div>
             <div className="grid grid-cols-2 gap-3 my-3">
@@ -63,6 +50,7 @@ export default function AirDopHome() {
                     children: <LeaderboardDialog />,
                     classWrapperDialog:
                       "p-0 !overflow-visible pb-4 max-w-[330px]",
+                    classDialog: "",
                   });
                 }}
               >
@@ -93,6 +81,7 @@ export default function AirDopHome() {
                       ),
                       classWrapperDialog:
                         "p-0 !overflow-visible pb-6 max-w-[330px]",
+                      classDialog: "",
                     });
                   }}
                   className="!bg-base !rounded-full text-white font-bold text-[22px] !pb-3 leading-none w-[200px]"
@@ -103,7 +92,7 @@ export default function AirDopHome() {
             </div>
             <p className="py-3 text-t-dark text-xs font-semibold text-center whitespace-nowrap">
               COST {mrtNextCost.toFixed(3)} MRT NEWSPEED{" "}
-              {(mrtNextSpeedIncreased + speed).toFixed(3)} MRT/H
+              {(mrtNextSpeedIncreased + currentSpeed).toFixed(3)} MRT/H
             </p>
           </div>
         </div>

@@ -2,18 +2,15 @@
 import { RootState } from "@/store/store";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import useCurrentSpeed from "./useGetCurrentSpeed";
 
 export default function useAutomationMining() {
     let interval: NodeJS.Timeout;
-    const { mining, sending, boosts } = useSelector((s: RootState) => s.miningStore);
-    const { speedLevel, claimTime, endMiningTime, minedTokens, lastBoostTime } = mining ?? {}
-    const { speed = 0 } = speedLevel ?? {}
+    const { mining, sending } = useSelector((s: RootState) => s.miningStore);
+    const { claimTime, endMiningTime, minedTokens, lastBoostTime } = mining ?? {}
     const [countTime, setCountTime] = useState(0)
-    const currentSpeed = useMemo(() => {
-        return speed + boosts?.reduce((acc, boost) => {
-            return acc + (boost.bonusSpeed ?? 0)
-        }, 0)
-    }, [boosts, speed])
+    const currentSpeed = useCurrentSpeed();
+
     const resetMining = () => {
         setCountTime(0)
     }

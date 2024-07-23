@@ -5,7 +5,7 @@ import BaseAvatar from "./BaseAvatar";
 interface IBaseCard {
   title: string | ReactElement;
   description?: string;
-  avatar?: string;
+  avatar?: ReactElement;
   onClick?: () => void;
   actionComponent?: ReactElement;
   highlight?: boolean;
@@ -17,6 +17,7 @@ export default function BaseCard({
   onClick = () => {},
   actionComponent,
   highlight,
+  avatar,
 }: IBaseCard) {
   const isTitleString = typeof title === "string";
   return (
@@ -27,10 +28,11 @@ export default function BaseCard({
       )}
       onClick={onClick}
     >
-      {/* <div className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden">
-        <img className="h-full w-full object-cover" alt="" src={avatar} />
-      </div> */}
-      <BaseAvatar name={isTitleString ? title : ""} />
+      <BaseAvatar
+        name={isTitleString ? title : ""}
+        children={avatar}
+      ></BaseAvatar>
+
       <div className="grow">
         {isTitleString ? (
           <p className="text-t-title font-bold text-base leading-none pb-1">

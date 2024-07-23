@@ -11,17 +11,17 @@ function formatNameToInitials(name: string) {
 function getRandomColor() {
   const colors = [
     "#FF5733", // Red-Orange
-        "#FF6F61", // Coral
-        "#FF8C00", // Dark Orange
-        "#F4A460", // Sandy Brown
-        "#FFD700"  
+    "#FF6F61", // Coral
+    "#FF8C00", // Dark Orange
+    "#F4A460", // Sandy Brown
+    "#FFD700",
   ];
 
   const randomIndex = Math.floor(Math.random() * colors.length);
 
   return colors[randomIndex];
 }
-export default function BaseAvatar({ name }: { name?: string }) {
+export default function BaseAvatar({ name, children }: { name?: string, children: React.ReactNode }) {
   const formatName = useMemo(() => {
     if (!name) return { name: "", background: "" };
     return {
@@ -35,7 +35,7 @@ export default function BaseAvatar({ name }: { name?: string }) {
       style={{ backgroundColor: formatName.background }}
       className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden flex justify-center items-center"
     >
-      {formatName.name}
+      {children ? children : formatName.name}
     </div>
   );
 }
