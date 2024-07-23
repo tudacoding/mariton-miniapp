@@ -12,3 +12,6 @@ export function formatDate(dateString: string) {
     const year = date.getFullYear();
     return `${hours}:${minutes} ${day}/${month}/${year}`;
 }
+export function roundUpToThreeDecimals(num: number) {
+    return Math.ceil(num * 1000) / 1000;
+}

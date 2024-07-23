@@ -17,7 +17,6 @@ const transactionStore = createModel<RootModel>()({
     effects: (dispatch) => ({
         getTransactions: async (wallet) => {
             if (wallet) {
-                // const res = await TransactionResource.getTransactionsWithWallet({ wallet })
                 const res = await TransactionResource.fetchTransactions({ wallet })
                 if (res?.data?.length > 0) {
                     const data = res.data.map((item: any) => {
@@ -25,8 +24,6 @@ const transactionStore = createModel<RootModel>()({
                             ...item.attributes, id: item.id
                         }
                     })
-                    console.log(data);
-
                     dispatch.transactionStore.setTransactions(data)
                     return res
                 }

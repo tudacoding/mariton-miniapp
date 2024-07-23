@@ -13,22 +13,22 @@ import Success from "@/assets/icons/Success";
 import CheckInIcon from "@/assets/icons/CheckinIcon";
 import RichJuniorIcon from "@/assets/icons/RichJuniorIcon";
 import MrtAmbasshador from "@/assets/icons/MrtAmbasshador";
+import BoostDialog from "@/modules/home-dialog/BoostDialog";
+import { handleBaseDialog } from "@/components/BaseDialog";
 
 export default function Boost() {
-  const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const { boosts } = useSelector((s: RootState) => s.miningStore);
   const checkinBoosts = useMemo(() => {
     return [
       {
-        description: "Boost +10% speed for 12h",
+        sortDescription: "Boost +10% speed for 12h",
         title: "Daily Check in",
         type: "CHECKIN",
         icon: <CheckInIcon />,
+        description: "Boost +10% speed for 12h",
         onClick: async (userId: number) => {
-          console.log(userId);
-          
           const res = await miningStore.boostDaily({
             userId,
             type: "CHECKIN",
@@ -37,8 +37,9 @@ export default function Boost() {
         },
       },
       {
+        sortDescription: "Boost +20% bonus speed for 24h",
         description:
-          "Boost +20% bonus speed for 24h",
+          "Minimum 01 TON balance in your Wallet to get 20% bonus speed for 24h",
         onClick: async (userId: number) => {
           const res = await miningStore.boostDaily({
             userId,
@@ -51,9 +52,9 @@ export default function Boost() {
         icon: <RichJuniorIcon />,
       },
       {
-        description:
-          "Boost +10% speed for 8h",
+        sortDescription: "Boost +10% speed for 8h",
         title: "Mariton Ambassador",
+        description: `Mariton Ambassador (Add '💎 $MRT' to your Twitter name Add @MARITONonTON to your Twitter bio) Boost +10% speed for 8h`,
         onClick: async (userId: number) => {
           const res = await miningStore.boostDaily({
             userId,
@@ -66,20 +67,17 @@ export default function Boost() {
       },
     ];
   }, []);
-  // const oneTimeBoosts = [
-  //   {
-  //     description: "Send h to contact to increase 10% h in 12h",
-  //     onClick: () => {},
-  //   },
-  //   {
-  //     description: "Check in rich to increase 20% speed in 24h",
-  //     onClick: () => {},
-  //   },
-  //   {
-  //     description: "Check in TW to increase 20% speed in 8h",
-  //     onClick: () => {},
-  //   },
-  // ];
+  const handleClick = async (item: any, index: number) => {
+    handleBaseDialog({
+      isVisible: true,
+      id: `boost_${index}`,
+    });
+    // actionsStore.handleDialog({
+    //   isVisible: true,
+    //   showBackgroundDialog: true,
+    //   children: <BoostDialog item={item} onAction={() => {}} />,
+    // });
+  };
   return (
     <HomeLayout>
       <div className="h-full flex">
@@ -91,38 +89,46 @@ export default function Boost() {
           />
           <div className={twMerge("grow overflow-auto px-6", "mb-5 mt-4")}>
             <BaseTitleDivider className="pt-0">Daily Misson</BaseTitleDivider>
-            {checkinBoosts.map(
-              ({ title, description, onClick, type, icon }, index) => {
-                const isActive = boosts.find((b) => b.type === type);
-                return (
-                  <div key={index} className="pb-3">
-                    <BaseCard
-                      title={title}
-                      description={description}
-                      onClick={async () => {
-                        if (!isActive && account.id) {
-                          setLoadingButtonId(index);
-                          await onClick(account.id);
-                          setLoadingButtonId(null);
-                        }
-                      }}
-                      avatar={icon}
-                      actionComponent={
-                        isActive ? (
-                          <Success className="h-6 w-6 mx-3" />
-                        ) : loadingButtonId === index ? (
-                          <Loading className="text-primary w-6 h-6" />
-                        ) : (
-                          <BaseButton className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold">
-                            Next
-                          </BaseButton>
-                        )
+            {checkinBoosts.map((item, index) => {
+              const { title, sortDescription, type, icon, onClick } = item;
+              const isActive = boosts.find((b) => b.type === type);
+              return (
+                <div key={index} className="pb-3">
+                  <BoostDialog
+                    id={`boost_${index}`}
+                    item={item}
+                    onAction={async () => {
+                      if (!isActive && account.id) {
+                        await onClick(account.id);
+                        handleBaseDialog({
+                          isVisible: false,
+                          id: `boost_${index}`,
+                        });
                       }
-                    ></BaseCard>
-                  </div>
-                );
-              }
-            )}
+                    }}
+                  />
+                  <BaseCard
+                    title={title}
+                    description={sortDescription}
+                    avatar={icon}
+                    actionComponent={
+                      isActive ? (
+                        <Success className="h-6 w-6 mx-3" />
+                      ) : (
+                        <BaseButton
+                          className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold"
+                          onClick={() => {
+                            handleClick(item, index);
+                          }}
+                        >
+                          Next
+                        </BaseButton>
+                      )
+                    }
+                  ></BaseCard>
+                </div>
+              );
+            })}
             {/* <BaseTitleDivider className="pt-1">
               One-time Misson
             </BaseTitleDivider> */}

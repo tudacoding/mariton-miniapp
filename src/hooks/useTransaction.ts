@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-
+import config from "@/config";
 export const fetchTransactions = async (address: string) => {
     const r = await fetch(
-        `https://testnet.toncenter.com/api/v3/transactions?account=${address}&limit=10`
+        `${config.tonApi}/transactions?account=${address}&limit=10`
     );
     return r.json();
 }

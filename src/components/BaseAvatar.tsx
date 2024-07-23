@@ -21,11 +21,22 @@ function getRandomColor() {
 
   return colors[randomIndex];
 }
-export default function BaseAvatar({ name, children }: { name?: string, children: React.ReactNode }) {
+export default function BaseAvatar({
+  name,
+  children,
+}: {
+  name?: string;
+  children: React.ReactNode;
+}) {
   const formatName = useMemo(() => {
+    if (children)
+      return {
+        children: children,
+        background: getRandomColor(),
+      };
     if (!name) return { name: "", background: "" };
     return {
-      name: formatNameToInitials(name),
+      children: formatNameToInitials(name),
       background: getRandomColor(),
     };
   }, [name]);
@@ -35,7 +46,7 @@ export default function BaseAvatar({ name, children }: { name?: string, children
       style={{ backgroundColor: formatName.background }}
       className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden flex justify-center items-center"
     >
-      {children ? children : formatName.name}
+      {formatName.children}
     </div>
   );
 }

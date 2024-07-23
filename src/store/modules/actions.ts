@@ -45,6 +45,7 @@ const actionsStore = createModel<RootModel>()({
         setSplashPopup(state, isVisibleSplash) {
             return { ...state, isVisibleSplash }
         },
+
     },
     effects: (dispatch) => ({
         async openSplashPopup(_, rootState) {
@@ -57,7 +58,7 @@ const actionsStore = createModel<RootModel>()({
         },
         async openAnimateAndClose({
             children
-        }, rootState) {
+        }) {
             dispatch.actionsStore.handleDialog({
                 isVisible: true,
                 children,

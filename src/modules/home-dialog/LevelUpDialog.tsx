@@ -17,12 +17,17 @@ function InforAfterLevelUp({
   mining,
   type,
   isTonUpdated,
+  navigateWallet,
+  notEnoughToken,
 }: {
   mining: IMining;
   type: LevelUpType;
   isTonUpdated: boolean;
   notEnoughToken?: boolean;
+  navigateWallet: (address: string) => void;
 }) {
+  const { handleDialog } = useDispatch<Dispatch>().actionsStore;
+
   const {
     level = 0,
     speed = 0,
@@ -33,31 +38,50 @@ function InforAfterLevelUp({
   const isTon = type === "TON";
   const newSpeed = isTon ? speed * 2 : mrtNextSpeedIncreased + speed;
   return (
-    <div className="text-t-title text-base text-center">
-      <p className=" font-bold">
-        {isTon
-          ? "Speed up with TON"
-          : `Upgrade your level to ${Number(level) + 1}`}
-      </p>
-      {isTon && isTonUpdated ? (
-        <p className="text-red-600 !text-sm pt-1">
-          Each level can only upgrade speed once.
+    <div>
+      <div className="text-t-title text-base text-center">
+        <p className=" font-bold">
+          {isTon
+            ? "Speed up with TON"
+            : `Upgrade your level to ${Number(level) + 1}`}
         </p>
-      ) : (
-        <>
-          <div className="flex flex-row justify-center gap-1 items-center">
-            <span className="pr-1">Cost:</span>
-            <span className="font-bold text-t-button">
-              {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
-            </span>
-            {!isTon ? <MaritonToken /> : <TonToken />}
-          </div>
-          <p>
-            <span>New speed: </span>
-            <span className="font-bold">{newSpeed.toFixed(3)} </span>
-            <span>MRT/H</span>
-          </p>
-        </>
+        {!(isTon && notEnoughToken) &&
+          (isTon && isTonUpdated ? (
+            <p className="text-red-600 !text-sm pt-1">
+              Each level can only upgrade speed once.
+            </p>
+          ) : (
+            <>
+              <div className="flex flex-row justify-center gap-1 items-center">
+                <span className="pr-1">Cost:</span>
+                <span className="font-bold text-t-button">
+                  {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
+                </span>
+                {!isTon ? <MaritonToken /> : <TonToken />}
+              </div>
+              <p>
+                <span>New speed: </span>
+                <span className="font-bold">{newSpeed.toFixed(3)} </span>
+                <span>MRT/H</span>
+              </p>
+            </>
+          ))}
+      </div>
+      {notEnoughToken && (
+        <div className="flex items-center justify-center gap-2">
+          <p className="text-red-600 !text-sm">Not enough {type}!</p>
+          <BaseAction
+            onClick={() => {
+              handleDialog({
+                isVisible: false,
+              });
+              navigateWallet(type === "MRT" ? "/wallet-mrt" : "/wallet-ton");
+            }}
+            className="underline text-t-title"
+          >
+            Deposit
+          </BaseAction>
+        </div>
       )}
     </div>
   );
@@ -151,27 +175,8 @@ export default function LevelUpDialog({
             type={selectedType}
             isTonUpdated={isTonUpdated}
             notEnoughToken={notEnoughToken}
+            navigateWallet={navigateWallet}
           />
-          {notEnoughToken && (
-            <div className="flex items-center justify-center gap-2">
-              <p className="text-red-600 !text-sm">
-                Not enough {selectedType.toUpperCase()} token!
-              </p>
-              <BaseAction
-                onClick={() => {
-                  handleDialog({
-                    isVisible: false,
-                  });
-                  navigateWallet(
-                    selectedType === "MRT" ? "/wallet-mrt" : "/wallet-ton"
-                  );
-                }}
-                className="underline text-t-title"
-              >
-                Deposit
-              </BaseAction>
-            </div>
-          )}
         </div>
       </div>
       <div className="absolute bottom-[-20px] flex flex-row justify-center w-full gap-6">

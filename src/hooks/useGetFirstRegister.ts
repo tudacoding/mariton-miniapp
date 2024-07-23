@@ -11,9 +11,9 @@ export function useGetFirstRegister() {
   const { accountStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const navigate = useNavigate();
-  const { first_name, last_name, id, avatar } = get(window, "Telegram.WebApp.initDataUnsafe.user", {}) as any;
-  const telegramName = first_name || last_name ? first_name ?? `${first_name} ` + (last_name ?? '') : undefined;
-  
+  const { first_name, last_name, id, avatar, username } = get(window, "Telegram.WebApp.initDataUnsafe.user", {}) as any;
+  const telegramName = username ?? ((first_name || last_name) ? first_name ?? `${first_name} ` + (last_name ?? '') : undefined);
+
   useEffect(() => {
     async function checkConnection() {
       // if (account) return;

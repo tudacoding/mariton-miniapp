@@ -8,7 +8,11 @@ const TransactionResource = {
         return res.data || [];
     },
     async fetchTransactions(data: any) {
-        const query = qs.stringify(data);
+        const query = qs.stringify({
+            filters: {
+                wallet: data.wallet
+            }
+        });
         const res = await axios.get(`${config.apiUrl}/transactions?${query}&sort[0]=createdAt:desc&pagination[limit]=20`);
         return res.data || [];
     }

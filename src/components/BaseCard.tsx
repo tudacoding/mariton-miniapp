@@ -4,7 +4,7 @@ import BaseAvatar from "./BaseAvatar";
 
 interface IBaseCard {
   title: string | ReactElement;
-  description?: string;
+  description?: string | ReactElement;
   avatar?: ReactElement;
   onClick?: () => void;
   actionComponent?: ReactElement;
@@ -33,14 +33,10 @@ export default function BaseCard({
         children={avatar}
       ></BaseAvatar>
 
-      <div className="grow">
-        {isTitleString ? (
-          <p className="text-t-title font-bold text-base leading-none pb-1">
-            {title}
-          </p>
-        ) : (
-          title
-        )}
+      <div className="grow flex flex-col justify-center">
+        <div className="text-t-title font-bold text-base leading-none pb-1">
+          {title}
+        </div>
         <p className="text-t-description font-medium text-xs leading-none">
           {description}
         </p>

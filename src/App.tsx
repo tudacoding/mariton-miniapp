@@ -5,9 +5,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { store } from "@/store/store";
 import { Provider } from "react-redux";
-import BaseDialog from "./components/BaseDialog";
 import useInitApp from "./hooks/useInitApp";
 import SplashPopup from "./components/SplashPopup";
+import DialogOutlet from "./components/DialogOutlet";
 
 const pages = import.meta.glob("./pages/*.tsx", { eager: true });
 
@@ -46,7 +46,7 @@ function App() {
       <Provider store={store}>
         <RouterProvider router={router} />
         <SplashPopup />
-        <BaseDialog />
+        <DialogOutlet />
         <ToastContainer
           position="top-right"
           theme="light"
