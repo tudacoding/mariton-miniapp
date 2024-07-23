@@ -45,12 +45,12 @@ export default function LeaderboardDialog() {
             </BaseButton>
           </div>
           <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset] h-[calc(100vh-300px)]">
-            {leaderboard?.[tab === "mint" ? "refs" : "mints"]?.map(
+            {leaderboard?.[tab === "ref" ? "refs" : "mints"]?.map(
               (item, index) => {
                 const description =
-                  tab === "mint"
+                  tab === "ref"
                     ? `${item.totalRefs} ref`
-                    : `${item.totalMrtTokensClaimed.toFixed(3)} mint`;
+                    : `${item.totalMrtTokensClaimed.toFixed(3)} mined`;
 
                 return (
                   <div key={index} className="pb-3">

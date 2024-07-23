@@ -38,7 +38,7 @@ export default function AirDopHome() {
             <div className="rounded-2xl overflow-hidden grow relative flex justify-center items-center">
               <img className="w-full h-full object-cover" src={mainBanner} />
               <span className="absolute top-0 left-0 text-t-dark font-semibold text-xs my-1.5 mx-2 bg-black/10 px-1 rounded-2xl ">
-                CURRENT SPEED {currentSpeed} MRT/H
+                CURRENT SPEED {currentSpeed.toFixed(3)} MRT/H
               </span>
             </div>
             <div className="grid grid-cols-2 gap-3 my-3">

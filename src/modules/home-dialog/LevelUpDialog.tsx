@@ -12,6 +12,7 @@ import { twMerge } from "tailwind-merge";
 import MaritonToken from "@/assets/icons/MaritonToken";
 import TonToken from "@/assets/icons/TonToken";
 import BaseAction from "@/components/BaseAction";
+import Loading from "@/assets/icons/Loading";
 function InforAfterLevelUp({
   mining,
   type,
@@ -71,8 +72,10 @@ export default function LevelUpDialog({
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
   const { levelUpMining } = useDispatch<Dispatch>().miningStore;
   const [selectedType, setSelectedType] = useState<LevelUpType>("MRT");
+  const [loading, setLoading] = useState(false);
 
   const handleUpdate = async () => {
+    setLoading(true);
     const res = await levelUpMining({
       type: selectedType,
     });
@@ -82,6 +85,7 @@ export default function LevelUpDialog({
         isVisible: false,
       });
     }
+    setLoading(false);
   };
   const isTonUpdated = useMemo(() => {
     if (mining?.speedLevel) {
@@ -104,6 +108,11 @@ export default function LevelUpDialog({
   }, [isTonUpdated, selectedType, notEnoughToken]);
   return (
     <>
+      {loading && (
+        <div className="h-[110%] w-full z-50 absolute flex justify-center items-center">
+          <Loading className="text-[#6CA71B]" />
+        </div>
+      )}
       <div className="top-0 p-[30px] w-full">
         <p className="text-t-button text-center font-extrabold text-[24px]">
           LEVEL UP

@@ -90,7 +90,13 @@ const miningStore = createModel<RootModel>()({
                 const res = await MiningRepository.levelUpMining(mining.id, {
                     type
                 })
-                if (res.id) dispatch.miningStore.setMining(res)
+                if (res.id) {
+                    dispatch.miningStore.setMining(res)
+                    dispatch.accountStore.setTokensWallet({
+                        tonTokens: res.account.tonTokens,
+                        mrtTokens: res.account.mrtTokens,
+                    })
+                }
                 return res
             }
         },
