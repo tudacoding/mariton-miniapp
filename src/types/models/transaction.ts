@@ -3,7 +3,7 @@ export interface ITransaction {
 	wallet: string;
 	signature: string;
 	nonce: string;
-	isDone: boolean;
+	isDone: boolean | 'pending';
 	amount: string;
 	createdAt: string;
 	updatedAt: string;

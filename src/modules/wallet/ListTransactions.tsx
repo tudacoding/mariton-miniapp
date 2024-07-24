@@ -6,14 +6,14 @@ export default function ListTransactions({
   claimToken,
 }: {
   transactions: ITransaction[];
-  claimToken: (transaction: ITransaction) => void;
+  claimToken: (transaction: ITransaction, index: number) => void;
 }) {
   return (
     <div className="flex flex-col gap-3">
-      {transactions.map((transaction: any) => {
+      {transactions.map((transaction: ITransaction, index: number) => {
         return (
           <TransactionCard
-            onClick={() => claimToken(transaction)}
+            onClick={() => claimToken(transaction, index)}
             key={transaction.id}
             transaction={transaction}
           />

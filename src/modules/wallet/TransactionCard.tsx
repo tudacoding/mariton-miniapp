@@ -1,4 +1,6 @@
+import Loading from "@/assets/icons/Loading";
 import MaritonToken from "@/assets/icons/MaritonToken";
+import Success from "@/assets/icons/Success";
 import BaseButton from "@/components/BaseButton";
 import BaseCard from "@/components/BaseCard";
 import { formatDate } from "@/helpers";
@@ -23,17 +25,31 @@ export default function TransactionCard({
       }
       description={formatDate(transaction.createdAt)}
       actionComponent={
-        transaction?.isDone ? (
-          <></>
-        ) : (
-          <BaseButton
-            onClick={onClick}
-            className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold"
-          >
-            Claim
-          </BaseButton>
-        )
+        <ActionTransactionCard onClick={onClick} isDone={transaction.isDone} />
       }
     ></BaseCard>
   );
+}
+function ActionTransactionCard({
+  isDone,
+  onClick,
+}: {
+  isDone: boolean | "pending";
+  onClick: () => void;
+}) {
+  switch (isDone) {
+    case true:
+      return <Success className="h-6 w-6 mx-4" />;
+    case "pending":
+      return <Loading className="text-primary w-6 h-6 mx-4"/>;
+    default:
+      return (
+        <BaseButton
+          onClick={onClick}
+          className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold"
+        >
+          Claim
+        </BaseButton>
+      );
+  }
 }

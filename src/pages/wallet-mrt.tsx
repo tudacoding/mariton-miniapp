@@ -16,7 +16,7 @@ export default function WalletPage() {
 
   const { mrtBalance } = useMaritonToken();
   const nav = useNavigate();
-  const { claimTokenToTonWallet, depositTokenMrt } = useDepositWallet();
+  const { claimTokenToWallet, depositTokenMrt } = useDepositWallet();
 
   return (
     <HomeLayout hideBottom>
@@ -36,11 +36,11 @@ export default function WalletPage() {
             type="CLAIM_MRT"
             maxValue={tokensWallet?.mrtTokens ?? 0}
             onSubmit={(value: number) => {
-              return claimTokenToTonWallet(value);
+              return claimTokenToWallet(value);
             }}
           />
           <BaseButton className="mx-6" onClick={() => nav("/history-claim")}>
-            History claim
+            History
           </BaseButton>
         </div>
         <div className="absolute bottom-[-30px] w-full flex justify-center">

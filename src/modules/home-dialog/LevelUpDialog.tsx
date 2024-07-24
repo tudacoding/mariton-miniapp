@@ -45,29 +45,28 @@ function InforAfterLevelUp({
             ? "Speed up with TON"
             : `Upgrade your level to ${Number(level) + 1}`}
         </p>
-        {!(isTon && notEnoughToken) &&
-          (isTon && isTonUpdated ? (
-            <p className="text-red-600 !text-sm pt-1">
-              Each level can only upgrade speed once.
+        {isTon && isTonUpdated ? (
+          <p className="text-red-600 !text-sm pt-1">
+            Each level can only upgrade speed once.
+          </p>
+        ) : (
+          <>
+            <div className="flex flex-row justify-center gap-1 items-center">
+              <span className="pr-1">Cost:</span>
+              <span className="font-bold text-t-button">
+                {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
+              </span>
+              {!isTon ? <MaritonToken /> : <TonToken />}
+            </div>
+            <p>
+              <span>New speed: </span>
+              <span className="font-bold">{newSpeed.toFixed(3)} </span>
+              <span>MRT/H</span>
             </p>
-          ) : (
-            <>
-              <div className="flex flex-row justify-center gap-1 items-center">
-                <span className="pr-1">Cost:</span>
-                <span className="font-bold text-t-button">
-                  {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
-                </span>
-                {!isTon ? <MaritonToken /> : <TonToken />}
-              </div>
-              <p>
-                <span>New speed: </span>
-                <span className="font-bold">{newSpeed.toFixed(3)} </span>
-                <span>MRT/H</span>
-              </p>
-            </>
-          ))}
+          </>
+        )}
       </div>
-      {notEnoughToken && (
+      {!(isTon && isTonUpdated) && notEnoughToken && (
         <div className="flex items-center justify-center gap-2">
           <p className="text-red-600 !text-sm">Not enough {type}!</p>
           <BaseAction

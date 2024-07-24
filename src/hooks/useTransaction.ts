@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import config from "@/config";
 export const fetchTransactions = async (address: string) => {
     const r = await fetch(
-        `${config.tonApi}/transactions?account=${address}&limit=10`
+        `${config.tonApi}transactions?account=${address}&limit=10`
     );
     return r.json();
 }

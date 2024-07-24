@@ -1,21 +1,24 @@
-import { useDispatch } from "react-redux";
-import { Dispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "@/store/store";
 import { useMaritonToken } from "@/hooks/useMaritonToken";
-import { Address, beginCell, toNano } from "@ton/core";
+import { Address, beginCell, Cell, toNano } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
 import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { JettonMaster } from "@ton/ton";
 import { useTonClient } from "@/hooks/useTonClient";
 import { ADDRESS_MRT, DEPOSIT_WALLET } from "@/config";
+import { ITransaction } from "@/types/models/transaction";
+import { fetchTransactions } from "@/hooks/useTransaction";
 
 export default function useDepositWallet() {
     const { claimMRT } = useMaritonToken();
-    const { miningStore, accountStore } = useDispatch<Dispatch>();
+    const { miningStore, accountStore, transactionStore } = useDispatch<Dispatch>();
+    const { transactions } = useSelector((s: RootState) => s.transactionStore);
     const wallet = useTonWallet();
     const client = useTonClient();
     const [tonConnectUI] = useTonConnectUI();
 
-    const claimMRTTokens = async (signature: any) => {
+    const claimMRTTokens = async (signature: ITransaction) => {
         const buffer = Buffer.from(signature.signature, "hex");
         const signatureCell = beginCell().storeBuffer(buffer).endCell();
 
@@ -28,7 +31,34 @@ export default function useDepositWallet() {
         const res = await claimMRT(buildMessage);
         return res;
     }
-    const claimTokenToTonWallet = async (token: number) => {
+    const reClaimTokenToWallet = async (transaction: ITransaction, index: number) => {
+        if (!transaction) return;
+        transactions[index] = { ...transactions[index], isDone: 'pending' }
+        transactionStore.setTransactions(transactions);
+        const wallet = (Address.parseRaw(transaction.wallet).toString())
+        const response = await claimMRTTokens(transaction)
+        const cell = Cell.fromBoc(Buffer.from(response.boc, 'base64'))[0];
+        const hash = cell.hash();
+        const latestHash = Buffer.from(hash).toString('base64');
+
+        if (!latestHash) return;
+        if (!wallet) return;
+        const interval = setInterval(async () => {
+            console.log("Checking...");
+
+            const response = await fetchTransactions(wallet);
+            const tx = response.transactions.find(
+                (tx: any) => tx.in_msg?.hash === latestHash
+            );
+            if (tx) {
+                console.log("Done...")
+                transactions[index] = { ...transactions[index], isDone: true }
+                transactionStore.setTransactions(transactions);
+                clearInterval(interval);
+            }
+        }, 5000);
+    }
+    const claimTokenToWallet = async (token: number) => {
         const signature = await miningStore.signSignature({
             amount: Number(token),
         });
@@ -111,9 +141,10 @@ export default function useDepositWallet() {
     };
 
     return {
-        claimTokenToTonWallet,
+        claimTokenToWallet,
         depositTokenMrt,
         depositTokenTon,
-        claimMRTTokens
+        claimMRTTokens,
+        reClaimTokenToWallet
     }
 }
