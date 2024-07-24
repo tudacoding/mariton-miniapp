@@ -10,6 +10,7 @@ interface IBaseCard {
   actionComponent?: ReactElement;
   highlight?: boolean;
   selected?: boolean;
+  isCustomAvatar?: boolean;
 }
 export default function BaseCard({
   title,
@@ -18,6 +19,7 @@ export default function BaseCard({
   actionComponent,
   highlight,
   avatar,
+  isCustomAvatar = false,
 }: IBaseCard) {
   const isTitleString = typeof title === "string";
   return (
@@ -28,10 +30,14 @@ export default function BaseCard({
       )}
       onClick={onClick}
     >
-      <BaseAvatar
-        name={isTitleString ? title : ""}
-        children={avatar}
-      ></BaseAvatar>
+      {isCustomAvatar ? (
+        avatar
+      ) : (
+        <BaseAvatar
+          name={isTitleString ? title : ""}
+          children={avatar}
+        ></BaseAvatar>
+      )}
 
       <div className="grow flex flex-col justify-center">
         <div className="text-t-title font-bold text-base leading-none pb-1">

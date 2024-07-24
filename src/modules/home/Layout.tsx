@@ -28,7 +28,7 @@ export default function HomeLayout({
           />
         </div>
       )}
-      <div className="flex flex-col h-full mx-3">
+      <div className="flex flex-col h-full mx-3 w-[-webkit-fill-available]">
         {!hideTop && (
           <div className="w-full">
             <AirdropActionBar />

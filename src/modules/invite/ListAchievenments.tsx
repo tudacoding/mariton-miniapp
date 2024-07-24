@@ -5,6 +5,7 @@ import { Dispatch, RootState } from "@/store/store";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "@/assets/icons/Loading";
+import MissionAvatar from "@/components/MissionAvatar";
 
 export default function ListAchievements() {
   const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
@@ -77,15 +78,20 @@ export default function ListAchievements() {
   return (
     <div>
       {achievements.map(({ description, onClick, title, selected }, index) => {
+        const isLoading = loadingButtonId === index;
         return (
           <div key={index} className="pb-3">
             <BaseCard
               title={title}
               description={description}
-              onClick={onClick}
+              onClick={() => {
+                !isLoading && onClick();
+              }}
+              isCustomAvatar
+              avatar={<MissionAvatar index={index + 1} />}
               actionComponent={
-                loadingButtonId === index ? (
-                  <Loading className="text-primary w-6 h-6"/>
+                isLoading ? (
+                  <Loading className="text-primary w-6 h-6" />
                 ) : selected ? (
                   <div className="h-6 w-6">
                     <Success />

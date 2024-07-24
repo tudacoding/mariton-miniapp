@@ -10,6 +10,9 @@ import { ILeaderboard } from "@/types/models/mining";
 import Account from "@/types/models/account";
 import MaritonToken from "@/assets/icons/MaritonToken";
 import TonToken from "@/assets/icons/TonToken";
+import RewardTon from "@/components/RewardTon";
+import RattingRef from "@/components/RattingRef";
+import TopRatting from "@/components/TopRatting";
 
 export default function LeaderboardDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
@@ -72,52 +75,20 @@ export default function LeaderboardDialog() {
     </>
   );
 }
+
 function LeaderboardRef({ leaderboardRef }: { leaderboardRef: Account[] }) {
-  const getReward = (amount: number, index: number) => {
-    switch (index) {
-      case 0:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-[22px] font-bold text-t-button">
-            <span>{amount}</span>
-          </div>
-        );
-      case 1:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-xl font-bold text-t-title">
-            <span>{amount}</span>
-          </div>
-        );
-      case 2:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-lg font-bold text-t-description">
-            <span>{amount}</span>
-          </div>
-        );
-      case 3:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-lg font-bold text-t-description">
-            <span>{amount}</span>
-          </div>
-        );
-      case 4:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-lg font-bold text-t-description">
-            <span>{amount}</span>
-          </div>
-        );
-      default:
-        return <div></div>;
-    }
-  };
   return (
     <>
       {leaderboardRef?.map((item, index) => {
-        const reward = getReward(item.totalRefs, index);
         return (
           <div key={index} className="pb-2.5">
             <BaseCard
               title={item.telegramName ?? "user"}
-              actionComponent={reward}
+              actionComponent={
+                <RattingRef amount={item.totalRefs} index={index} />
+              }
+              avatar={index > 4 ? undefined : <TopRatting index={index} />}
+              isCustomAvatar={index < 5}
             ></BaseCard>
           </div>
         );
@@ -125,52 +96,11 @@ function LeaderboardRef({ leaderboardRef }: { leaderboardRef: Account[] }) {
     </>
   );
 }
+
 function LeaderboardMint({ leaderboardMint }: { leaderboardMint: Account[] }) {
-  const getRewardTon = (index: number) => {
-    switch (index) {
-      case 0:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-[22px] font-bold text-t-button">
-            <span>30</span>
-            <TonToken className="w-5 h-5" />
-          </div>
-        );
-      case 1:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-xl font-bold text-t-title">
-            <span>20</span>
-            <TonToken className="w-4 h-4" />
-          </div>
-        );
-      case 2:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-lg font-bold text-t-description">
-            <span>10</span>
-            <TonToken className="w-3.5 h-3.5" />
-          </div>
-        );
-      case 3:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-lg font-bold text-t-description">
-            <span>10</span>
-            <TonToken className="w-3.5 h-3.5" />
-          </div>
-        );
-      case 4:
-        return (
-          <div className="flex flex-row justify-center items-center gap-1 text-lg font-bold text-t-description">
-            <span>10</span>
-            <TonToken className="w-3.5 h-3.5" />
-          </div>
-        );
-      default:
-        return <div></div>;
-    }
-  };
   return (
     <>
       {leaderboardMint?.map((item, index) => {
-        const rewardTon = getRewardTon(index);
         return (
           <div key={index} className="pb-2.5">
             <BaseCard
@@ -181,8 +111,10 @@ function LeaderboardMint({ leaderboardMint }: { leaderboardMint: Account[] }) {
                   <MaritonToken className="h-3 w-3" />
                 </div>
               }
-              actionComponent={rewardTon}
+              actionComponent={<RewardTon index={index} />}
+              avatar={index > 4 ? undefined : <TopRatting index={index} />}
               onClick={() => {}}
+              isCustomAvatar={index < 5}
             ></BaseCard>
           </div>
         );

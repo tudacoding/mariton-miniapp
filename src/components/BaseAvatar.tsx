@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { twMerge } from "tailwind-merge";
 
 function formatNameToInitials(name: string) {
   const parts = name.split(/[\s\W]+/);
@@ -27,6 +28,7 @@ export default function BaseAvatar({
 }: {
   name?: string;
   children: React.ReactNode;
+  visibleBorderAvatar?: boolean;
 }) {
   const formatName = useMemo(() => {
     if (children)
@@ -44,7 +46,9 @@ export default function BaseAvatar({
   return (
     <div
       style={{ backgroundColor: formatName.background }}
-      className="flex-none h-10 w-10 border-2 border-solid border-primary rounded-full overflow-hidden flex justify-center items-center"
+      className={twMerge(
+        "flex-none h-10 w-10 rounded-full overflow-hidden flex justify-center items-center border-2 border-solid border-primary"
+      )}
     >
       {formatName.children}
     </div>
