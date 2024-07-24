@@ -15,4 +15,6 @@ export default {
   retweet: 'https://x.com/Mariton_game/status/1790663138108723575',
   annoucementTelegram: 'https://t.me/MaritonAnn',
   botTele: isTestnet ? 'https://t.me/testnet_mariton_bot?start=' : 'https://t.me/mariton_bot?start=',
+  tonViewer: isTestnet ? 'https://testnet.tonviewer.com/transaction/' : 'https://tonviewer.com/transaction/',
+  tonApi: isTestnet ? 'https://testnet.toncenter.com/api/v3/' : 'https://toncenter.com/api/v3/',
 };
