@@ -8,7 +8,7 @@ const MainPage = () => {
     <HomeLayout>
       <CityBuildings />
       <AirdopBtn />
-      <LuckySpin />
+      {/* <LuckySpin /> */}
     </HomeLayout>
   );
 };

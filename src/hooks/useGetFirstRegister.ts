@@ -17,14 +17,19 @@ export function useGetFirstRegister() {
   useEffect(() => {
     async function checkConnection() {
       // if (account) return;
-      await accountStore.getFirstRegister({
+      const res = await accountStore.getFirstRegister({
         address: get(wallet, "account.address"),
         publicKey: get(wallet, "account.publicKey"),
         telegramUserId: id,
         telegramName,
         telegramAvatar: avatar
       });
+      if (res?.type === 'UNIQUE_TELEGRAM_ID_TYPE') {
+        navigate("/welcome");
+      }
     }
+
+
     if (get(wallet, "account.address")) {
       checkConnection();
     } else {

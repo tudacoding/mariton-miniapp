@@ -68,16 +68,16 @@ const accountStore = createModel<RootModel>()({
   },
   effects: (dispatch) => ({
     async getFirstRegister(params) {
-      const res: Account = await AccountRepository.getFirstRegister(params);
-      if (res) {
+      const res = await AccountRepository.getFirstRegister(params);
+      if (res.id) {
         dispatch.accountStore.setAccount(res);
         dispatch.accountStore.setTokensWallet({
           tonTokens: res.tonTokens,
           mrtTokens: res.mrtTokens,
           totalMrtTokensClaimed: res.totalMrtTokensClaimed,
         });
+        return res;
       }
-      return res;
     },
     async completeMission(params) {
       const res = await AccountRepository.completeMission(params);

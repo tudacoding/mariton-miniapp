@@ -88,7 +88,7 @@ export default function Boost() {
             alt="bg-mission-body"
           />
           <div className={twMerge("grow overflow-auto px-6", "mb-5 mt-4")}>
-            <BaseTitleDivider className="pt-0">Daily Misson</BaseTitleDivider>
+            <BaseTitleDivider className="pt-0">Daily Mission</BaseTitleDivider>
             {checkinBoosts.map((item, index) => {
               const { title, sortDescription, type, icon, onClick } = item;
               const isActive = boosts.find((b) => b.type === type);
