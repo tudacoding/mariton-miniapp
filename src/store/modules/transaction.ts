@@ -20,8 +20,11 @@ const transactionStore = createModel<RootModel>()({
             if (wallet) {
                 const res = await TransactionResource.fetchTransactions({ wallet })
                 if (res?.data?.length > 0) {
-                    const transactionPendings: { [key: string]: boolean } = JSON.parse(localStorage.getItem("transactionPendings") || "{}");
-
+                    let transactionPendings: { [key: string]: any } = JSON.parse(localStorage.getItem("transactionPendings") || "{}");
+                    const timeNow = new Date().getTime()
+                    const resetPeding = (timeNow - (transactionPendings?.lastTimeUpdate ?? 0) >= 60 * 60 * 1000)
+                    if (resetPeding) transactionPendings = {}
+                    localStorage.setItem("transactionPendings", '')
                     const data = res.data.reduce((accumulator: any, currentValue: any) => {
                         accumulator[currentValue.id] = {
                             ...currentValue.attributes, id: currentValue.id,
