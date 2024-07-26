@@ -61,7 +61,7 @@ export default function LeaderboardDialog() {
         </div>
         <div className="h-[20px]"></div>
       </div>
-      <div className="absolute bottom-[-30px] flex flex-row justify-center w-full gap-4">
+      <div className="absolute bottom-[-20px] flex flex-row justify-center w-full gap-4">
         <BaseAction
           onClick={() =>
             handleDialog({
@@ -69,7 +69,7 @@ export default function LeaderboardDialog() {
             })
           }
         >
-          <img src={closeButton} alt="" className="object-contain" />
+          <img src={closeButton} alt="" className="object-contain h-12" />
         </BaseAction>
       </div>
     </>

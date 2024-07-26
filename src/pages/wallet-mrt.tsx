@@ -6,6 +6,7 @@ import HomeLayout from "@/modules/home/Layout";
 
 import BaseAction from "@/components/BaseAction";
 import closeButton from "@/assets/game/close-button.png";
+import messageBubble from "@/assets/air/message-bubble.png";
 import FormCard from "@/modules/wallet/FormCard";
 import BackgroundWallet from "@/modules/wallet/BackgroundWallet";
 import BaseButton from "@/components/BaseButton";
@@ -20,6 +21,15 @@ export default function WalletPage() {
   return (
     <HomeLayout hideBottom>
       <div className="relative h-fix">
+        <BaseAction
+          className="absolute right-0 animate-ping-click"
+          onClick={() => nav("/history-claim")}
+        >
+          <div className="relative">
+            <img src={messageBubble} />
+            <span className="absolute text-t-button font-bold top-0 py-2 px-3">History</span>
+          </div>
+        </BaseAction>
         <BackgroundWallet />
         <div className="px-4 pt-24 pb-14 flex flex-col gap-6">
           <FormCard
@@ -38,9 +48,6 @@ export default function WalletPage() {
               await claimTokenToWallet(value);
             }}
           />
-          <BaseButton className="mx-6" onClick={() => nav("/history-claim")}>
-            History
-          </BaseButton>
         </div>
         <div className="absolute bottom-[-30px] w-full flex justify-center">
           <BaseAction

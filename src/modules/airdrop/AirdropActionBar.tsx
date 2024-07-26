@@ -5,6 +5,7 @@ import BaseImage from "@/components/BaseImage";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useNavigate } from "react-router-dom";
+import { formatNumber } from "@/helpers";
 
 const AirdropActionBar = ({ className = "" }: { className?: string }) => {
   const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
@@ -29,7 +30,7 @@ const AirdropActionBar = ({ className = "" }: { className?: string }) => {
         />
         <div className="absolute w-full h-full top-0 py-[10px] pl-[50px]">
           <span className="text-t-title">
-            {(tokensWallet?.tonTokens ?? 0).toFixed(3)}
+            {formatNumber(tokensWallet?.tonTokens ?? 0, 3)}
           </span>
         </div>
       </div>
@@ -46,7 +47,7 @@ const AirdropActionBar = ({ className = "" }: { className?: string }) => {
         />
         <div className="absolute w-full h-full top-0 py-[10px] pl-[50px]">
           <span className="text-t-title">
-            {(tokensWallet?.mrtTokens ?? 0).toFixed(3)}
+            {formatNumber(tokensWallet?.mrtTokens ?? 0, 3)}
           </span>
         </div>
       </div>

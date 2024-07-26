@@ -1,8 +1,4 @@
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
 import { twMerge } from "tailwind-merge";
-import backgroundDialog from "@/assets/air/short-background-body.png";
-import { R } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 export function handleBaseDialog({
   id,
@@ -30,9 +26,9 @@ export default function BaseDialog({
   return (
     <dialog
       id={`base_dialog_${id}`}
-      className={twMerge("modal bg-[#0006]", classDialog)}
+      className={twMerge("modal bg-black/70 backdrop-blur-[2px]", classDialog)}
     >
-      <div className={twMerge("modal-box bg-transparent shadow-none")}>
+      <div className={"modal-box bg-transparent shadow-none px-2"}>
         {children}
       </div>
       <form method="dialog" className="modal-backdrop">

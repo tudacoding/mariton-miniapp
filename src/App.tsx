@@ -50,9 +50,10 @@ function App() {
         <ToastContainer
           position="top-right"
           theme="light"
-          autoClose={3000}
+          autoClose={300000}
           hideProgressBar={true}
           toastClassName={"m-3 rounded-xl text-sm font-semibold-all"}
+          style={{ zIndex: 9999, position: 'fixed', top: 0, right: 0 }}
         />
       </Provider>
     </>

@@ -13,6 +13,7 @@ import MaritonToken from "@/assets/icons/MaritonToken";
 import TonToken from "@/assets/icons/TonToken";
 import BaseAction from "@/components/BaseAction";
 import Loading from "@/assets/icons/Loading";
+import { formatNumber } from "@/helpers";
 function InforAfterLevelUp({
   mining,
   type,
@@ -54,13 +55,13 @@ function InforAfterLevelUp({
             <div className="flex flex-row justify-center gap-1 items-center">
               <span className="pr-1">Cost:</span>
               <span className="font-bold text-t-button">
-                {(isTon ? tonNextCost : mrtNextCost).toFixed(3)}
+                {formatNumber(isTon ? tonNextCost : mrtNextCost, 3)}
               </span>
               {!isTon ? <MaritonToken /> : <TonToken />}
             </div>
             <p>
               <span>New speed: </span>
-              <span className="font-bold">{newSpeed.toFixed(3)} </span>
+              <span className="font-bold">{formatNumber(newSpeed, 3)} </span>
               <span>MRT/H</span>
             </p>
           </>
@@ -186,10 +187,10 @@ export default function LevelUpDialog({
             })
           }
         >
-          <img src={closeButton} alt="" className="object-contain h-[50px]" />
+          <img src={closeButton} alt="" className="object-contain h-12" />
         </BaseAction>
         <BaseAction onClick={handleUpdate} disable={disableButtonUpgrade}>
-          <img src={upgradeButton} alt="" className="object-contain h-[50px]" />
+          <img src={upgradeButton} alt="" className="object-contain h-12" />
         </BaseAction>
       </div>
     </>

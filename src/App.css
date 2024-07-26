@@ -6,3 +6,6 @@
     background-color: transparent;
   }
 }
+body {
+  min-width: 375px;
+}

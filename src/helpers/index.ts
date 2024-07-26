@@ -15,3 +15,10 @@ export function formatDate(dateString: string) {
 export function roundUpToThreeDecimals(num: number) {
     return Math.ceil(num * 1000) / 1000;
 }
+export function formatNumber(number: number, fixed: number) {
+    if (number % 1 === 0) {
+        return number.toString();
+    } else {
+        return number.toFixed(fixed);
+    }
+}

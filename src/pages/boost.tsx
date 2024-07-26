@@ -15,11 +15,16 @@ import RichJuniorIcon from "@/assets/icons/RichJuniorIcon";
 import MrtAmbasshador from "@/assets/icons/MrtAmbasshador";
 import BoostDialog from "@/modules/home-dialog/BoostDialog";
 import { handleBaseDialog } from "@/components/BaseDialog";
-
+import useGetInforTelegram from "@/hooks/useGetInforTelegram";
+import { KEY_MARITON_AMBASSADOR } from "@/config";
+import useCopy from "@/hooks/useCopy";
 export default function Boost() {
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const { boosts } = useSelector((s: RootState) => s.miningStore);
+  const { telegramName } = useGetInforTelegram();
+  const [copy] = useCopy(KEY_MARITON_AMBASSADOR);
+
   const checkinBoosts = useMemo(() => {
     return [
       {
@@ -33,19 +38,29 @@ export default function Boost() {
             userId,
             type: "CHECKIN",
           });
-          if (res) toast.success("Boost +10% speed for 12h");
+          if (res) {
+            toast.success("Boost +10% speed for 12h");
+            return true;
+          }
         },
       },
       {
         sortDescription: "Boost +20% bonus speed for 24h",
-        description:
-          "Minimum 01 TON balance in your Wallet to get 20% bonus speed for 24h",
+        description: (
+          <span>
+            Minimum 01 TON balance in your Wallet <br /> Boost +20% bonus speed
+            for 24h
+          </span>
+        ),
         onClick: async (userId: number) => {
           const res = await miningStore.boostDaily({
             userId,
             type: "JUNIOR_RICH_MARITON",
           });
-          if (res) toast.success("Boost +20% speed for 24h");
+          if (res) {
+            toast.success("Boost +20% speed for 24h");
+            return true;
+          }
         },
         title: "Junior Rich Mariton",
         type: "JUNIOR_RICH_MARITON",
@@ -54,15 +69,39 @@ export default function Boost() {
       {
         sortDescription: "Boost +10% speed for 8h",
         title: "Mariton Ambassador",
-        description: `Mariton Ambassador (Add '💎 $MRT' to your Twitter name Add @MARITONonTON to your Twitter bio) Boost +10% speed for 8h`,
+        description: (
+          <span>
+            Mariton Ambassador (Add{" "}
+            <span
+              className="underline"
+              onClick={() => {
+                copy();
+                toast.success("Copy!");
+              }}
+            >
+              '{KEY_MARITON_AMBASSADOR}'
+            </span>{" "}
+            to your Telegram name) <br /> Boost +10% speed for 8h
+          </span>
+        ),
         onClick: async (userId: number) => {
-          const res = await miningStore.boostDaily({
-            userId,
-            type: "UPDATE_TWITTER",
-          });
-          if (res) toast.success("Boost +10% speed for 8h");
+          if (telegramName?.includes(KEY_MARITON_AMBASSADOR)) {
+            const res = await miningStore.boostDaily({
+              userId,
+              type: "MARITON_AMBASSADOR",
+            });
+            if (res) {
+              toast.success("Boost +10% speed for 8h");
+              return true;
+            }
+          } else {
+            toast.error(
+              `You need add '${KEY_MARITON_AMBASSADOR}' to your Telegram name`
+            );
+            return false;
+          }
         },
-        type: "UPDATE_TWITTER",
+        type: "MARITON_AMBASSADOR",
         icon: <MrtAmbasshador />,
       },
     ];
@@ -99,11 +138,12 @@ export default function Boost() {
                     item={item}
                     onAction={async () => {
                       if (!isActive && account.id) {
-                        await onClick(account.id);
-                        handleBaseDialog({
-                          isVisible: false,
-                          id: `boost_${index}`,
-                        });
+                        const res = await onClick(account.id);
+                        if (res)
+                          handleBaseDialog({
+                            isVisible: false,
+                            id: `boost_${index}`,
+                          });
                       }
                     }}
                   />

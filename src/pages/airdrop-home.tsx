@@ -11,6 +11,7 @@ import { useStartMining } from "@/hooks/useStartMining";
 import MiningTokenCount from "@/modules/airdrop/MiningTokenCount";
 import { useNavigate } from "react-router-dom";
 import useCurrentSpeed from "@/hooks/useGetCurrentSpeed";
+import { formatNumber } from "@/helpers";
 
 export default function AirDopHome() {
   const { handleDialog, openAnimateAndClose } =
@@ -38,7 +39,7 @@ export default function AirDopHome() {
             <div className="rounded-2xl overflow-hidden grow relative flex justify-center items-center">
               <img className="w-full h-full object-cover" src={mainBanner} />
               <span className="absolute top-0 left-0 text-t-dark font-semibold text-xs my-1.5 mx-2 bg-black/10 px-1 rounded-2xl ">
-                CURRENT SPEED {currentSpeed.toFixed(3)} MRT/H
+                CURRENT SPEED {formatNumber(currentSpeed, 3)} MRT/H
               </span>
             </div>
             <div className="grid grid-cols-2 gap-3 my-3">
@@ -91,8 +92,8 @@ export default function AirDopHome() {
               </div>
             </div>
             <p className="py-3 text-t-dark text-xs font-semibold text-center whitespace-nowrap">
-              COST {mrtNextCost.toFixed(3)} MRT NEWSPEED{" "}
-              {(mrtNextSpeedIncreased + currentSpeed).toFixed(3)} MRT/H
+              COST {formatNumber(mrtNextCost, 3)} MRT NEWSPEED{" "}
+              {formatNumber(mrtNextSpeedIncreased + currentSpeed, 3)} MRT/H
             </p>
           </div>
         </div>

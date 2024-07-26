@@ -3,6 +3,7 @@ import { RootState } from "@/store/store";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import useCurrentSpeed from "./useGetCurrentSpeed";
+import { formatNumber } from "@/helpers";
 
 export default function useAutomationMining() {
     let interval: NodeJS.Timeout;
@@ -49,6 +50,6 @@ export default function useAutomationMining() {
         }
     }, [countTime, claimTime, countStopMining]);
 
-    const amount = (sending ? 0 : (currentAmount + (countTime / 1000) * (currentSpeed / 3600))).toFixed(6)
+    const amount = sending ? 0 : formatNumber(currentAmount + (countTime / 1000) * (currentSpeed / 3600), 6)
     return { amount, resetMining, clearIntervalMining }
 }

@@ -69,7 +69,7 @@ export default function FormCard({
           onClick={() => {
             if (numberValue) onSubmit(numberValue);
           }}
-          className="w-[80px] px-1"
+          className="w-[80px] px-1 bg-success"
         >
           {type === "CLAIM_MRT" ? "Withdraw" : "Deposit"}
         </BaseButton>

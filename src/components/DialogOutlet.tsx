@@ -13,7 +13,7 @@ export default function DialogOutlet() {
   return (
     <dialog
       id="base_dialog"
-      className={twMerge("modal bg-[#0006]", classDialog)}
+      className={twMerge("modal bg-black/70 backdrop-blur-[2px]", classDialog)}
     >
       <div
         className={twMerge(

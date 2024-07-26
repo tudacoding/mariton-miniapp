@@ -10,10 +10,18 @@ export default {
     extend: {
       animation: {
         "spin-slow": "spin 6s linear infinite",
+        "ping-click": "ping-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+      },
+      keyframes: {
+        "ping-ping": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(0.98)",  },
+        },
       },
       colors: {
         primary: "#F0C233",
         light: "#FFFCE1",
+        success: "#88BA2A",
         //text
         "t-title": "#925E04",
         "t-description": "#A79575",

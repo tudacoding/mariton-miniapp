@@ -5,15 +5,14 @@ import { Dispatch, RootState } from "@/store/store";
 import { useTonWallet } from "@tonconnect/ui-react";
 import { get } from "lodash-es";
 import { useNavigate } from "react-router-dom";
+import useGetInforTelegram from "./useGetInforTelegram";
 
 export function useGetFirstRegister() {
   const wallet = useTonWallet();
   const { accountStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const navigate = useNavigate();
-  const { first_name, last_name, id, avatar, username } = get(window, "Telegram.WebApp.initDataUnsafe.user", {}) as any;
-  const telegramName = username ?? ((first_name || last_name) ? first_name ?? `${first_name} ` + (last_name ?? '') : undefined);
-
+  const { telegramName, avatar, id } = useGetInforTelegram()
   useEffect(() => {
     async function checkConnection() {
       // if (account) return;
