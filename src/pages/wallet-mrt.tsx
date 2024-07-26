@@ -13,7 +13,6 @@ import useDepositWallet from "@/hooks/useDepositWallet";
 
 export default function WalletPage() {
   const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
-
   const { mrtBalance } = useMaritonToken();
   const nav = useNavigate();
   const { claimTokenToWallet, depositTokenMrt } = useDepositWallet();
@@ -35,8 +34,8 @@ export default function WalletPage() {
             title="MRT Withdrawal"
             type="CLAIM_MRT"
             maxValue={tokensWallet?.mrtTokens ?? 0}
-            onSubmit={(value: number) => {
-              return claimTokenToWallet(value);
+            onSubmit={async (value: number) => {
+              await claimTokenToWallet(value);
             }}
           />
           <BaseButton className="mx-6" onClick={() => nav("/history-claim")}>

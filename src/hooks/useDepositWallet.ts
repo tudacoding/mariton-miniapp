@@ -3,17 +3,19 @@ import { Dispatch, RootState } from "@/store/store";
 import { useMaritonToken } from "@/hooks/useMaritonToken";
 import { Address, beginCell, Cell, toNano } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
-import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
+import { SendTransactionResponse, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { JettonMaster } from "@ton/ton";
 import { useTonClient } from "@/hooks/useTonClient";
 import { ADDRESS_MRT, DEPOSIT_WALLET } from "@/config";
 import { ITransaction } from "@/types/models/transaction";
 import { fetchTransactions } from "@/hooks/useTransaction";
+import useGetTransactions from "./useGetTransactions";
+import { toast } from "react-toastify";
 
 export default function useDepositWallet() {
     const { claimMRT } = useMaritonToken();
-    const { miningStore, accountStore, transactionStore } = useDispatch<Dispatch>();
-    const { transactions } = useSelector((s: RootState) => s.transactionStore);
+    const { miningStore, accountStore } = useDispatch<Dispatch>();
+    const { transactions, getTransactions, setTransactions } = useGetTransactions();
     const wallet = useTonWallet();
     const client = useTonClient();
     const [tonConnectUI] = useTonConnectUI();
@@ -31,39 +33,56 @@ export default function useDepositWallet() {
         const res = await claimMRT(buildMessage);
         return res;
     }
-    const reClaimTokenToWallet = async (transaction: ITransaction, index: number) => {
-        if (!transaction) return;
-        transactions[index] = { ...transactions[index], isDone: 'pending' }
-        transactionStore.setTransactions(transactions);
-        const wallet = (Address.parseRaw(transaction.wallet).toString())
-        const response = await claimMRTTokens(transaction)
+    const reFetchTransaction = async (response: SendTransactionResponse, wallet: string, index: number | string) => {
         const cell = Cell.fromBoc(Buffer.from(response.boc, 'base64'))[0];
         const hash = cell.hash();
         const latestHash = Buffer.from(hash).toString('base64');
 
         if (!latestHash) return;
         if (!wallet) return;
+        let count = 0;
+        const transactionPendings: { [key: string]: boolean } = JSON.parse(localStorage.getItem("transactionPendings") || "{}");
+        localStorage.setItem("transactionPendings", JSON.stringify({ ...transactionPendings, [index]: true }));
+
         const interval = setInterval(async () => {
-            console.log("Checking...");
+            console.log("Checking...", count++);
 
             const response = await fetchTransactions(wallet);
             const tx = response.transactions.find(
                 (tx: any) => tx.in_msg?.hash === latestHash
             );
-            if (tx) {
-                console.log("Done...")
-                transactions[index] = { ...transactions[index], isDone: true }
-                transactionStore.setTransactions(transactions);
+            if (tx || count > 8) {
+                console.log(!!tx ? "Done..." : "Stop...");
+                transactions[index] = { ...transactions[index], isDone: !!tx }
+                setTransactions(transactions);
+                const transactionPendings: { [key: string]: boolean } = JSON.parse(localStorage.getItem("transactionPendings") || "{}");
+                delete transactionPendings[index];
+                localStorage.setItem("transactionPendings", JSON.stringify(transactionPendings));
                 clearInterval(interval);
             }
-        }, 5000);
+        }, 10000);
+    }
+    const reClaimTokenToWallet = async (transaction: ITransaction, index: number | string) => {
+        const transactionPendings = localStorage.getItem("transactionPendings") || "{}";
+        const isHasPending = transactionPendings !== "{}";
+        if (isHasPending) toast.error("You have a pending transaction, please wait until the transaction is complete");
+        const wallet = (Address.parseRaw(transaction.wallet).toString())
+        const response = await claimMRTTokens(transaction)
+        transactions[index] = { ...transactions[index], isDone: 'pending' }
+        setTransactions(transactions);
+        reFetchTransaction(response, wallet, index);
     }
     const claimTokenToWallet = async (token: number) => {
         const signature = await miningStore.signSignature({
             amount: Number(token),
         });
+        if (!signature) return;
         const res = await claimMRTTokens(signature);
-        return res;
+        const dataTransactions = await getTransactions();
+        dataTransactions[signature.id] = { ...dataTransactions[0], isDone: 'pending' }
+        setTransactions(dataTransactions);
+        const wallet = (Address.parseRaw(signature.wallet).toString())
+        reFetchTransaction(res, wallet, 0);
     };
     const depositTokenMrt = async (token: number) => {
         if (!wallet || !client) return;

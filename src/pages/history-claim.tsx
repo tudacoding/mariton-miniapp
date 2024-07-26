@@ -7,11 +7,16 @@ import { useNavigate } from "react-router-dom";
 import useGetTransactions from "@/hooks/useGetTransactions";
 import useDepositWallet from "@/hooks/useDepositWallet";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
+import { useEffect } from "react";
 
 export default function HistoryClaim() {
   const nav = useNavigate();
-  const { transactions } = useGetTransactions();
+  const { transactions, getTransactions } = useGetTransactions();
   const { reClaimTokenToWallet } = useDepositWallet();
+
+  useEffect(() => {
+    getTransactions();
+  }, []);
 
   return (
     <HomeLayout hideBottom>
@@ -23,7 +28,7 @@ export default function HistoryClaim() {
             alt="bg-mission-body"
           />
           <div className="grow overflow-auto px-6 mb-10 mt-4">
-            <BaseTitleDivider className="pt-0">History Claim</BaseTitleDivider>
+            <BaseTitleDivider className="pt-0">History</BaseTitleDivider>
 
             <ListTransactions
               claimToken={reClaimTokenToWallet}

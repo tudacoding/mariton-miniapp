@@ -3,11 +3,12 @@ import { RootModel } from "..";
 import TransactionResource from "@/api/repository/transaction";
 import { ITransaction } from "@/types/models/transaction";
 interface State {
-    transactions: ITransaction[];
+    transactions: { [key: string]: ITransaction };
 }
 const transactionStore = createModel<RootModel>()({
     state: {
-        transactions: []
+        transactions: {},
+        intervalFetch: false
     } as State,
     reducers: {
         setTransactions(state, transactions) {
@@ -15,17 +16,21 @@ const transactionStore = createModel<RootModel>()({
         },
     },
     effects: (dispatch) => ({
-        getTransactions: async (wallet) => {
+        fetchTransactions: async (wallet) => {
             if (wallet) {
                 const res = await TransactionResource.fetchTransactions({ wallet })
                 if (res?.data?.length > 0) {
-                    const data = res.data.map((item: any) => {
-                        return {
-                            ...item.attributes, id: item.id
+                    const transactionPendings: { [key: string]: boolean } = JSON.parse(localStorage.getItem("transactionPendings") || "{}");
+
+                    const data = res.data.reduce((accumulator: any, currentValue: any) => {
+                        accumulator[currentValue.id] = {
+                            ...currentValue.attributes, id: currentValue.id,
+                            isDone: transactionPendings[currentValue.id] ? 'pending' : currentValue.attributes.isDone
                         }
-                    })
+                        return accumulator
+                    }, {})
                     dispatch.transactionStore.setTransactions(data)
-                    return res
+                    return data
                 }
 
             }

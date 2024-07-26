@@ -5,15 +5,15 @@ export default function ListTransactions({
   transactions,
   claimToken,
 }: {
-  transactions: ITransaction[];
-  claimToken: (transaction: ITransaction, index: number) => void;
+  transactions: { [key: string]: ITransaction };
+  claimToken: (transaction: ITransaction, index: string | number) => void;
 }) {
   return (
     <div className="flex flex-col gap-3">
-      {transactions.map((transaction: ITransaction, index: number) => {
+      {Object.entries(transactions).map(([key, transaction]) => {
         return (
           <TransactionCard
-            onClick={() => claimToken(transaction, index)}
+            onClick={() => claimToken(transaction, key)}
             key={transaction.id}
             transaction={transaction}
           />
