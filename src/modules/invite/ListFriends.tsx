@@ -13,7 +13,7 @@ export default function ListFriend() {
           <div key={index} className="pb-3">
             <BaseCard
               title={`${getUserName({ first_name, last_name, username })}`}
-              description={"Sent invite link"}
+              description={"Joined via your Invite Link"}
               onClick={() => {}}
             ></BaseCard>
           </div>

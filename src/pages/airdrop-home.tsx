@@ -16,7 +16,7 @@ import { formatNumber } from "@/helpers";
 export default function AirDopHome() {
   const { handleDialog, openAnimateAndClose } =
     useDispatch<Dispatch>().actionsStore;
-  const { claimTokens } = useDispatch<Dispatch>().miningStore;
+  const { claimTokens, getLeaderboard } = useDispatch<Dispatch>().miningStore;
   const { mining } = useStartMining();
   const { mrtNextCost = 0, mrtNextSpeedIncreased = 0 } =
     mining?.speedLevel ?? {};
@@ -46,6 +46,7 @@ export default function AirDopHome() {
               <BaseButton
                 className={"text-lg font-bold !text-t-button !bg-card"}
                 onClick={() => {
+                  getLeaderboard()
                   handleDialog({
                     isVisible: true,
                     children: <LeaderboardDialog />,

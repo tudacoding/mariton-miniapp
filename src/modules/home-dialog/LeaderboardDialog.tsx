@@ -6,10 +6,8 @@ import { Dispatch, RootState } from "@/store/store";
 import { useState } from "react";
 import BaseCard from "@/components/BaseCard";
 import BaseAction from "@/components/BaseAction";
-import { ILeaderboard } from "@/types/models/mining";
 import Account from "@/types/models/account";
 import MaritonToken from "@/assets/icons/MaritonToken";
-import TonToken from "@/assets/icons/TonToken";
 import RewardTon from "@/components/RewardTon";
 import RattingRef from "@/components/RattingRef";
 import TopRatting from "@/components/TopRatting";
@@ -53,9 +51,9 @@ export default function LeaderboardDialog() {
           </div>
           <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset] h-[calc(100vh-300px)] max-h-[500px]">
             {tab === "ref" ? (
-              <LeaderboardRef leaderboardRef={leaderboard["refs"]} />
+              <LeaderboardRef leaderboardRef={leaderboard?.["refs"]} />
             ) : (
-              <LeaderboardMint leaderboardMint={leaderboard["mints"]} />
+              <LeaderboardMint leaderboardMint={leaderboard?.["mints"]} />
             )}
           </div>
         </div>

@@ -13,7 +13,6 @@ export function useStartMining() {
       miningStore.startMining({
         id: account?.id,
       });
-      miningStore.getLeaderboard();
       miningStore.fetchBoosts(account?.id)
     }
   }, [account?.id]);
