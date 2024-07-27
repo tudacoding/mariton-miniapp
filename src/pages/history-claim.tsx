@@ -8,11 +8,13 @@ import useGetTransactions from "@/hooks/useGetTransactions";
 import useDepositWallet from "@/hooks/useDepositWallet";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
 import { useEffect } from "react";
+import { useMaritonToken } from "@/hooks/useMaritonToken";
 
 export default function HistoryClaim() {
   const nav = useNavigate();
   const { transactions, getTransactions } = useGetTransactions();
-  const { reClaimTokenToWallet } = useDepositWallet();
+  const { client } = useMaritonToken();
+  const { reClaimTokenToWallet } = useDepositWallet({ client });
 
   useEffect(() => {
     getTransactions();
