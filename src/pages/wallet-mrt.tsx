@@ -10,6 +10,7 @@ import messageBubble from "@/assets/air/message-bubble.png";
 import FormCard from "@/modules/wallet/FormCard";
 import BackgroundWallet from "@/modules/wallet/BackgroundWallet";
 import useDepositWallet from "@/hooks/useDepositWallet";
+import MessageBubble from "@/assets/icons/MessageBubble";
 
 export default function WalletPage() {
   const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
@@ -21,12 +22,12 @@ export default function WalletPage() {
     <HomeLayout hideBottom>
       <div className="relative h-fix">
         <BaseAction
-          className="absolute right-0 animate-ping-click"
+          className="absolute animate-ping-click right-[135px]"
           onClick={() => nav("/history-claim")}
         >
           <div className="relative">
-            <img src={messageBubble} />
-            <span className="absolute text-t-button font-bold top-0 py-2 px-3">
+            <MessageBubble />
+            <span className="absolute text-t-button font-bold top-0 py-2 px-6">
               History
             </span>
           </div>
