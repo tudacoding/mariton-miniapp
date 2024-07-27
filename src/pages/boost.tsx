@@ -18,6 +18,7 @@ import { handleBaseDialog } from "@/components/BaseDialog";
 import useGetInforTelegram from "@/hooks/useGetInforTelegram";
 import { KEY_MARITON_AMBASSADOR } from "@/config";
 import useCopy from "@/hooks/useCopy";
+import BaseAction from "@/components/BaseAction";
 export default function Boost() {
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
@@ -133,20 +134,6 @@ export default function Boost() {
               const isActive = boosts.find((b) => b.type === type);
               return (
                 <div key={index} className="pb-3">
-                  <BoostDialog
-                    id={`boost_${index}`}
-                    item={item}
-                    onAction={async () => {
-                      if (!isActive && account.id) {
-                        const res = await onClick(account.id);
-                        if (res)
-                          handleBaseDialog({
-                            isVisible: false,
-                            id: `boost_${index}`,
-                          });
-                      }
-                    }}
-                  />
                   <BaseCard
                     title={title}
                     description={sortDescription}
@@ -155,14 +142,15 @@ export default function Boost() {
                       isActive ? (
                         <Success className="h-6 w-6 mx-3" />
                       ) : (
-                        <BaseButton
-                          className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold"
-                          onClick={() => {
-                            handleClick(item, index);
+                        <BoostDialog
+                          id={`boost_${index}`}
+                          item={item}
+                          onAction={async () => {
+                            if (!isActive && account.id) {
+                              return await onClick(account.id);
+                            }
                           }}
-                        >
-                          Next
-                        </BaseButton>
+                        />
                       )
                     }
                   ></BaseCard>

@@ -50,6 +50,6 @@ export default function useAutomationMining() {
         }
     }, [countTime, claimTime, countStopMining]);
 
-    const amount = sending ? 0 : formatNumber(currentAmount + (countTime / 1000) * (currentSpeed / 3600), 6)
+    const amount = sending ? '0.000000' : (currentAmount + (countTime / 1000) * (currentSpeed / 3600)).toFixed(6)
     return { amount, resetMining, clearIntervalMining }
 }

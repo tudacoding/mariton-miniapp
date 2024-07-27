@@ -62,12 +62,12 @@ const actionsStore = createModel<RootModel>()({
             dispatch.actionsStore.handleDialog({
                 isVisible: true,
                 children,
-                classDialog: "h-full bg-transparent",
+                classDialog: "h-full bg-transparent backdrop-blur-none",
                 showBackgroundDialog: false,
             });
             await delay(1500)
             dispatch.actionsStore.closeDialog({
-                classDialog: "h-full bg-transparent",
+                classDialog: "h-full bg-transparent backdrop-blur-none",
             });
         }
     })
