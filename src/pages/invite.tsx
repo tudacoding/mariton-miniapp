@@ -69,7 +69,7 @@ export default function InvitePage() {
             <div className="rounded-xl bg-primary flex flex-row py-5 px-[14px] justify-between my-[6px]">
               <div className="flex flex-row gap-1 items-center justify-center">
                 <span className="text-2xl text-t-button font-bold leading-none">
-                  {formatNumber(mining?.friendClaimTokens ?? 0, 6)}
+                  {(mining?.friendClaimTokens ?? 0).toFixed(6)}
                 </span>
                 <MaritonToken />
               </div>
