@@ -9,14 +9,13 @@ import closeButton from "@/assets/game/close-button.png";
 import messageBubble from "@/assets/air/message-bubble.png";
 import FormCard from "@/modules/wallet/FormCard";
 import BackgroundWallet from "@/modules/wallet/BackgroundWallet";
-import BaseButton from "@/components/BaseButton";
 import useDepositWallet from "@/hooks/useDepositWallet";
 
 export default function WalletPage() {
   const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
-  const {  } = useMaritonToken();
+  const { mrtBalance, client } = useMaritonToken();
   const nav = useNavigate();
-  const { claimTokenToWallet, depositTokenMrt } = useDepositWallet();
+  const { claimTokenToWallet, depositTokenMrt } = useDepositWallet({ client });
 
   return (
     <HomeLayout hideBottom>
@@ -27,7 +26,9 @@ export default function WalletPage() {
         >
           <div className="relative">
             <img src={messageBubble} />
-            <span className="absolute text-t-button font-bold top-0 py-2 px-3">History</span>
+            <span className="absolute text-t-button font-bold top-0 py-2 px-3">
+              History
+            </span>
           </div>
         </BaseAction>
         <BackgroundWallet />
@@ -35,7 +36,7 @@ export default function WalletPage() {
           <FormCard
             title="MRT Deposit"
             type="MRT"
-            maxValue={0}
+            maxValue={mrtBalance}
             onSubmit={(value: number) => {
               return depositTokenMrt(value);
             }}

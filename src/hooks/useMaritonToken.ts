@@ -16,7 +16,6 @@ export function useMaritonToken() {
   const [MRT, setMRT] = useState<number>(0);
   const [TON, setTON] = useState<number>(0);
   const { sender } = useTonConnect();
-  const [tonConnectUI] = useTonConnectUI();
   const userFriendlyAddress = useTonAddress();
   const wallet = userFriendlyAddress ? address(userFriendlyAddress) : null;
   const mrtAddress = Address.parse(
@@ -43,7 +42,7 @@ export function useMaritonToken() {
       if (!client) return;
       if (!tokenContract) return;
       if (!claimContract) return;
-      if(!wallet) return;
+      if (!wallet) return;
       if (loaded) return;
       // toast.loading("loading info 🥚🥚..");
       //Check MRT token:
@@ -66,6 +65,7 @@ export function useMaritonToken() {
   }, [client, tokenContract, loaded, wallet]);
 
   return {
+    client,
     loaded: loaded,
     wallet: userFriendlyAddress ? address(userFriendlyAddress) : null,
     tonBalance: TON,
@@ -78,23 +78,6 @@ export function useMaritonToken() {
         },
         "withdraw"
       );
-    },
-    claimMRT: async (message: ClaimMRT) => {
-      const response = await tonConnectUI.sendTransaction({
-        validUntil: Math.floor(Date.now() / 1000) + 600,
-        messages: [
-          {
-            address: claimAddress.toString(),
-            amount: toNano(Number(0.1)).toString(),
-            payload: beginCell()
-              .store(storeClaimMRT(message))
-              .endCell()
-              .toBoc()
-              .toString("base64"),
-          },
-        ],
-      });
-      return response
     },
     MintClose: async () => {
       return await tokenContract?.send(
@@ -120,4 +103,29 @@ export function useMaritonToken() {
       );
     },
   };
+}
+export function useMaritonTokenMethod() {
+  const [tonConnectUI] = useTonConnectUI();
+  const claimAddress = Address.parse(
+    CLAIM_ADDRESS
+  );
+  return {
+    claimMRT: async (message: ClaimMRT) => {
+      const response = await tonConnectUI.sendTransaction({
+        validUntil: Math.floor(Date.now() / 1000) + 600,
+        messages: [
+          {
+            address: claimAddress.toString(),
+            amount: toNano(Number(0.1)).toString(),
+            payload: beginCell()
+              .store(storeClaimMRT(message))
+              .endCell()
+              .toBoc()
+              .toString("base64"),
+          },
+        ],
+      });
+      return response
+    },
+  }
 }

@@ -11,7 +11,7 @@ import { Dispatch, RootState } from "@/store/store";
 import BaseButton from "@/components/BaseButton";
 import { beginCell } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
-import { useMaritonToken } from "@/hooks/useMaritonToken";
+import {  useMaritonTokenMethod } from "@/hooks/useMaritonToken";
 import { useNavigate } from "react-router-dom";
 
 const LotteryItem = (props: any) => {
@@ -83,7 +83,7 @@ const Pagination = () => {
 const InventoryScreen = () => {
   const { inventory } = useGetInventory();
   const { miningStore } = useDispatch<Dispatch>();
-  const { claimMRT } = useMaritonToken();
+  const { claimMRT } = useMaritonTokenMethod();
   const nav = useNavigate();
 
   return (

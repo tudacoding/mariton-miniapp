@@ -9,29 +9,6 @@ export default function useAutomationMining() {
     let interval: NodeJS.Timeout;
     const { mining, sending } = useSelector((s: RootState) => s.miningStore);
     const { claimTime, endMiningTime, minedTokens, lastBoostTime } = mining ?? {}
-    // const test = {
-    //     "id": 71,
-    //     "minedTokens": 0,
-    //     "claimTime": "2024-07-26T20:09:48.835Z",
-    //     "createdAt": "2024-07-26T20:09:48.998Z",
-    //     "updatedAt": "2024-07-26T20:09:48.998Z",
-    //     "endMiningTime": "2024-07-27T00:09:48.836Z",
-    //     "lastBoostTime": null,
-    //     "friendClaimTokens": 0,
-    //     "speedLevel": {
-    //         "id": 37,
-    //         "level": "1",
-    //         "speed": 0.1,
-    //         "log": {},
-    //         "mrtNextCost": 2.5,
-    //         "mrtNextSpeedIncreased": 0.01,
-    //         "tonNextCost": 0.1,
-    //         "missionFriendsLevel": 0,
-    //         "createdAt": "2024-07-26T20:09:48.837Z",
-    //         "updatedAt": "2024-07-26T20:09:48.837Z"
-    //     },
-    // }
-    // const { claimTime, endMiningTime, minedTokens, lastBoostTime } = test
     const [countTime, setCountTime] = useState(0)
     const currentSpeed = useCurrentSpeed();
 
@@ -54,7 +31,6 @@ export default function useAutomationMining() {
 
         const countStartTime = lastBoostTime ? new Date(lastBoostTime).getTime() : new Date(claimTime).getTime();
         const countEndTime = countStopMining ? new Date().getTime() : new Date(endMiningTime).getTime();
-
         const elapsedTimeInSeconds = Math.floor((countEndTime > countStartTime ? countEndTime - countStartTime : 0) / 1000);
         const earnedTokens = elapsedTimeInSeconds * (currentSpeed / 3600);
         setCountTime(0)
@@ -74,5 +50,6 @@ export default function useAutomationMining() {
     }, [countTime, claimTime, countStopMining]);
 
     const amount = sending ? '0.000000' : (currentAmount + (countTime / 1000) * (currentSpeed / 3600)).toFixed(6)
+    
     return { amount, resetMining, clearIntervalMining }
 }

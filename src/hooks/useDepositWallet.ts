@@ -1,23 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
-import { useMaritonToken } from "@/hooks/useMaritonToken";
+import { useMaritonToken, useMaritonTokenMethod } from "@/hooks/useMaritonToken";
 import { Address, beginCell, Cell, toNano } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
 import { SendTransactionResponse, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
-import { JettonMaster } from "@ton/ton";
+import { JettonMaster, TonClient } from "@ton/ton";
 import { useTonClient } from "@/hooks/useTonClient";
 import { ADDRESS_MRT, DEPOSIT_WALLET } from "@/config";
 import { ITransaction } from "@/types/models/transaction";
 import { fetchTransactions } from "@/hooks/useTransaction";
 import useGetTransactions from "./useGetTransactions";
-import { toast } from "react-toastify";
 
-export default function useDepositWallet() {
-    const { claimMRT } = useMaritonToken();
+export default function useDepositWallet({ client }: { client?: TonClient }) {
+    const { claimMRT } = useMaritonTokenMethod();
     const { miningStore, accountStore } = useDispatch<Dispatch>();
     const { transactions, getTransactions, setTransactions } = useGetTransactions();
     const wallet = useTonWallet();
-    const client = useTonClient();
     const [tonConnectUI] = useTonConnectUI();
 
     const claimMRTTokens = async (signature: ITransaction) => {

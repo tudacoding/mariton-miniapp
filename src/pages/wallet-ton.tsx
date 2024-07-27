@@ -9,9 +9,9 @@ import useDepositWallet from "@/hooks/useDepositWallet";
 
 export default function TonWalletPage() {
   const nav = useNavigate();
-  const { tonBalance } = useMaritonToken();
+  const { tonBalance, client } = useMaritonToken();
 
-  const { depositTokenTon } = useDepositWallet();
+  const { depositTokenTon } = useDepositWallet({ client });
   return (
     <HomeLayout hideBottom>
       <div className="relative h-fix">

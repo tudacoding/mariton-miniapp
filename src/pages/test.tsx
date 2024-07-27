@@ -1,19 +1,16 @@
 import { ClaimMRT } from "@/contract/claim";
 import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
-import { useMaritonToken } from "@/hooks/useMaritonToken";
+import {
+  useMaritonToken,
+  useMaritonTokenMethod,
+} from "@/hooks/useMaritonToken";
 import { beginCell, toNano } from "@ton/core";
 import { mnemonicToWalletKey, sign } from "@ton/crypto";
 const TestScreen = () => {
   const { account } = useGetFirstRegister();
-  const {
-    wallet,
-    tonBalance,
-    mrtBalance,
-    mintMRT,
-    MintClose,
-    claimMRT,
-    withdrawTon,
-  } = useMaritonToken();
+  const { wallet, tonBalance, mrtBalance, mintMRT, MintClose, withdrawTon } =
+    useMaritonToken();
+  const { claimMRT } = useMaritonTokenMethod();
   const handleClaim = async () => {
     const mnemonics: string[] =
       "left foam sniff safe current crop prison dutch manage pole recall survey spoon swamp garbage rabbit perfect tilt eager topic crew police raw leopard".split(
@@ -44,7 +41,7 @@ const TestScreen = () => {
     <div className="h-screen">
       <ol className="mt-2 list-decimal list-inside space-y-2 text-lg">
         <li>publicKey: {account.publicKey}</li>
-        <li>Wallet: {wallet.toString()}</li>
+        <li>Wallet: {wallet?.toString()}</li>
         <li>Ton Balance: {Number(tonBalance).toFixed(2)}</li>
         <li>MRT Balance: {Number(mrtBalance)}</li>
       </ol>
