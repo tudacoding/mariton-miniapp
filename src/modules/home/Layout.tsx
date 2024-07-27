@@ -4,6 +4,8 @@ import AirdropActionBar from "../airdrop/AirdropActionBar";
 import { useLocation } from "react-router-dom";
 import HomeNavbar from "./NavbarBottom";
 import land from "@/assets/game/land.png";
+import { useGetFirstRegister } from "@/hooks/useGetFirstRegister";
+import WelcomePage from "@/pages/welcome";
 
 interface IHomeLayout extends PropsWithChildren {
   classname?: string;
@@ -17,6 +19,8 @@ export default function HomeLayout({
   hideTop = false,
 }: IHomeLayout) {
   const location = useLocation();
+  const { account } = useGetFirstRegister();
+  if (!account) return <WelcomePage />;
   return (
     <div className="h-screen w-full mx-auto flex flex-col items-center justify-start relative">
       {location?.pathname === "/" && (

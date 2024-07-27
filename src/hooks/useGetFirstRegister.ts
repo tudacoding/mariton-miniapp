@@ -15,7 +15,7 @@ export function useGetFirstRegister() {
   const { telegramName, avatar, id } = useGetInforTelegram()
   useEffect(() => {
     async function checkConnection() {
-      // if (account) return;
+      if (account) return;
       const res = await accountStore.getFirstRegister({
         address: get(wallet, "account.address"),
         publicKey: get(wallet, "account.publicKey"),

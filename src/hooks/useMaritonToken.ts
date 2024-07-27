@@ -18,7 +18,7 @@ export function useMaritonToken() {
   const { sender } = useTonConnect();
   const [tonConnectUI] = useTonConnectUI();
   const userFriendlyAddress = useTonAddress();
-  const wallet = address(userFriendlyAddress);
+  const wallet = userFriendlyAddress ? address(userFriendlyAddress) : null;
   const mrtAddress = Address.parse(
     MRT_ADDRESS
   );
@@ -43,6 +43,7 @@ export function useMaritonToken() {
       if (!client) return;
       if (!tokenContract) return;
       if (!claimContract) return;
+      if(!wallet) return;
       if (loaded) return;
       // toast.loading("loading info 🥚🥚..");
       //Check MRT token:
@@ -62,11 +63,11 @@ export function useMaritonToken() {
       }
     }
     getValue();
-  }, [client, tokenContract, loaded]);
+  }, [client, tokenContract, loaded, wallet]);
 
   return {
     loaded: loaded,
-    wallet: address(userFriendlyAddress),
+    wallet: userFriendlyAddress ? address(userFriendlyAddress) : null,
     tonBalance: TON,
     mrtBalance: MRT,
     withdrawTon: async () => {

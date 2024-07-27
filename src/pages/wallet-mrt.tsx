@@ -14,7 +14,7 @@ import useDepositWallet from "@/hooks/useDepositWallet";
 
 export default function WalletPage() {
   const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
-  const { mrtBalance } = useMaritonToken();
+  const {  } = useMaritonToken();
   const nav = useNavigate();
   const { claimTokenToWallet, depositTokenMrt } = useDepositWallet();
 
@@ -35,7 +35,7 @@ export default function WalletPage() {
           <FormCard
             title="MRT Deposit"
             type="MRT"
-            maxValue={mrtBalance}
+            maxValue={0}
             onSubmit={(value: number) => {
               return depositTokenMrt(value);
             }}

@@ -189,7 +189,7 @@ export default function LevelUpDialog({
         >
           <img src={closeButton} alt="" className="object-contain h-12" />
         </BaseAction>
-        <BaseAction onClick={handleUpdate} disable={disableButtonUpgrade}>
+        <BaseAction onClick={handleUpdate} disable={disableButtonUpgrade || loading}>
           <img src={upgradeButton} alt="" className="object-contain h-12" />
         </BaseAction>
       </div>
