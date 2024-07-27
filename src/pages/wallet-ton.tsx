@@ -7,6 +7,7 @@ import BackgroundWallet from "@/modules/wallet/BackgroundWallet";
 import { useMaritonToken } from "@/hooks/useMaritonToken";
 import useDepositWallet from "@/hooks/useDepositWallet";
 
+
 export default function TonWalletPage() {
   const nav = useNavigate();
   const { tonBalance, client } = useMaritonToken();
