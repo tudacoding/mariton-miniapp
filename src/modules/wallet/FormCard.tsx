@@ -38,7 +38,7 @@ export default function FormCard({
           <BaseAction>
             <Minus
               onClick={() => {
-                if (numberValue > 0) setValue(numberValue - 1);
+                if (numberValue - 1 >= 0) setValue(numberValue - 1);
               }}
             />
           </BaseAction>

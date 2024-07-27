@@ -23,7 +23,7 @@ export default function Boost() {
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const { boosts } = useSelector((s: RootState) => s.miningStore);
-  const { telegramName } = useGetInforTelegram();
+  const { first_name, last_name } = useGetInforTelegram();
   const [copy] = useCopy(KEY_MARITON_AMBASSADOR);
 
   const checkinBoosts = useMemo(() => {
@@ -86,7 +86,7 @@ export default function Boost() {
           </span>
         ),
         onClick: async (userId: number) => {
-          if (telegramName?.includes(KEY_MARITON_AMBASSADOR)) {
+          if ((first_name + last_name)?.includes(KEY_MARITON_AMBASSADOR)) {
             const res = await miningStore.boostDaily({
               userId,
               type: "MARITON_AMBASSADOR",
