@@ -104,7 +104,7 @@ export function useMaritonToken() {
     },
   };
 }
-export function useMaritonTokenMethod() {
+export function useClaimMRTMethod() {
   const [tonConnectUI] = useTonConnectUI();
   const claimAddress = Address.parse(
     CLAIM_ADDRESS

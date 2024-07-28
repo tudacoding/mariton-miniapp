@@ -11,8 +11,9 @@ import MaritonToken from "@/assets/icons/MaritonToken";
 import RewardTon from "@/components/RewardTon";
 import RattingRef from "@/components/RattingRef";
 import TopRatting from "@/components/TopRatting";
+import React from "react";
 
-export default function LeaderboardDialog() {
+export default React.memo(function LeaderboardDialog() {
   const { handleDialog } = useDispatch<Dispatch>().actionsStore;
   const { leaderboard } = useSelector((state: RootState) => state.miningStore);
   const [tab, setTab] = useState<"ref" | "mint">("ref");
@@ -72,8 +73,7 @@ export default function LeaderboardDialog() {
       </div>
     </>
   );
-}
-
+});
 function LeaderboardRef({ leaderboardRef }: { leaderboardRef: Account[] }) {
   return (
     <>

@@ -3,7 +3,6 @@ import { RootState } from "@/store/store";
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import useCurrentSpeed from "./useGetCurrentSpeed";
-import { formatNumber } from "@/helpers";
 
 export default function useAutomationMining() {
     let interval: NodeJS.Timeout;

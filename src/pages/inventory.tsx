@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import headBgLottery from "@/assets/game/head-background-lottery.png";
 import bodyBgLottery from "@/assets/game/body-background-lottery.png";
 import ActionBar from "@/modules/home/ActionBar";
@@ -8,11 +7,6 @@ import { get } from "lodash-es";
 import ImageLotteryItem from "@/components/ImageLotteryItem";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
-import BaseButton from "@/components/BaseButton";
-import { beginCell } from "@ton/core";
-import { ClaimMRT } from "@/contract/claim";
-import {  useMaritonTokenMethod } from "@/hooks/useMaritonToken";
-import { useNavigate } from "react-router-dom";
 
 const LotteryItem = (props: any) => {
   const attributes = get(props.item, "attributes.lottery_item.data.attributes");
@@ -82,39 +76,11 @@ const Pagination = () => {
 
 const InventoryScreen = () => {
   const { inventory } = useGetInventory();
-  const { miningStore } = useDispatch<Dispatch>();
-  const { claimMRT } = useMaritonTokenMethod();
-  const nav = useNavigate();
 
   return (
     <div className="relative h-screen">
       <ActionBar />
       <div className="relative flex flex-col items-center p-2 mt-[60px]">
-        <BaseButton
-          onClick={async () => {
-            const signature = await miningStore.signSignature({});
-            const buffer = Buffer.from(signature.signature, "hex");
-            const signatureCell = beginCell().storeBuffer(buffer).endCell();
-
-            const buildMessage: ClaimMRT = {
-              $$type: "ClaimMRT",
-              nonce: BigInt(signature.nonce),
-              amount: BigInt(signature.amount),
-              signature: signatureCell,
-            };
-            const res = await claimMRT(buildMessage);
-            return res;
-          }}
-        >
-          Claim
-        </BaseButton>
-        <BaseButton
-          onClick={() => {
-            nav("/test");
-          }}
-        >
-          Mint MRT
-        </BaseButton>
         <img src={headBgLottery}></img>
         <div className="relative w-full h-full flex justify-center">
           <img className="absolute" src={bodyBgLottery}></img>
