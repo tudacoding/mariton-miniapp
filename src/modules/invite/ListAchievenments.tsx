@@ -2,12 +2,12 @@ import BaseCard from "@/components/BaseCard";
 import Success from "@/assets/icons/Success";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "@/assets/icons/Loading";
 import MissionAvatar from "@/components/MissionAvatar";
 
-export default function ListAchievements() {
+export default memo(function ListAchievements() {
   const [loadingButtonId, setLoadingButtonId] = useState<number | null>(null);
   const { mining } = useSelector((state: RootState) => state.miningStore);
   const { completeMissionFriend } = useDispatch<Dispatch>().miningStore;
@@ -106,4 +106,4 @@ export default function ListAchievements() {
       })}
     </div>
   );
-}
+});

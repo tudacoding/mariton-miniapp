@@ -1,5 +1,4 @@
 import HomeLayout from "@/modules/home/Layout";
-// import coinPng from "@/assets/air/mariton-tk-ico.png";
 import BaseButton from "@/components/BaseButton";
 import { useEffect, useState } from "react";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
@@ -17,7 +16,6 @@ import ListFriend from "@/modules/invite/ListFriends";
 import Copy from "@/assets/icons/Copy";
 import MaritonToken from "@/assets/icons/MaritonToken";
 import ListAchievements from "@/modules/invite/ListAchievenments";
-import { formatNumber } from "@/helpers";
 
 export default function InvitePage() {
   const wallet = useTonWallet();
@@ -52,8 +50,8 @@ export default function InvitePage() {
           >
             <BaseTitleDivider className="pt-1">Invite Link</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
-              <div className="py-2 px-4 text-t-description bg-card rounded-xl grow max-w-[200px]">
-                <p className="line-clamp-1 text-sm">{ref}</p>
+              <div className="py-2 text-t-description bg-card rounded-xl grow">
+                <span className="line-clamp-1 px-1 text-sm whitespace-pre-wrap">{" "}{ref}{" "}</span>
               </div>
               <BaseButton
                 className=" flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"

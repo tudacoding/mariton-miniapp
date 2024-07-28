@@ -1,9 +1,10 @@
 import BaseCard from "@/components/BaseCard";
 import { getUserName } from "@/hooks/useGetInforTelegram";
 import { RootState } from "@/store/store";
+import { memo } from "react";
 import { useSelector } from "react-redux";
 
-export default function ListFriend() {
+export default memo(function ListFriend() {
   const { friends } = useSelector((s: RootState) => s.miningStore);
   return (
     <div>
@@ -21,4 +22,4 @@ export default function ListFriend() {
       })}
     </div>
   );
-}
+});
