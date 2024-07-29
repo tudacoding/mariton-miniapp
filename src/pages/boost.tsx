@@ -7,8 +7,7 @@ import { twMerge } from "tailwind-merge";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 import { toast } from "react-toastify";
-import Loading from "@/assets/icons/Loading";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import Success from "@/assets/icons/Success";
 import CheckInIcon from "@/assets/icons/CheckinIcon";
 import RichJuniorIcon from "@/assets/icons/RichJuniorIcon";
@@ -18,7 +17,6 @@ import { handleBaseDialog } from "@/components/BaseDialog";
 import useGetInforTelegram from "@/hooks/useGetInforTelegram";
 import { KEY_MARITON_AMBASSADOR } from "@/config";
 import useCopy from "@/hooks/useCopy";
-import BaseAction from "@/components/BaseAction";
 export default function Boost() {
   const { miningStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
@@ -86,7 +84,11 @@ export default function Boost() {
           </span>
         ),
         onClick: async (userId: number) => {
-          if ((first_name + last_name)?.includes(KEY_MARITON_AMBASSADOR)) {
+          if (
+            ((first_name ?? "") + (last_name ?? ""))?.includes(
+              KEY_MARITON_AMBASSADOR
+            )
+          ) {
             const res = await miningStore.boostDaily({
               userId,
               type: "MARITON_AMBASSADOR",
