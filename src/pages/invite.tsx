@@ -85,7 +85,7 @@ export default function InvitePage() {
               </div>
             </div>
             <p className="text-center text-t-description text-xs font-semibold">
-              Each time a friend claims, they receive 1% of $MRT tokens. You can
+              Each time a friend claims, you receive 1% of $MRT tokens. You can
               claim to accumulate mined tokens.
             </p>
             <BaseDivider className="my-3" />

@@ -13,22 +13,21 @@ export default function TransactionCard({
   transaction,
   onClick = () => {},
 }: ITransactionCard) {
-  console.log(transaction.amount);
-  
   return (
     <BaseCard
       title={
         <div className="flex flex-row gap-1 items-center">
           <p className="text-t-title font-bold text-base leading-none pb-1">
-            {`${formatNumber((Number(transaction.amount) / 1000000000), 6)}`}
+            {`${formatNumber(Number(transaction.amount) / 1000000000, 6)}`}
           </p>
-          <MaritonToken className="mb-1" />
         </div>
       }
       description={formatDate(transaction.createdAt)}
       actionComponent={
         <ActionTransactionCard onClick={onClick} isDone={transaction.isDone} />
       }
+      avatar={<MaritonToken className="h-8 w-8" />}
+      isCustomAvatar
     ></BaseCard>
   );
 }
@@ -43,7 +42,7 @@ function ActionTransactionCard({
     case true:
       return <Success className="h-6 w-6 mx-4" />;
     case "pending":
-      return <Loading className="text-primary w-6 h-6 mx-4"/>;
+      return <Loading className="text-primary w-6 h-6 mx-4" />;
     default:
       return (
         <BaseButton
