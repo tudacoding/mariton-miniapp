@@ -7,7 +7,7 @@ export const KEY_MARITON_AMBASSADOR = '💎 $MRT'
 
 export const DEPOSIT_WALLET = "EQBJcYyhJcJDBN39BHd5V-2un3Dkgi7ExK1S9q3eIhHqPEI3";
 export const MRT_ADDRESS = "EQBnyp_7TXUXld965YwLnJB7p1jqZ72HCoJRzgdFinOpCVtR";
-export const CLAIM_ADDRESS = "EQBl6ve64-k-Fp3v_XScsYYN1a6uaVSE3o8hNacGJ3qDs1hg";
+export const CLAIM_ADDRESS = "EQAZ_nYe8VsmWXmPuUdrnSN1Mv0ur88hNNpySNaZluN3Pt9M";
 export default {
   apiUrl: isTestnet ? "https://api.vaffsiam.com/api" : "https://api.mariton.xyz/api",
   // apiUrl: "http://localhost:1337/api",
