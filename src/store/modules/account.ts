@@ -3,9 +3,11 @@ import { createModel } from "@rematch/core";
 import AccountRepository from "@/api/repository/account";
 
 import type { RootModel } from "..";
-import Account from "@/types/models/account";
+import Account, { ITokensWallet } from "@/types/models/account";
 import SpinRepository from "@/api/repository/spin";
 import { get } from "lodash-es";
+import DepositRepository from "@/api/repository/deposit";
+import { toast } from "react-toastify";
 
 interface State {
   account: Account;
@@ -14,9 +16,12 @@ interface State {
   currentPage: number;
   countRef: number;
   listMissions: Array<any>;
+  tokensWallet: ITokensWallet;
 }
 const accountStore = createModel<RootModel>()({
-  state: {} as State,
+  state: {
+    countRef: 0,
+  } as State,
   reducers: {
     setAccount(state, data) {
       return {
@@ -54,12 +59,25 @@ const accountStore = createModel<RootModel>()({
         listMissions: data,
       };
     },
+    setTokensWallet(state, data: ITokensWallet) {
+      return {
+        ...state,
+        tokensWallet: { ...state.tokensWallet, ...data },
+      }
+    }
   },
   effects: (dispatch) => ({
     async getFirstRegister(params) {
       const res = await AccountRepository.getFirstRegister(params);
-      if (res) dispatch.accountStore.setAccount(res);
-      return res;
+      if (res.id) {
+        dispatch.accountStore.setAccount(res);
+        dispatch.accountStore.setTokensWallet({
+          tonTokens: res.tonTokens,
+          mrtTokens: res.mrtTokens,
+          totalMrtTokensClaimed: res.totalMrtTokensClaimed,
+        });
+        return res;
+      }
     },
     async completeMission(params) {
       const res = await AccountRepository.completeMission(params);
@@ -87,6 +105,40 @@ const accountStore = createModel<RootModel>()({
       dispatch.accountStore.setCountRef(get(res, "meta.pagination.total"));
       return get(res, "meta.pagination.total");
     },
+    async createTransaction({ type, amount }, rootState) {
+      const account = rootState.accountStore.account;
+      if (account?.id) {
+        const res = await DepositRepository.createTransaction({
+          wallet: account.wallet,
+          publicKey: account.publicKey,
+          type,
+          amount
+        });
+        if (res.id) return res
+      }
+    },
+    async getStatusTransaction({ id }, rootState) {
+      const account = rootState.accountStore.account;
+      if (account?.id) {
+        const accountId = account?.id
+        const interval = setInterval(async () => {
+          const res = await DepositRepository.getStatusTransaction(id);
+          if (res && res.data.attributes?.status === 'success') {
+            const account = await AccountRepository.getAccount({ id: accountId });
+            if (account) {
+              dispatch.accountStore.setAccount(account.data?.attributes);
+              dispatch.accountStore.setTokensWallet({
+                tonTokens: account.data?.attributes.tonTokens,
+                mrtTokens: account.data?.attributes.mrtTokens,
+              })
+            }
+            clearInterval(interval);
+            toast.success('Successful transaction!');
+          }
+        }, 5000)
+      }
+
+    }
   }),
 });
 export default accountStore;

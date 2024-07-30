@@ -6,13 +6,23 @@ interface IProps {
   address: string;
   publicKey: string;
   step?: number;
+  telegramAvatar?: string;
+  telegramUserId?: string;
+  telegramName?: string;
 }
 
 const AccountRepository = {
-  getFirstRegister: async ({ address, publicKey }: IProps) => {
+  getAccount: async ({ id }: any) => {
+    const res = await axios.get(`${config.apiUrl}/accounts/${id}`);
+    return res.data || {};
+  },
+  getFirstRegister: async ({ address, publicKey, telegramAvatar, telegramUserId, telegramName }: IProps) => {
     const res = await axios.post(`${config.apiUrl}/game/first-register`, {
       address,
       publicKey,
+      telegramUserId,
+      telegramName,
+      telegramAvatar
     });
     return res.data || {};
   },

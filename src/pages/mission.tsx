@@ -21,19 +21,19 @@ const MissionScreen = () => {
   return (
     <div className="relative h-screen">
       <ActionBar />
-      <div className="relative flex flex-col items-center justify-center w-full p-4">
+      <div className="relative flex flex-col items-center justify-center w-full p-4 mt-[60px]">
         <img
           className="absolute top-0 z-10"
           src={missionHeader}
           alt="bg-mission-header"
         />
-        <div className="absolute top-10 relative w-full">
+        <div className="top-10 relative w-full h-fit">
           <img
-            className="absolute w-full"
+            className="absolute w-full z-[-10] h-full"
             src={missionBody}
             alt="bg-mission-body"
           />
-          <div className="w-full absolute p-6 mt-2">
+          <div className="w-full p-6 mt-2">
             <div className="w-full h-full bg-amber-100 rounded-xl p-4">
               <ActionButton
                 logo={logoX}

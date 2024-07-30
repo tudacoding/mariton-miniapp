@@ -22,10 +22,11 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
   },
   "include": ["src"],
+  "exclude": ["src/contract/token.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

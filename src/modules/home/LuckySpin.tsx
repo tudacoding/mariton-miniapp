@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const LuckySpin = () => {
   const navigate = useNavigate();
   return (
-    <div className="absolute top-16 ml-6 flex items-center flex-col">
+    <div className="absolute top-16 flex items-center flex-col">
       <img
         onClick={() => navigate("/spin")}
         className="animate-pulse cursor-pointer mt-2"
