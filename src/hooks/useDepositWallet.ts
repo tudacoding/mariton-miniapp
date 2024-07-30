@@ -5,7 +5,7 @@ import { Address, beginCell, Cell, toNano } from "@ton/core";
 import { ClaimMRT } from "@/contract/claim";
 import { SendTransactionResponse, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { JettonMaster, TonClient } from "@ton/ton";
-import { ADDRESS_MRT, DEPOSIT_WALLET } from "@/config";
+import { MRT_ADDRESS, DEPOSIT_WALLET } from "@/config";
 import { ITransaction } from "@/types/models/transaction";
 import { fetchTransactions } from "@/hooks/useTransaction";
 import useGetTransactions from "./useGetTransactions";
@@ -109,7 +109,7 @@ export default function useDepositWallet({ client }: { client?: TonClient }) {
             .endCell();
 
         let jettonMasterCustom = client.open(
-            JettonMaster.create(Address.parse(ADDRESS_MRT))
+            JettonMaster.create(Address.parse(MRT_ADDRESS))
         );
         let jettonWalletMRT = await jettonMasterCustom.getWalletAddress(
             Address.parse(wallet.account.address)

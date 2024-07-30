@@ -142,8 +142,10 @@ const miningStore = createModel<RootModel>()({
         fetchBoosts: async (account: number) => {
             if (!account) return;
             const res = await BoostRepository.fetchActiveBoosts(account);
-            dispatch.miningStore.setListBoosts(res)
-            return res;
+            if (res?.length) {
+                dispatch.miningStore.setListBoosts(res)
+                return res;
+            }
         }
 
     })
