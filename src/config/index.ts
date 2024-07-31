@@ -5,7 +5,7 @@ export const KEY_MARITON_AMBASSADOR = '💎 $MRT'
 // export const CLAIM_ADDRESS = "EQAM3Wpq1IgEEffxq-riW0JU_mee_rIslQb3AWpmimV3aHj5";
 
 
-export const DEPOSIT_WALLET = "EQBJcYyhJcJDBN39BHd5V-2un3Dkgi7ExK1S9q3eIhHqPEI3";
+export const DEPOSIT_WALLET = "UQBJcYyhJcJDBN39BHd5V-2un3Dkgi7ExK1S9q3eIhHqPB_y";
 export const MRT_ADDRESS = "EQBnyp_7TXUXld965YwLnJB7p1jqZ72HCoJRzgdFinOpCVtR";
 export const CLAIM_ADDRESS = "EQAZ_nYe8VsmWXmPuUdrnSN1Mv0ur88hNNpySNaZluN3Pt9M";
 export default {
