@@ -1,14 +1,9 @@
 import BaseDivider from "@/components/BaseDivider";
-import BaseDialog, { handleBaseDialog } from "@/components/BaseDialog";
-import background from "@/assets/air/background-v2.png";
 import Loading from "@/assets/icons/Loading";
 import { useState } from "react";
 import MaritonToken from "@/assets/icons/MaritonToken";
-import BaseAction from "@/components/BaseAction";
-import closeButton from "@/assets/game/close-button.png";
 import boostButton from "@/assets/air/boost-button.png";
 import BaseDialogV2 from "@/components/BaseDialogV2";
-import BaseButton from "@/components/BaseButton";
 
 export default function BoostDialog({
   item,
@@ -41,7 +36,7 @@ export default function BoostDialog({
         </div>
       )}
       <div className="flex justify-center flex-col items-center top-0 w-full px-[30px] pt-6 pb-12">
-        <p className="text-t-button text-center font-extrabold text-[24px] whitespace-nowrap">
+        <p className="text-t-button text-center font-extrabold text-[24px]">
           {item?.title}
         </p>
         <BaseDivider className="h-[1px] my-4" />

@@ -1,8 +1,8 @@
 import config from "@/config";
-import { EBoostType } from "@/types/models/mining";
+import { EDailyType } from "@/types/models/mining";
 import axios from "axios";
 const BoostRepository = {
-    boostCheckIn: async (account: number, type: EBoostType) => {
+    boostCheckIn: async (account: number, type: EDailyType) => {
         const res = await axios.post(`${config.apiUrl}/daily/daily-boost`, { account, type });
         return res.data || {};
     },

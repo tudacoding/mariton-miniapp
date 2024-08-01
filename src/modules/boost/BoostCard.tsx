@@ -1,7 +1,7 @@
 import Success from "@/assets/icons/Success";
 import BaseCard from "@/components/BaseCard";
 import BoostDialog from "../home-dialog/BoostDialog";
-import { EBoostType } from "@/types/models/mining";
+import { EDailyType } from "@/types/models/mining";
 import useGetInforTelegram from "@/hooks/useGetInforTelegram";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
@@ -11,7 +11,7 @@ export interface BoostCardProps {
   title: string;
   sortDescription: string;
   icon: JSX.Element;
-  type: EBoostType;
+  type: EDailyType;
   description?: string | JSX.Element;
 }
 export default function BoostCard({
@@ -34,7 +34,7 @@ export default function BoostCard({
     type,
     sortDescription,
   }: {
-    type: EBoostType;
+    type: EDailyType;
     sortDescription: string;
   }) => {
     if (
@@ -55,7 +55,23 @@ export default function BoostCard({
     }
     return false;
   };
-
+  const handleBoost = async () => {
+    let result = false;
+    if (!isActive && account.id) {
+      if (type === EDailyType.MARITON_AMBASSADOR) {
+        result = await handleMaritonAmbassador(item);
+      } else {
+        result = await miningStore.boostDaily({
+          userId: account.id,
+          type,
+        });
+        if (result) {
+          toast.success(sortDescription);
+        }
+      }
+    }
+    return result;
+  };
   return (
     <div key={index} className="pb-3">
       <BaseCard
@@ -70,23 +86,7 @@ export default function BoostCard({
             <BoostDialog
               id={`boost_${index}`}
               item={item}
-              onAction={async () => {
-                let result = false;
-                if (!isActive && account.id) {
-                  if (type === EBoostType.MARITON_AMBASSADOR) {
-                    result = await handleMaritonAmbassador(item);
-                  } else {
-                    result = await miningStore.boostDaily({
-                      userId: account.id,
-                      type,
-                    });
-                    if (result) {
-                      toast.success(sortDescription);
-                    }
-                  }
-                }
-                return result;
-              }}
+              onAction={async () => await handleBoost()}
             />
           )
         }

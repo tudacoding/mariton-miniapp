@@ -1,7 +1,7 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from "..";
 import MiningRepository from "@/api/repository/minning";
-import { EBoostType, IFriend, ILeaderboard, IMining, LevelUpType } from "@/types/models/mining";
+import { EDailyType, IFriend, ILeaderboard, IMining, LevelUpType } from "@/types/models/mining";
 import FriendRepository from "@/api/repository/friend";
 import { get } from "lodash-es";
 import BoostRepository from "@/api/repository/boost";
@@ -132,7 +132,7 @@ const miningStore = createModel<RootModel>()({
             const res = await MiningRepository.getLeaderboard()
             dispatch.miningStore.setLeaderboard(res)
         },
-        boostDaily: async ({ userId, type }: { userId: number, type: EBoostType }) => {
+        boostDaily: async ({ userId, type }: { userId: number, type: EDailyType }) => {
             let res = await BoostRepository.boostCheckIn(userId, type)
             if (res.id) {
                 await dispatch.miningStore.fetchBoosts(userId)
