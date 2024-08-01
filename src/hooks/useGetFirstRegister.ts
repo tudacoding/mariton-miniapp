@@ -9,7 +9,7 @@ import useGetInforTelegram from "./useGetInforTelegram";
 
 export function useGetFirstRegister() {
   const wallet = useTonWallet();
-  const { accountStore } = useDispatch<Dispatch>();
+  const { accountStore, settingsStore } = useDispatch<Dispatch>();
   const { account } = useSelector((s: RootState) => s.accountStore);
   const navigate = useNavigate();
   const { telegramName, avatar, id } = useGetInforTelegram()
@@ -32,6 +32,7 @@ export function useGetFirstRegister() {
     if (get(wallet, "account.address")) {
       checkConnection();
     } else {
+      settingsStore.fetchSettingApp()
       navigate("/");
     }
   }, [wallet]);

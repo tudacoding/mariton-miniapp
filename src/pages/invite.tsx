@@ -16,6 +16,7 @@ import ListFriend from "@/modules/invite/ListFriends";
 import Copy from "@/assets/icons/Copy";
 import MaritonToken from "@/assets/icons/MaritonToken";
 import ListAchievements from "@/modules/invite/ListAchievenments";
+import { formatNumber } from "@/helpers";
 
 export default function InvitePage() {
   const wallet = useTonWallet();
@@ -28,7 +29,7 @@ export default function InvitePage() {
   const [copy] = useCopy(ref);
   const { claimRefTokens, getFriends } = useDispatch<Dispatch>().miningStore;
   const { openAnimateAndClose } = useDispatch<Dispatch>().actionsStore;
-
+  const friendClaimTokens = mining?.friendClaimTokens ?? 0;
   const handleClaimToken = () => {
     openAnimateAndClose({ children: <img src={claimTokenGif} /> });
     claimRefTokens({});
@@ -51,7 +52,10 @@ export default function InvitePage() {
             <BaseTitleDivider className="pt-1">Invite Link</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
               <div className="py-2 text-t-description bg-card rounded-xl grow">
-                <span className="line-clamp-1 px-1 text-sm whitespace-pre-wrap">{" "}{ref}{" "}</span>
+                <span className="line-clamp-1 px-1 text-sm whitespace-pre-wrap">
+                  {" "}
+                  {ref}{" "}
+                </span>
               </div>
               <BaseButton
                 className=" flex flex-row justify-center items-center gap-1 bg-b-secondary py-2"
@@ -67,7 +71,7 @@ export default function InvitePage() {
             <div className="rounded-xl bg-primary flex flex-row py-5 px-[14px] justify-between my-[6px]">
               <div className="flex flex-row gap-1 items-center justify-center">
                 <span className="text-2xl text-t-button font-bold leading-none">
-                  {(mining?.friendClaimTokens ?? 0).toFixed(6)}
+                  {formatNumber(friendClaimTokens, 6)}
                 </span>
                 <MaritonToken />
               </div>
@@ -76,9 +80,9 @@ export default function InvitePage() {
                   onClick={handleClaimToken}
                   className={twMerge(
                     "text-t-title font-bold text-xs bg-light rounded-3xl pt-1 pb-0 h-full",
-                    mining?.friendClaimTokens <= 0 && "!opacity-50"
+                    friendClaimTokens <= 0 && "!opacity-50"
                   )}
-                  disabled={mining?.friendClaimTokens <= 0}
+                  disabled={friendClaimTokens <= 0}
                 >
                   Claim
                 </BaseButton>

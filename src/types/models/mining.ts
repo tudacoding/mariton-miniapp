@@ -25,7 +25,12 @@ export interface IMining {
 }
 
 export type LevelUpType = 'TON' | 'MRT'
-
+export enum EBoostType {
+    CHECKIN = 'CHECKIN',
+    JUNIOR_RICH_MARITON = 'JUNIOR_RICH_MARITON',
+    MARITON_AMBASSADOR = 'MARITON_AMBASSADOR',
+    ONE_TIME_MISSION = 'ONE_TIME_MISSION',
+}
 export interface IFriend {
     avatar: string;
     id: number;

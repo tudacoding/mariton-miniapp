@@ -38,3 +38,6 @@ export interface IBoost {
   isActive?: any;
   account: number;
 }
+export interface ISettingApp {
+  minClaimToken: number;
+}

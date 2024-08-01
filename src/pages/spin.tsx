@@ -98,7 +98,7 @@ const SpinScreen = () => {
           ></img>
         )}
         <div
-          onClick={() => navigate("/")}
+          onClick={() => navigate(-1)}
           className="mt-2 font-bold hover:opacity-50 cursor-pointer"
         >
           No, thanks!

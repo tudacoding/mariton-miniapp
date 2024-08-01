@@ -49,7 +49,7 @@ function ActionTransactionCard({
           onClick={onClick}
           className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold"
         >
-          Claim
+          Reclaim
         </BaseButton>
       );
   }

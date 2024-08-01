@@ -6,18 +6,22 @@ import HomeLayout from "@/modules/home/Layout";
 
 import BaseAction from "@/components/BaseAction";
 import closeButton from "@/assets/game/close-button.png";
-import messageBubble from "@/assets/air/message-bubble.png";
 import FormCard from "@/modules/wallet/FormCard";
 import BackgroundWallet from "@/modules/wallet/BackgroundWallet";
 import useDepositWallet from "@/hooks/useDepositWallet";
 import MessageBubble from "@/assets/icons/MessageBubble";
+import { useState } from "react";
 
 export default function WalletPage() {
   const { tokensWallet } = useSelector((s: RootState) => s.accountStore);
+  const { settings } = useSelector((s: RootState) => s.settingsStore);
   const { mrtBalance, client } = useMaritonToken();
   const nav = useNavigate();
   const { claimTokenToWallet, depositTokenMrt } = useDepositWallet({ client });
 
+  const [messageErrors, setMessageErrors] = useState<any>({
+    claim: null,
+  });
   return (
     <HomeLayout hideBottom>
       <div className="relative h-fix">
@@ -45,9 +49,29 @@ export default function WalletPage() {
           <FormCard
             title="MRT Withdrawal"
             type="CLAIM_MRT"
+            errorMessage={messageErrors.claim}
             maxValue={tokensWallet?.mrtTokens ?? 0}
+            onChange={(value) => {
+              if (Number(value) >= settings.minClaimToken) {
+                setMessageErrors({
+                  ...messageErrors,
+                  claim: null,
+                });
+              }
+            }}
             onSubmit={async (value: number) => {
-              await claimTokenToWallet(value);
+              if (value >= settings.minClaimToken) {
+                setMessageErrors({
+                  ...messageErrors,
+                  claim: null,
+                });
+                await claimTokenToWallet(value);
+              } else {
+                setMessageErrors({
+                  ...messageErrors,
+                  claim: `Min withdrawal ${settings?.minClaimToken ?? 0} MRT`,
+                });
+              }
             }}
           />
         </div>

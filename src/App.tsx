@@ -8,27 +8,8 @@ import { Provider } from "react-redux";
 import useInitApp from "./hooks/useInitApp";
 import SplashPopup from "./components/SplashPopup";
 import DialogOutlet from "./components/DialogOutlet";
-const pages = import.meta.glob("./pages/*.tsx", { eager: true });
+import { routes } from "./router";
 
-const routes = [];
-for (const path of Object.keys(pages)) {
-  const fileName = path.match(/\.\/pages\/(.*)\.tsx$/)?.[1];
-  if (!fileName) {
-    continue;
-  }
-
-  const normalizedPathName = fileName.includes("$")
-    ? fileName.replace("$", ":")
-    : fileName.replace(/\/index/, "");
-  const pathPage = pages[path] as any;
-  routes.push({
-    path: fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`,
-    Element: pathPage?.default,
-    loader: pathPage?.loader,
-    action: pathPage?.action,
-    ErrorBoundary: pathPage?.ErrorBoundary,
-  });
-}
 const router = createBrowserRouter(
   routes.map(({ Element, ErrorBoundary, ...rest }) => ({
     ...rest,

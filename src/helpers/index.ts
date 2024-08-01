@@ -16,9 +16,11 @@ export function roundUpToThreeDecimals(num: number) {
     return Math.ceil(num * 1000) / 1000;
 }
 export function formatNumber(number: number, fixed: number) {
-    if (number % 1 === 0) {
+    if (number % 1 === 0 && number !== 0) {
         return number.toString();
     } else {
+        if (number > 1000) return number.toFixed(0);
+        if (number > 100) return number.toFixed(1);
         return number.toFixed(fixed);
     }
 }

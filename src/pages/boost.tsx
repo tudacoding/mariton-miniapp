@@ -1,125 +1,116 @@
 import HomeLayout from "@/modules/home/Layout";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
-import BaseCard from "@/components/BaseCard";
-import BaseButton from "@/components/BaseButton";
 import background from "@/assets/air/short-background-body.png";
+import logoTele from "@/assets/game/telegram-logo.png";
 import { twMerge } from "tailwind-merge";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 import { toast } from "react-toastify";
-import { useMemo } from "react";
-import Success from "@/assets/icons/Success";
 import CheckInIcon from "@/assets/icons/CheckinIcon";
 import RichJuniorIcon from "@/assets/icons/RichJuniorIcon";
 import MrtAmbasshador from "@/assets/icons/MrtAmbasshador";
-import BoostDialog from "@/modules/home-dialog/BoostDialog";
-import { handleBaseDialog } from "@/components/BaseDialog";
-import useGetInforTelegram from "@/hooks/useGetInforTelegram";
 import { KEY_MARITON_AMBASSADOR } from "@/config";
 import useCopy from "@/hooks/useCopy";
+import { EBoostType } from "@/types/models/mining";
+import BoostCard, { BoostCardProps } from "@/modules/boost/BoostCard";
+import LogoX from "@/assets/icons/LogoX";
+
 export default function Boost() {
-  const { miningStore } = useDispatch<Dispatch>();
-  const { account } = useSelector((s: RootState) => s.accountStore);
   const { boosts } = useSelector((s: RootState) => s.miningStore);
-  const { first_name, last_name } = useGetInforTelegram();
   const [copy] = useCopy(KEY_MARITON_AMBASSADOR);
 
-  const checkinBoosts = useMemo(() => {
-    return [
-      {
-        sortDescription: "Boost +10% speed for 12h",
-        title: "Daily Check in",
-        type: "CHECKIN",
-        icon: <CheckInIcon />,
-        description: "Boost +10% speed for 12h",
-        onClick: async (userId: number) => {
-          const res = await miningStore.boostDaily({
-            userId,
-            type: "CHECKIN",
-          });
-          if (res) {
-            toast.success("Boost +10% speed for 12h");
-            return true;
-          }
-        },
-      },
-      {
-        sortDescription: "Boost +20% bonus speed for 24h",
-        description: (
-          <span>
-            Minimum 01 TON balance in your Wallet <br /> Boost +20% bonus speed
-            for 24h
-          </span>
-        ),
-        onClick: async (userId: number) => {
-          const res = await miningStore.boostDaily({
-            userId,
-            type: "JUNIOR_RICH_MARITON",
-          });
-          if (res) {
-            toast.success("Boost +20% speed for 24h");
-            return true;
-          }
-        },
-        title: "Junior Rich Mariton",
-        type: "JUNIOR_RICH_MARITON",
-        icon: <RichJuniorIcon />,
-      },
-      {
-        sortDescription: "Boost +10% speed for 8h",
-        title: "Mariton Ambassador",
-        description: (
-          <span>
-            Mariton Ambassador (Add{" "}
-            <span
-              className="underline"
-              onClick={() => {
-                copy();
-                toast.success("Copy!");
-              }}
-            >
-              '{KEY_MARITON_AMBASSADOR}'
-            </span>{" "}
-            to your Telegram name) <br /> Boost +10% speed for 8h
-          </span>
-        ),
-        onClick: async (userId: number) => {
-          if (
-            ((first_name ?? "") + (last_name ?? ""))?.includes(
-              KEY_MARITON_AMBASSADOR
-            )
-          ) {
-            const res = await miningStore.boostDaily({
-              userId,
-              type: "MARITON_AMBASSADOR",
-            });
-            if (res) {
-              toast.success("Boost +10% speed for 8h");
-              return true;
-            }
-          } else {
-            toast.error(
-              `You need add '${KEY_MARITON_AMBASSADOR}' to your Telegram name`
-            );
-            return false;
-          }
-        },
-        type: "MARITON_AMBASSADOR",
-        icon: <MrtAmbasshador />,
-      },
-    ];
-  }, []);
-  const handleClick = async (item: any, index: number) => {
-    handleBaseDialog({
-      isVisible: true,
-      id: `boost_${index}`,
-    });
-    // actionsStore.handleDialog({
-    //   isVisible: true,
-    //   showBackgroundDialog: true,
-    //   children: <BoostDialog item={item} onAction={() => {}} />,
-    // });
-  };
+  const checkinBoosts: BoostCardProps[] = [
+    {
+      sortDescription: "Boost +10% speed for 12h",
+      title: "Daily Check in",
+      type: EBoostType.CHECKIN,
+      icon: <CheckInIcon />,
+      description: "Boost +10% speed for 12h",
+    },
+    {
+      sortDescription: "Boost +20% speed for 24h",
+      description: (
+        <span>
+          Minimum 01 TON balance in your Wallet <br /> Boost +20% speed for 24h
+        </span>
+      ),
+      title: "Junior Rich Mariton",
+      type: EBoostType.JUNIOR_RICH_MARITON,
+      icon: <RichJuniorIcon />,
+    },
+    {
+      sortDescription: "Boost +10% speed for 8h",
+      title: "Mariton Ambassador",
+      description: (
+        <span>
+          Mariton Ambassador (Add{" "}
+          <span
+            className="underline"
+            onClick={() => {
+              copy();
+              toast.success("Copy!");
+            }}
+          >
+            '{KEY_MARITON_AMBASSADOR}'
+          </span>{" "}
+          to your Telegram name) <br /> Boost +10% speed for 8h
+        </span>
+      ),
+      type: EBoostType.MARITON_AMBASSADOR,
+      icon: <MrtAmbasshador />,
+    },
+  ];
+  const oneTimeBoosts = [
+    {
+      sortDescription: "Boost +30% lifetime mining speed",
+      title: "Follow Mariton on X",
+      description: (
+        <span>
+          X (Follow): https://x.com/mariton_game
+          <br /> Boost +30% lifetime mining speed
+        </span>
+      ),
+      type: EBoostType.ONE_TIME_MISSION,
+      icon: <LogoX className="h-10 w-10" />,
+    },
+    {
+      sortDescription: "Boost +30% lifetime mining speed",
+      title: "Like and Retweet Mariton's post on X",
+      description: (
+        <span>
+          Post (Like + Retweet):
+          https://x.com/Mariton_game/status/1818542419107102893
+          <br /> Boost +30% lifetime mining speed
+        </span>
+      ),
+      type: EBoostType.ONE_TIME_MISSION,
+      icon: <LogoX className="h-10 w-10" />,
+    },
+    {
+      sortDescription: "Boost +30% lifetime mining speed",
+      title: "Join Mariton Community",
+      description: (
+        <span>
+          Chat (Join) : https://t.me/Mariton_Chat
+          <br /> Boost +30% lifetime mining speed
+        </span>
+      ),
+      type: EBoostType.ONE_TIME_MISSION,
+      icon: <img src={logoTele} alt="" className="h-9 w-9" />,
+    },
+    {
+      sortDescription: "Boost +30% lifetime mining speed",
+      title: "Join Mariton Channel",
+      description: (
+        <span>
+          Channel (Join): https://t.me/MaritonAnn
+          <br /> Boost +30% lifetime mining speed
+        </span>
+      ),
+      type: EBoostType.ONE_TIME_MISSION,
+      icon: <img src={logoTele} alt="" className="h-9 w-9" />,
+    },
+  ];
   return (
     <HomeLayout>
       <div className="h-full flex">
@@ -132,50 +123,30 @@ export default function Boost() {
           <div className={twMerge("grow overflow-auto px-6", "mb-5 mt-4")}>
             <BaseTitleDivider className="pt-0">Daily Mission</BaseTitleDivider>
             {checkinBoosts.map((item, index) => {
-              const { title, sortDescription, type, icon, onClick } = item;
+              const { type } = item;
               const isActive = boosts.find((b) => b.type === type);
               return (
-                <div key={index} className="pb-3">
-                  <BaseCard
-                    title={title}
-                    description={sortDescription}
-                    avatar={icon}
-                    actionComponent={
-                      isActive ? (
-                        <Success className="h-6 w-6 mx-3" />
-                      ) : (
-                        <BoostDialog
-                          id={`boost_${index}`}
-                          item={item}
-                          onAction={async () => {
-                            if (!isActive && account.id) {
-                              return await onClick(account.id);
-                            }
-                          }}
-                        />
-                      )
-                    }
-                  ></BaseCard>
-                </div>
+                <BoostCard
+                  index={index}
+                  item={item}
+                  key={index}
+                  isActive={!!isActive}
+                />
               );
             })}
             {/* <BaseTitleDivider className="pt-1">
               One-time Misson
             </BaseTitleDivider> */}
-            {/* {oneTimeBoosts.map(({ description, onClick }, index) => {
+            {/* {oneTimeBoosts.map((item, index) => {
+              const { type } = item;
+              const isActive = boosts.find((b) => b.type === type);
               return (
-                <div key={index} className="pb-3">
-                  <BaseCard
-                    title="Daily check in"
-                    description={description}
-                    onClick={onClick}
-                    actionComponent={
-                      <BaseButton className="pt-[5px] pb-[2px] px-[14px] rounded-2xl text-xs text-t-title font-bold">
-                        Next
-                      </BaseButton>
-                    }
-                  ></BaseCard>
-                </div>
+                <BoostCard
+                  index={index}
+                  item={item}
+                  key={index}
+                  isActive={!!isActive}
+                />
               );
             })} */}
           </div>
