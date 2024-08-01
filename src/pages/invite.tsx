@@ -117,9 +117,7 @@ export default function InvitePage() {
                 Friends ({countFriends})
               </BaseButton>
             </div>
-            <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset]">
-              {tab === "friends" ? <ListFriend /> : <ListAchievements />}
-            </div>
+            {tab === "friends" ? <ListFriend /> : <ListAchievements />}
           </div>
         </div>
       </div>

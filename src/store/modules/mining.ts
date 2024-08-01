@@ -47,6 +47,11 @@ const miningStore = createModel<RootModel>()({
             return {
                 ...state, boosts
             }
+        },
+        setPagenationFriends(state, friends) {
+            return {
+                ...state, friends: [...state.friends, ...friends]
+            }
         }
     },
     effects: (dispatch) => ({
@@ -102,13 +107,25 @@ const miningStore = createModel<RootModel>()({
         },
         async getFriends(_, rootState) {
             const account = rootState.accountStore.account
-            if (!account.telegramUserId) return;
-            const res = await FriendRepository.fetchFriends(account.telegramUserId)
+            if (!account?.telegramUserId) return;
+            const res = await FriendRepository.fetchFriends({ userId: account.telegramUserId })
             if (res.data) {
                 dispatch.miningStore.setFriends({
                     friends: res.data,
                     countFriends: get(res, "meta.pagination.total")
                 })
+            }
+        },
+        async paginationFriends(data, rootState) {
+            const account = rootState.accountStore.account
+            if (!account?.telegramUserId) return;
+            const res = await FriendRepository.fetchFriends({
+                ...data,
+                userId: account.telegramUserId
+            })
+            if (res.data) {
+                dispatch.miningStore.setPagenationFriends(res.data)
+                return res.data
             }
         },
         async completeMissionFriend({ id, data }) {

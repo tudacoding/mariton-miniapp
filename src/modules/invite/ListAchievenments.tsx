@@ -76,7 +76,7 @@ export default memo(function ListAchievements() {
     ];
   }, [level]);
   return (
-    <div>
+    <div className="overflow-y-auto overflow-clip grow pt-2 overflow-x-[unset]">
       {achievements.map(({ description, onClick, title, selected }, index) => {
         const isLoading = loadingButtonId === index;
         return (

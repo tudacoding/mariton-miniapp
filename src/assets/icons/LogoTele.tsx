@@ -19,8 +19,8 @@ export default function LogoTele({ ...props }: any) {
           x2="256"
           y2="512"
         >
-          <stop offset="0" stop-color="#2AABEE" />
-          <stop offset="1" stop-color="#229ED9" />
+          <stop offset="0" stopColor="#2AABEE" />
+          <stop offset="1" stopColor="#229ED9" />
         </linearGradient>
       </defs>
       <circle fill="url(#prefix__a)" cx="256" cy="256" r="256" />
