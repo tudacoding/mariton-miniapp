@@ -11,17 +11,20 @@ const BoostRepository = {
         const res = await axios.get(`${config.apiUrl}/daily/active-boost/${account}`);
         return res.data || [];
     },
-    oneTimeMission: async ({ account, type, status }: { account: number, type: EDailyType, status: string }) => {
-        const res = await axios.post(`${config.apiUrl}/dailies`, {
-            data: {
-                account, type, status
-            }
+    oneTimeMission: async (
+        {
+            userId,
+            type
+        }: {
+            userId: number,
+            type: EDailyType
+        }
+    ) => {
+        const res = await axios.post(`${config.apiUrl}/daily/one-time-boost`, {
+            account: userId,
+            type
         });
-        return res
-    },
-    oneTimeMissionCheck: async (id: number) => {
-        const res = await axios.get(`${config.apiUrl}/daily/ontime-mission-check/${id}`);
-        return res
+        return res.data ?? {}
     }
 };
 export default BoostRepository;

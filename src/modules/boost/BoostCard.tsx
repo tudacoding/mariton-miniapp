@@ -60,7 +60,9 @@ export default function BoostCard({
     if (!isActive && account.id) {
       if (type === EDailyType.MARITON_AMBASSADOR) {
         result = await handleMaritonAmbassador(item);
-      } else {
+      } else if (
+        [EDailyType.CHECKIN, EDailyType.JUNIOR_RICH_MARITON].includes(type)
+      ) {
         result = await miningStore.boostDaily({
           userId: account.id,
           type,
@@ -68,6 +70,12 @@ export default function BoostCard({
         if (result) {
           toast.success(sortDescription);
         }
+      } else {
+        //one time checkin
+        result = await miningStore.boostOneTime({
+          userId: account.id,
+          type,
+        });
       }
     }
     return result;

@@ -156,6 +156,13 @@ const miningStore = createModel<RootModel>()({
                 return res
             }
         },
+        boostOneTime: async ({ userId, type }: { userId: number, type: EDailyType }) => {
+            let res = await BoostRepository.oneTimeMission({ userId, type })
+            if (res.id) {
+                await dispatch.miningStore.fetchBoosts(userId)
+                return res
+            }
+        },
         fetchBoosts: async (account: number) => {
             if (!account) return;
             const res = await BoostRepository.fetchActiveBoosts(account);
