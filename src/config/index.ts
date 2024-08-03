@@ -6,7 +6,7 @@ export const maritonChatLink = 'https://t.me/Mariton_Chat';
 export const XLink = 'https://x.com/mariton_game';
 export const XLink_2 = 'https://x.com/Mariton_game/status/1818542419107102893';
 
-export const isTestnet = true;
+export const isTestnet = false;
 
 export const DEPOSIT_WALLET = isTestnet ? "0QAszBVzU37ZyRzA0I5Dn-RZoY6qg2FtGWN4Q356vsR_3jX_" : "UQBJcYyhJcJDBN39BHd5V-2un3Dkgi7ExK1S9q3eIhHqPB_y";
 export const MRT_ADDRESS = isTestnet ? "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPycyUAGvCp" : "EQBnyp_7TXUXld965YwLnJB7p1jqZ72HCoJRzgdFinOpCVtR";
