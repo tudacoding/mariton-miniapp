@@ -111,7 +111,7 @@ export default function GetDataBoost() {
               window.open(maritonChatLink, "_blank");
             }}
           >
-            {maritonChatLink}
+            Join Group here
           </span>
           <br /> Boost +30% mining speed
         </span>
@@ -131,7 +131,7 @@ export default function GetDataBoost() {
               window.open(maritonChannelLink, "_blank");
             }}
           >
-            {maritonChannelLink}
+            Join Channel here
           </span>
           <br /> Boost +30% mining speed
         </span>
