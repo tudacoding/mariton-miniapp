@@ -100,7 +100,7 @@ export default function GetDataBoost() {
     //   icon: <LogoX className="h-10 w-10" />,
     // },
     {
-      sortDescription: "Boost +30% mining speed",
+      sortDescription: "Boost +30% speed for 24h",
       title: "Join Mariton Community",
       description: (
         <span>
@@ -113,14 +113,14 @@ export default function GetDataBoost() {
           >
             Join Group here
           </span>
-          <br /> Boost +30% mining speed
+          <br /> Boost +30% speed for 24h
         </span>
       ),
       type: EDailyType.ONE_TIME_JOIN_CHAT_TELE,
       icon: <LogoTele className="h-9 w-9" />,
     },
     {
-      sortDescription: "Boost +30% mining speed",
+      sortDescription: "Boost +30% speed for 24h",
       title: "Join Mariton Channel",
       description: (
         <span>
@@ -133,7 +133,7 @@ export default function GetDataBoost() {
           >
             Join Channel here
           </span>
-          <br /> Boost +30% mining speed
+          <br /> Boost +30% speed for 24h
         </span>
       ),
       type: EDailyType.ONE_TIME_JOIN_CHANNEL_TELE,
