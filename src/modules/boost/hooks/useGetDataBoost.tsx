@@ -8,7 +8,6 @@ import { useMemo } from "react";
 import { maritonChannelLink, maritonChatLink, XLink } from "@/config";
 import useCopy from "@/hooks/useCopy";
 import { EDailyType } from "@/types/models/mining";
-import LogoX from "@/assets/icons/LogoX";
 import LogoTele from "@/assets/icons/LogoTele";
 
 export default function GetDataBoost() {
