@@ -1,12 +1,12 @@
 import ComingSoon from "@/modules/airdrop/ComingSoon";
 import comingSoonLogo from "@/assets/air/air-coming-soon.png";
 import HomeLayout from "@/modules/home/Layout";
-import LuckySpin from "@/modules/home/LuckySpin";
+// import LuckySpin from "@/modules/home/LuckySpin";
 
 const AirdropPage = () => {
   return (
     <HomeLayout>
-      <LuckySpin />
+      {/* <LuckySpin /> */}
       <div className="flex items-center justify-center h-full">
         <ComingSoon
           imageSrc={comingSoonLogo}
