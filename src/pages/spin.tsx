@@ -47,8 +47,8 @@ const SpinScreen = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-        {account && (
+      <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+        {/* {account && (
           <div
             onClick={() => {
               copy();
@@ -61,7 +61,7 @@ const SpinScreen = () => {
               {config.botTele}{account.ref}
             </div>
           </div>
-        )}
+        )} */}
 
         {!numberSpin ? (
           <div className="font-lalezar text-2xl mb-4 text-center">
