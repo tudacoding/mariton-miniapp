@@ -40,7 +40,7 @@ const AirNavbar = () => {
     },
     {
       title: "Airdrop",
-      link: "/airdrop",
+      link: "/spin",
       image: comingButton,
       alt: "airdrop-button",
     },
