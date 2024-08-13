@@ -83,7 +83,7 @@ function LeaderboardRef({ leaderboardRef }: { leaderboardRef: Account[] }) {
             <BaseCard
               title={item.telegramName ?? "user"}
               actionComponent={
-                <RattingRef amount={item.totalRefs} index={index} />
+                <RattingRef amount={item.totalRefsOnWeek} index={index} />
               }
               avatar={index > 4 ? undefined : <TopRatting index={index} />}
               isCustomAvatar={index < 5}
@@ -105,7 +105,7 @@ function LeaderboardMint({ leaderboardMint }: { leaderboardMint: Account[] }) {
               title={item.telegramName ?? "user"}
               description={
                 <div className="flex flex-row gap-0.5">
-                  {item.totalMrtTokensClaimed.toFixed(0)}{" "}
+                  {item.totalMrtTokensClaimedOnWeek.toFixed(0)}{" "}
                   <MaritonToken className="h-3 w-3" />
                 </div>
               }

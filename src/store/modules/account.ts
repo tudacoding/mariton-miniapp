@@ -73,8 +73,7 @@ const accountStore = createModel<RootModel>()({
         dispatch.accountStore.setAccount(res);
         dispatch.accountStore.setTokensWallet({
           tonTokens: res.tonTokens,
-          mrtTokens: res.mrtTokens,
-          totalMrtTokensClaimed: res.totalMrtTokensClaimed,
+          mrtTokens: res.mrtTokens
         });
         return res;
       }

@@ -6,6 +6,7 @@ import FriendRepository from "@/api/repository/friend";
 import { get } from "lodash-es";
 import BoostRepository from "@/api/repository/boost";
 import { IBoost } from "@/types/models/account";
+import TransactionResource from "@/api/repository/transaction";
 interface State {
     mining: IMining,
     sending: boolean;
@@ -70,10 +71,7 @@ const miningStore = createModel<RootModel>()({
             const mining = rootState.miningStore.mining
             if (mining.id) {
                 const res: IMining = await MiningRepository.claimTokens(mining.id)
-                dispatch.accountStore.setTokensWallet({
-                    mrtTokens: res.account.mrtTokens,
-                    totalMrtTokensClaimed: res.account.totalMrtTokensClaimed,
-                })
+                dispatch.accountStore.setTokensWallet({ mrtTokens: res.account.mrtTokens })
                 setMining(res)
             }
             setSending(false)
@@ -82,10 +80,7 @@ const miningStore = createModel<RootModel>()({
             const mining = rootState.miningStore.mining
             if (mining.id) {
                 const res = await MiningRepository.claimRefTokens(mining.id)
-                dispatch.accountStore.setTokensWallet({
-                    mrtTokens: res.account.mrtTokens,
-                    totalMrtTokensClaimed: res.account.totalMrtTokensClaimed,
-                })
+                dispatch.accountStore.setTokensWallet({ mrtTokens: res.account.mrtTokens})
                 dispatch.miningStore.setMining(res)
             }
         },
@@ -137,7 +132,7 @@ const miningStore = createModel<RootModel>()({
         },
         async signSignature({ amount }, rootState) {
             const { account } = rootState.accountStore
-            const res = await MiningRepository.signSignature({ wallet: account.wallet, tokens: amount })
+            const res = await TransactionResource.signSignature({ wallet: account.wallet, tokens: amount })
             if (res.id) {
                 dispatch.accountStore.setTokensWallet({
                     mrtTokens: res.account.mrtTokens,
