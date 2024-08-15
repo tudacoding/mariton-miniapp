@@ -1,6 +1,6 @@
-import LotteryItem from "@/types/models/lotteryItem";
+import { IInventory } from "@/types/models/lotteryItem";
 
-export function getTitleLotteryItem(item: LotteryItem) {
+export function getTitleLotteryItem(item: IInventory) {
   if (item.type === "ton") {
     return "token";
   } else if (item.type === "discount") {

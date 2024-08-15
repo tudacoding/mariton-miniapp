@@ -5,7 +5,25 @@ import { Dispatch, RootState } from "@/store/store";
 import { useTonWallet } from "@tonconnect/ui-react";
 import { get } from "lodash-es";
 import { useNavigate } from "react-router-dom";
+import { IInventory } from "@/types/models/lotteryItem";
 
+const getListInventory = (inventory: any) => {
+  const list = {} as any
+  inventory?.forEach((item: any) => {
+    const key = `${item.attributes.type}-${item.attributes.value}`
+    if (!list[key]) {
+      list[key] = {
+        ...item.attributes, id: item.id, amount: 1
+      }
+    } else {
+      list[key] = {
+        ...list[key], amount: list[key].amount + 1
+      }
+    }
+
+  })
+  return Object.values(list) as IInventory[]
+}
 export function useGetInventory() {
   const wallet = useTonWallet();
   const { accountStore } = useDispatch<Dispatch>();
@@ -16,10 +34,6 @@ export function useGetInventory() {
     async function getInventory() {
       await accountStore.getHistoryLottery({
         wallet: get(wallet, "account.address"),
-        pagination: {
-          page: currentPage || 1,
-          pageSize: 4,
-        },
       });
     }
     if (get(wallet, "account.address")) {
@@ -30,6 +44,6 @@ export function useGetInventory() {
   }, [wallet, currentPage]);
 
   return {
-    inventory,
+    listInventory: getListInventory(inventory),
   };
 }

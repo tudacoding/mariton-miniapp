@@ -22,7 +22,7 @@ export default function HomeLayout({
   const { account } = useGetFirstRegister();
   if (!account) return <WelcomePage />;
   return (
-    <div className="h-screen w-full mx-auto flex flex-col items-center justify-start relative">
+    <div className="h-screen w-full mx-auto flex flex-col items-center justify-start relative min-h-[600px]">
       {location?.pathname === "/" && (
         <div className="absolute inset-0 z-[-100]">
           <img

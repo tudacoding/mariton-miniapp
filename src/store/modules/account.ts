@@ -91,8 +91,6 @@ const accountStore = createModel<RootModel>()({
     async getHistoryLottery(params) {
       const res = await SpinRepository.getHistoryLottery(params);
       if (res.data) dispatch.accountStore.setInventory(res.data);
-      if (res.meta && res.meta.pagination)
-        dispatch.accountStore.setPagination(res.meta.pagination);
       return res;
     },
     async getRef(params) {

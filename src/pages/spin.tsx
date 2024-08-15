@@ -11,9 +11,6 @@ import { get } from "lodash-es";
 import { useTonWallet } from "@tonconnect/ui-react";
 import { useNavigate } from "react-router-dom";
 import DialogLottery from "@/modules/spin/DialogLottery";
-import useCopy from "@/hooks/useCopy";
-import { toast } from "react-toastify";
-import config from "@/config";
 
 const SpinScreen = () => {
   const [isSpinning, setIsSpinning] = useState(false);
@@ -25,9 +22,6 @@ const SpinScreen = () => {
   const wallet = useTonWallet();
   const [loteryItem, setLoteryItem] = useState({ id: 0, type: "", value: "" });
   const navigate = useNavigate();
-  const [copy] = useCopy(
-    account ? `${config.botTele}${account.ref}` : ""
-  );
   return (
     <div className="relative h-screen">
       <div className="absolute z-40 w-full">
@@ -48,61 +42,42 @@ const SpinScreen = () => {
       </div>
 
       <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-        {/* {account && (
-          <div
-            onClick={() => {
-              copy();
-              toast.success("Copy successfully!");
-            }}
-            className="card card-compact bg-amber-500 shadow-xl p-4 mb-4 text-center text-amber-800 hover:opacity-50 cursor-pointer"
-          >
-            <div className="font-bold">Copy your referral link</div>
-            <div className="text-nowrap text-xs">
-              {config.botTele}{account.ref}
-            </div>
-          </div>
-        )} */}
-
         {!numberSpin ? (
-          <div className="font-lalezar text-2xl mb-4 text-center">
-            INVITE FRIENDS TO GET MORE SPIN
+          <div className="font-lalezar text-2xl mb-4 text-center whitespace-nowrap">
+            ONE FREE SPIN EVERY DAY
           </div>
         ) : (
           <div className="font-lalezar text-2xl mb-4">
             {numberSpin} SPIN AVAILABLE
           </div>
         )}
-        {numberSpin ? (
-          <img
-            onClick={async () => {
-              setIsSpinning(true);
-              setNumberSpin(numberSpin - 1);
-              setTimeout(async () => {
-                const result = await spinLottery({
-                  address: get(wallet, "account.address"),
-                  publicKey: get(wallet, "account.publicKey"),
-                });
-                setLoteryItem(result);
-                setIsOpenDialog(true);
-                setIsSpinning(false);
-              }, 3000);
-            }}
-            className="hover:opacity-50 cursor-pointer"
-            src={spinButton}
-          ></img>
-        ) : (
-          <img
-            onClick={() => navigate("/mission")}
-            className="hover:opacity-50 cursor-pointer"
-            src={inviteFriends}
-          ></img>
+        {!!numberSpin && (
+          <>
+            <img
+              onClick={async () => {
+                setIsSpinning(true);
+                setNumberSpin(numberSpin - 1);
+                setTimeout(async () => {
+                  const result = await spinLottery({
+                    address: get(wallet, "account.address"),
+                    publicKey: get(wallet, "account.publicKey"),
+                  });
+                  setLoteryItem(result);
+                  setIsOpenDialog(true);
+                  setIsSpinning(false);
+                }, 3000);
+              }}
+              className="hover:opacity-50 cursor-pointer"
+              src={spinButton}
+            ></img>
+            <div
+              onClick={() => navigate(-1)}
+              className="mt-2 font-bold hover:opacity-50 cursor-pointer"
+            >
+              No, thanks!
+            </div>
+          </>
         )}
-        <div
-          onClick={() => navigate(-1)}
-          className="mt-2 font-bold hover:opacity-50 cursor-pointer"
-        >
-          No, thanks!
-        </div>
       </div>
       <DialogLottery item={loteryItem} />
     </div>
