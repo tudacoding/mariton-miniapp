@@ -4,7 +4,7 @@ export default interface LotteryItem {
   value: string;
 }
 export interface IInventory {
-  amount: number;
+  amount?: number;
   type: string;
   value: string;
   id: number;

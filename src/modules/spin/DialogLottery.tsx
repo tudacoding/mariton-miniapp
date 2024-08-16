@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import dialogLottery from "@/assets/game/dialog-lottery.png";
-import LotteryItem from "@/types/models/lotteryItem";
+import LotteryItem, { IInventory } from "@/types/models/lotteryItem";
 import tonLogo from "@/assets/game/lottery-item/ton.png";
 import coupon from "@/assets/game/lottery-item/coupon.png";
 import puzzleFire from "@/assets/game/lottery-item/fire-puzzle.png";
@@ -10,10 +10,10 @@ import { getTitleLotteryItem } from "@/utils/string";
 import { Dispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 interface IProps {
-  item: LotteryItem;
+  item: IInventory;
 }
-const DialogLottery = (props: IProps) => {
-  const title = getTitleLotteryItem(props.item);
+const DialogLottery = ({ item }: IProps) => {
+  const title = getTitleLotteryItem(item);
   const { isOpenDialog } = useSelector((s: RootState) => s.spinStore);
   const { spinStore } = useDispatch<Dispatch>();
   return (
@@ -26,34 +26,32 @@ const DialogLottery = (props: IProps) => {
           <img className="h-fit absolute" src={dialogLottery}></img>
           <div className="absolute top-12 w-full flex flex-col items-center">
             <div className="w-3/4 h-40 bg-gray-50 rounded-lg border-2 border-amber-600 flex justify-center">
-              {props.item.type === "ton" && (
+              {item.type === "ton" && (
                 <div className="flex items-center">
                   <span className="text-amber-800 font-bold text-3xl">
-                    {props.item.value}
+                    {item.value}
                   </span>
                   <img className="ml-2" src={tonLogo}></img>
                 </div>
               )}
-              {props.item.type === "discount" && (
+              {item.type === "discount" && (
                 <div className="relative flex items-center">
                   <img className="ml-2" src={coupon}></img>
                   <span className="absolute left-10 text-amber-800 font-bold text-3xl">
                     <div className="font-bold text-2xl">COUPON</div>
-                    <div className="font-bold text-6xl">
-                      {props.item.value} %
-                    </div>
+                    <div className="font-bold text-6xl">{item.value} %</div>
                   </span>
                 </div>
               )}
-              {props.item.type === "puzzle" && (
+              {item.type === "puzzle" && (
                 <div className="relative flex items-center">
-                  {props.item.value === "fire" && (
+                  {item.value === "fire" && (
                     <img width={60} className="ml-2" src={puzzleFire}></img>
                   )}
-                  {props.item.value === "water" && (
+                  {item.value === "water" && (
                     <img width={60} className="ml-2" src={puzzleWater}></img>
                   )}
-                  {props.item.value === "tree" && (
+                  {item.value === "tree" && (
                     <img width={60} className="ml-2" src={puzzleTree}></img>
                   )}
                 </div>
