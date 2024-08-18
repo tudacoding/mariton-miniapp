@@ -13,8 +13,8 @@ export const MRT_ADDRESS = isTestnet ? "EQBAK2GFaOix6p9rRP2URa2Uf8Th8XvzuymnFPPy
 export const CLAIM_ADDRESS = isTestnet ? "EQAM3Wpq1IgEEffxq-riW0JU_mee_rIslQb3AWpmimV3aHj5" : "EQAZ_nYe8VsmWXmPuUdrnSN1Mv0ur88hNNpySNaZluN3Pt9M";
 
 export default {
-  apiUrl: isTestnet ? "https://api.vaffsiam.com/api" : "https://api.mariton.xyz/api",
-  // apiUrl: "http://localhost:1337/api",
+  // apiUrl: isTestnet ? "https://api.vaffsiam.com/api" : "https://api.mariton.xyz/api",
+  apiUrl: "http://localhost:1337/api",
   docs: "https://docs.mariton.xyz",
   faq: "https://docs.mariton.xyz",
   twitter: "https://x.com/Mariton_game",
