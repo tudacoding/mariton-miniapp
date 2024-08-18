@@ -11,10 +11,10 @@ const ImageLotteryItem = ({ item }: { item: IInventory }) => {
     <div className="h-16 flex justify-center">
       {item.type === "ton" && (
         <div className="flex items-center">
-          <span className="text-amber-800 font-bold text-3xl">
+          <span className="text-amber-800 font-bold text-2xl">
             {item.value}
           </span>
-          <img className="ml-2 w-10" src={tonLogo}></img>
+          <img className="w-8 pl-1" src={tonLogo}></img>
         </div>
       )}
       {item.type === "discount" && (

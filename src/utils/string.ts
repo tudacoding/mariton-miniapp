@@ -2,7 +2,7 @@ import { IInventory } from "@/types/models/lotteryItem";
 
 export function getTitleLotteryItem(item: IInventory) {
   if (item.type === "ton") {
-    return "token";
+    return `${item.value} TON`;
   } else if (item.type === "discount") {
     return `discount ${item.value}%`;
   } else if (item.type === "puzzle") {

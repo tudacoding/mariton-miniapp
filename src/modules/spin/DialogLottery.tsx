@@ -24,9 +24,6 @@ const DialogLottery = ({ item }: IProps) => {
         <div className="w-3/4 h-40 bg-gray-50 rounded-lg border-2 border-amber-600 flex justify-center">
           {item.type === "ton" && (
             <div className="flex items-center">
-              <span className="text-amber-800 font-bold text-3xl">
-                {item.value}
-              </span>
               <img className="ml-2" src={tonLogo}></img>
             </div>
           )}
@@ -58,7 +55,7 @@ const DialogLottery = ({ item }: IProps) => {
             {String(title).toUpperCase()}
           </div>
           <div className="text-amber-950 font-bold text-center py-4">
-            Congratulations! <br /> You have received a {title}.
+            Congratulations! <br /> You have received {item.type === 'ton' ? '' : 'a '}{title}.
           </div>
         </div>
       </div>
