@@ -44,10 +44,10 @@ const SpinScreen = () => {
 
   return (
     <HomeLayout hideBottom>
-      <div className="relative h-full flex flex-col justify-between overflow-hidden">
+      <div className="relative h-full flex flex-col justify-between overflow-x-hidden">
         <div className="w-full flex flex-col">
           <img src={luckySpin}></img>
-          <div className="relative">
+          <div className="relative mb-6">
             <img
               className={`${isSpinning ? "animate-spin" : ""}`}
               src={spinCircle}
