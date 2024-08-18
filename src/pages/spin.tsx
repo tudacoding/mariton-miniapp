@@ -1,5 +1,6 @@
 import spinCircle from "@/assets/game/spin-circle.png";
 import pickSpin from "@/assets/game/pick-spin.png";
+import luckySpin from "@/assets/images/lucky-spin.png";
 import spinButton from "@/assets/game/spin-button.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,8 +44,9 @@ const SpinScreen = () => {
 
   return (
     <HomeLayout hideBottom>
-      <div className="relative h-full flex flex-col justify-between">
-        <div className="w-full flex items-center justify-center">
+      <div className="relative h-full flex flex-col justify-between overflow-hidden">
+        <div className="w-full flex flex-col">
+          <img src={luckySpin}></img>
           <div className="relative">
             <img
               className={`${isSpinning ? "animate-spin" : ""}`}
