@@ -4,8 +4,8 @@ export function getTitleLotteryItem(item: IInventory) {
   if (item.type === "ton") {
     return `${item.value} TON`;
   } else if (item.type === "discount") {
-    return `discount ${item.value}%`;
+    return `${item.value}% discount`;
   } else if (item.type === "puzzle") {
-    return `puzzle ${item.value}`;
+    return `${item.value} egg piece`;
   }
 }
