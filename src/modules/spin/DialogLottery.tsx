@@ -5,7 +5,7 @@ import coupon from "@/assets/game/lottery-item/coupon.png";
 import puzzleFire from "@/assets/game/lottery-item/fire-puzzle.png";
 import puzzleWater from "@/assets/game/lottery-item/water-puzzle.png";
 import puzzleTree from "@/assets/game/lottery-item/tree-puzzle.png";
-import { getTitleLotteryItem } from "@/utils/string";
+import { getDescriptionLotteryItem, getTitleLotteryItem } from "@/utils/string";
 import { Dispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 interface IProps {
@@ -55,7 +55,7 @@ const DialogLottery = ({ item }: IProps) => {
             {String(title).toUpperCase()}
           </div>
           <div className="text-amber-950 font-bold text-center py-4">
-            Congratulations! <br /> You have received {item.type === 'ton' ? '' : 'a '}{title}.
+            Congratulations! <br /> {getDescriptionLotteryItem(item)}.
           </div>
         </div>
       </div>
