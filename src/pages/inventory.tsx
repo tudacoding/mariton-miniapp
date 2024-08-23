@@ -8,7 +8,7 @@ import headBgLottery from "@/assets/game/head-background-lottery.png";
 import bodyBgLottery from "@/assets/game/body-background-lottery.png";
 import { IInventory } from "@/types/models/lotteryItem";
 
-const LotteryItem = ({ item, index }: { item: IInventory; index: number }) => {
+const LotteryItem = ({ item }: { item: IInventory }) => {
   return (
     <div className="w-full h-400 bg-amber-50 rounded-lg p-2">
       <div className="relative flex justify-center border border-amber-400 rounded-lg p-4">
@@ -42,7 +42,7 @@ export default function InventoryScreen() {
         <div className="overflow-y-auto overflow-clip grow overflow-x-[unset] relative h-[calc(100%-140px)] mt-4">
           <div className="grid grid-cols-2 gap-4 px-6 ">
             {listInventory?.map((item: any, index: number) => (
-              <LotteryItem key={index} item={item} index={index} />
+              <LotteryItem key={index} item={item} />
             ))}
           </div>
         </div>
