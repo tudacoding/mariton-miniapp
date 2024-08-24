@@ -23,7 +23,7 @@ export function useGetFirstRegister() {
         telegramName,
         telegramAvatar: avatar
       });
-      if (res?.type === 'UNIQUE_TELEGRAM_ID_TYPE') {
+      if (!res.id) {
         navigate("/welcome");
       }
     }

@@ -2,8 +2,8 @@ import logoHouse from "@/assets/air/namdvfix.gif";
 import Mining from "@/assets/air/mining.png";
 import BaseImage from "@/components/BaseImage";
 import { useNavigate } from "react-router-dom";
-import box from "@/assets/game/box-coming.png";
-// import box from "@/assets/game/box.png";
+// import box from "@/assets/game/box-coming.png";
+import box from "@/assets/game/box.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "@/store/store";
 
@@ -29,7 +29,7 @@ const AirdopBtn = () => {
         <BaseImage width={"50%"} src={Mining} alt="box" />
         <BaseImage width={"70%"} src={logoHouse} alt="box" className="ml-2" />
       </div>
-      <BaseImage width={"40%"} src={box} alt="box" />
+      <BaseImage width={"40%"} src={box} alt="box" path="/inventory" />
     </div>
   );
 };

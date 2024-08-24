@@ -1,40 +1,40 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import tonLogo from "@/assets/game/lottery-item/ton.png";
 import coupon from "@/assets/game/lottery-item/coupon.png";
 import puzzleFire from "@/assets/game/lottery-item/fire-puzzle.png";
 import puzzleWater from "@/assets/game/lottery-item/water-puzzle.png";
 import puzzleTree from "@/assets/game/lottery-item/tree-puzzle.png";
+import { ELotteryItem, EMonster, IInventory } from "@/types/models/lotteryItem";
 
-const ImageLotteryItem = (props: any) => {
+const ImageLotteryItem = ({ item }: { item: IInventory }) => {
   return (
-    <div className="">
-      {props.item.type === "ton" && (
-        <div className="flex items-center h-20">
-          <span className="text-amber-800 font-bold text-3xl">
-            {props.item.value}
+    <div className="h-16 flex justify-center">
+      {item.type === ELotteryItem.TON && (
+        <div className="flex items-center">
+          <span className="text-amber-800 font-bold text-2xl">
+            {item.value}
           </span>
-          <img className="ml-2 w-10" src={tonLogo}></img>
+          <img className="w-8 pl-1" src={tonLogo}></img>
         </div>
       )}
-      {props.item.type === "discount" && (
-        <div className="relative flex items-center h-20">
-          <img className="ml-2" src={coupon}></img>
-          <span className="absolute left-8 text-amber-800 font-bold text-3xl">
-            <div className="font-bold text-sm">COUPON</div>
-            <div className="font-bold text-sm">{props.item.value} %</div>
-          </span>
+      {item.type === ELotteryItem.DISCOUNT && (
+        <div className="relative flex items-center">
+          <img className="" src={coupon}></img>
+          <div className="absolute !text-amber-800 right-3 flex flex-col leading-none font-extrabold mx-auto">
+            <span className="text-[14px]">COUPON</span>
+            <span className="text-[28px]">{item.value}%</span>
+          </div>
         </div>
       )}
-      {props.item.type === "puzzle" && (
-        <div className="relative flex items-center h-20">
-          {props.item.value === "fire" && (
-            <img width={60} className="ml-2" src={puzzleFire}></img>
+      {item.type === ELotteryItem.PUZZLE && (
+        <div className="relative flex items-center">
+          {item.value === EMonster.FIRE && (
+            <img width={54} className="ml-2" src={puzzleFire}></img>
           )}
-          {props.item.value === "water" && (
-            <img width={60} className="ml-2" src={puzzleWater}></img>
+          {item.value === EMonster.WATER && (
+            <img width={54} className="ml-2" src={puzzleWater}></img>
           )}
-          {props.item.value === "tree" && (
-            <img width={60} className="ml-2" src={puzzleTree}></img>
+          {item.value === EMonster.TREE && (
+            <img width={54} className="ml-2" src={puzzleTree}></img>
           )}
         </div>
       )}

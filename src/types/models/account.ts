@@ -15,8 +15,8 @@ export default interface Account {
   telegramAvatar: string;
   tonTokens: number;
   mrtTokens: number;
-  totalMrtTokensClaimed: number;
-  totalRefs: number;
+  totalMrtTokensClaimedOnWeek: number;
+  totalRefsOnWeek: number;
 }
 export interface IRef {
   username: string;
@@ -27,7 +27,6 @@ export interface IRef {
 export interface ITokensWallet {
   tonTokens?: number;
   mrtTokens?: number;
-  totalMrtTokensClaimed?: number;
 }
 
 export interface IBoost {

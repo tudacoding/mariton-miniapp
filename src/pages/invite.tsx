@@ -46,9 +46,7 @@ export default function InvitePage() {
             src={background}
             alt="bg-mission-body"
           />
-          <div
-            className={twMerge("w-full h-full px-6 flex flex-col", "pb-5 pt-3")}
-          >
+          <div className="w-full h-full px-6 flex flex-col pb-5 pt-3">
             <BaseTitleDivider className="pt-1">Invite Link</BaseTitleDivider>
             <div className="flex flex-row gap-3 pb-2">
               <div className="py-2 text-t-description bg-card rounded-xl grow">

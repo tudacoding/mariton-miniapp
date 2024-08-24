@@ -22,13 +22,9 @@ const SpinRepository = {
     });
     return res.data || {};
   },
-  getHistoryLottery: async ({ wallet, pagination }: IPropsHistoryLottery) => {
+  getHistoryLottery: async ({ wallet }: IPropsHistoryLottery) => {
     const query = qs.stringify(
       {
-        pagination: {
-          page: pagination.page,
-          pageSize: pagination.pageSize,
-        },
         populate: {
           account: {
             fields: ["wallet"],

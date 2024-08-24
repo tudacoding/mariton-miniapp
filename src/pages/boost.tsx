@@ -1,7 +1,6 @@
 import HomeLayout from "@/modules/home/Layout";
 import BaseTitleDivider from "@/components/BaseTitleDivider";
 import background from "@/assets/air/short-background-body.png";
-import { twMerge } from "tailwind-merge";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
@@ -21,7 +20,7 @@ export default function Boost() {
             src={background}
             alt="bg-mission-body"
           />
-          <div className={twMerge("grow overflow-auto px-6", "mb-5 mt-4")}>
+          <div className="grow overflow-auto px-6 mb-5 mt-4">
             <BaseTitleDivider className="pt-0">Daily Mission</BaseTitleDivider>
             {checkinBoosts.map((item, index) => {
               const { type } = item;

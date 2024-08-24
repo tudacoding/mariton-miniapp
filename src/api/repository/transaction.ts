@@ -15,6 +15,10 @@ const TransactionResource = {
         });
         const res = await axios.get(`${config.apiUrl}/transactions?${query}&sort[0]=createdAt:desc&pagination[limit]=20`);
         return res.data || [];
-    }
+    },
+    signSignature: async (data: any) => {
+        const res = await axios.post(`${config.apiUrl}/transaction/sign-signature`, data);
+        return res.data || {};
+    },
 }
 export default TransactionResource;

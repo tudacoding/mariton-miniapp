@@ -1,4 +1,6 @@
 #root {
+  min-width: 375px;
+  min-height: 600px;
   max-width: 430px;
   margin: 0 auto;
 
@@ -7,5 +9,5 @@
   }
 }
 body {
-  min-width: 375px;
+  
 }

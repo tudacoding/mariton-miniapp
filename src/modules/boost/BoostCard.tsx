@@ -37,9 +37,8 @@ export default function BoostCard({
     type: EDailyType;
     sortDescription: string;
   }) => {
-    if (
-      ((first_name ?? "") + (last_name ?? ""))?.includes(KEY_MARITON_AMBASSADOR)
-    ) {
+    const fullName = (first_name ?? "") + (last_name ?? "");
+    if (fullName.includes(KEY_MARITON_AMBASSADOR)) {
       const res = await miningStore.boostDaily({
         userId: account?.id,
         type,
@@ -50,35 +49,59 @@ export default function BoostCard({
       }
     } else {
       toast.error(
-        `You need add '${KEY_MARITON_AMBASSADOR}' to your Telegram name`
+        `You need to add '${KEY_MARITON_AMBASSADOR}' to your Telegram name`
       );
     }
     return false;
   };
-  const handleBoost = async () => {
-    let result = false;
-    if (!isActive && account.id) {
-      if (type === EDailyType.MARITON_AMBASSADOR) {
-        result = await handleMaritonAmbassador(item);
-      } else if (
-        [EDailyType.CHECKIN, EDailyType.JUNIOR_RICH_MARITON].includes(type)
-      ) {
-        result = await miningStore.boostDaily({
-          userId: account.id,
-          type,
-        });
-        if (result) {
-          toast.success(sortDescription);
-        }
-      } else {
-        //one time checkin
-        result = await miningStore.boostOneTime({
-          userId: account.id,
-          type,
-        });
-      }
+
+  const handleBoostDaily = async (
+    type: EDailyType,
+    sortDescription: string
+  ) => {
+    const res = await miningStore.boostDaily({
+      userId: account.id,
+      type,
+    });
+    if (res) {
+      toast.success(sortDescription);
     }
-    return result;
+    return res;
+  };
+
+  const handleBoostOneTime = async (
+    type: EDailyType,
+    sortDescription: string
+  ) => {
+    const res = await miningStore.boostOneTime({
+      userId: account.id,
+      type,
+    });
+    if (res) {
+      toast.success(sortDescription);
+    }
+    return res;
+  };
+
+  const handleBoost = async () => {
+    if (!isActive && account.id) {
+      let result = false;
+
+      switch (type) {
+        case EDailyType.MARITON_AMBASSADOR:
+          result = await handleMaritonAmbassador(item);
+          break;
+        case EDailyType.CHECKIN:
+        case EDailyType.JUNIOR_RICH_MARITON:
+          result = await handleBoostDaily(type, sortDescription);
+          break;
+        default:
+          result = await handleBoostOneTime(type, sortDescription);
+      }
+
+      return result;
+    }
+    return false;
   };
   return (
     <div key={index} className="pb-3">

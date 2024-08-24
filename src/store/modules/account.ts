@@ -73,8 +73,7 @@ const accountStore = createModel<RootModel>()({
         dispatch.accountStore.setAccount(res);
         dispatch.accountStore.setTokensWallet({
           tonTokens: res.tonTokens,
-          mrtTokens: res.mrtTokens,
-          totalMrtTokensClaimed: res.totalMrtTokensClaimed,
+          mrtTokens: res.mrtTokens
         });
         return res;
       }
@@ -92,8 +91,6 @@ const accountStore = createModel<RootModel>()({
     async getHistoryLottery(params) {
       const res = await SpinRepository.getHistoryLottery(params);
       if (res.data) dispatch.accountStore.setInventory(res.data);
-      if (res.meta && res.meta.pagination)
-        dispatch.accountStore.setPagination(res.meta.pagination);
       return res;
     },
     async getRef(params) {
