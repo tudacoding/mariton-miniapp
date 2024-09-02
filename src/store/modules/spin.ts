@@ -25,10 +25,18 @@ const spinStore = createModel<RootModel>()({
     },
   },
   effects: (dispatch) => ({
-    async spinLottery(params) {
+    async spinLottery(params, rootState) {
       const res = await SpinRepository.spinLottery(params);
-      if (res) dispatch.spinStore.setCollectedItem(res);
-      return res;
+      if (res) {
+        console.log(res);
+        const account = rootState.accountStore.account;
+        dispatch.accountStore.setAccount({
+          ...account,
+          usedSpins: account.usedSpins + 1
+        })
+        dispatch.spinStore.setCollectedItem(res);
+        return res;
+      }
     },
   }),
 });
