@@ -9,24 +9,33 @@ import { maritonChannelLink, maritonChatLink, XLink } from "@/config";
 import useCopy from "@/hooks/useCopy";
 import { EDailyType } from "@/types/models/mining";
 import LogoTele from "@/assets/icons/LogoTele";
-
+import LogoX from "@/assets/icons/LogoX";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@/store/store";
+const bonusSpeedOneTime = {
+  1012: "Boost +10% speed for 12h",
+  2024: "Boost +20% speed for 24h",
+  1008: "Boost +10% speed for 8h",
+  3024: "Boost +30% speed for 24h",
+};
 export default function GetDataBoost() {
+  const { checkingBoost } = useDispatch<Dispatch>().miningStore;
   const [copy] = useCopy(KEY_MARITON_AMBASSADOR);
   const checkinBoosts: BoostCardProps[] = useMemo(
     () => [
       {
-        sortDescription: "Boost +10% speed for 12h",
+        sortDescription: bonusSpeedOneTime["1012"],
         title: "Daily Check in",
         type: EDailyType.CHECKIN,
         icon: <CheckInIcon />,
-        description: "Boost +10% speed for 12h",
+        description: bonusSpeedOneTime["1012"],
       },
       {
-        sortDescription: "Boost +20% speed for 24h",
+        sortDescription: bonusSpeedOneTime["2024"],
         description: (
           <span>
-            Minimum 01 TON balance in your Wallet <br /> Boost +20% speed for
-            24h
+            Minimum 01 TON balance in your Wallet <br />{" "}
+            {bonusSpeedOneTime["2024"]}
           </span>
         ),
         title: "Junior Rich Mariton",
@@ -34,7 +43,7 @@ export default function GetDataBoost() {
         icon: <RichJuniorIcon />,
       },
       {
-        sortDescription: "Boost +10% speed for 8h",
+        sortDescription: bonusSpeedOneTime["1008"],
         title: "Mariton Ambassador",
         description: (
           <span>
@@ -48,7 +57,7 @@ export default function GetDataBoost() {
             >
               '{KEY_MARITON_AMBASSADOR}'
             </span>{" "}
-            to your Telegram name) <br /> Boost +10% speed for 8h
+            to your Telegram name) <br /> {bonusSpeedOneTime["1008"]}
           </span>
         ),
         type: EDailyType.MARITON_AMBASSADOR,
@@ -58,52 +67,63 @@ export default function GetDataBoost() {
     [copy]
   );
   const oneTimeBoosts = [
-    // {
-    //   sortDescription: "Boost +30% mining speed",
-    //   title: "Follow Mariton on X",
-    //   description: (
-    //     <span>
-    //       X (Follow):{" "}
-    //       <span
-    //         className="underline"
-    //         onClick={() => {
-    //           window.open(XLink, "_blank");
-    //         }}
-    //       >
-    //         {XLink}
-    //       </span>
-    //       <br /> Boost +30% mining speed
-    //     </span>
-    //   ),
-    //   type: EDailyType.ONE_TIME_FOLLOW_X,
-    //   icon: <LogoX className="h-10 w-10" />,
-    // },
-    // {
-    //   sortDescription: "Boost +30% mining speed",
-    //   title: "Like and Retweet Mariton's post on X",
-    //   description: (
-    //     <>
-    //       <span className="whitespace-nowrap">Post (Like + Retweet):</span>
-    //       <p
-    //         className="underline"
-    //         onClick={() => {
-    //           window.open(XLink_2, "_blank");
-    //         }}
-    //       >
-    //         {XLink}
-    //       </p>
-    //       Boost +30% mining speed
-    //     </>
-    //   ),
-    //   type: EDailyType.ONE_TIME_LIKE_X,
-    //   icon: <LogoX className="h-10 w-10" />,
-    // },
     {
-      sortDescription: "Boost +30% speed for 24h",
+      sortDescription: bonusSpeedOneTime[3024],
+      title: "Follow Mariton on X",
+      description: (
+        <span>
+          X:{" "}
+          <span
+            className="underline"
+            onClick={() => {
+              window.open(XLink, "_blank");
+              checkingBoost({
+                type: EDailyType.ONE_TIME_FOLLOW_X,
+                bonusSpeed: 0,
+                isActive: false,
+              });
+            }}
+          >
+            Follow here
+          </span>
+          <br /> {bonusSpeedOneTime[3024]}
+        </span>
+      ),
+      type: EDailyType.ONE_TIME_FOLLOW_X,
+      icon: <LogoX className="h-10 w-10" />,
+    },
+    {
+      sortDescription: bonusSpeedOneTime[3024],
+      title: "Like and Retweet Mariton's post",
+      description: (
+        <>
+          <span className="whitespace-nowrap">Post: </span>
+          <span
+            className="underline"
+            onClick={() => {
+              window.open(XLink_2, "_blank");
+              checkingBoost({
+                type: EDailyType.ONE_TIME_LIKE_X,
+                bonusSpeed: 0,
+                isActive: false,
+              });
+            }}
+          >
+            Like and Retweet here
+          </span>
+          <br />
+          {bonusSpeedOneTime[3024]}
+        </>
+      ),
+      type: EDailyType.ONE_TIME_LIKE_X,
+      icon: <LogoX className="h-10 w-10" />,
+    },
+    {
+      sortDescription: bonusSpeedOneTime[3024],
       title: "Join Mariton Community",
       description: (
         <span>
-          Chat (Join) :{" "}
+          Chat:{" "}
           <span
             className="underline"
             onClick={async () => {
@@ -112,18 +132,18 @@ export default function GetDataBoost() {
           >
             Join Group here
           </span>
-          <br /> Boost +30% speed for 24h
+          <br /> {bonusSpeedOneTime[3024]}
         </span>
       ),
       type: EDailyType.ONE_TIME_JOIN_CHAT_TELE,
       icon: <LogoTele className="h-9 w-9" />,
     },
     {
-      sortDescription: "Boost +30% speed for 24h",
+      sortDescription: bonusSpeedOneTime[3024],
       title: "Join Mariton Channel",
       description: (
         <span>
-          Channel (Join):{" "}
+          Channel:{" "}
           <span
             className="underline"
             onClick={() => {
@@ -132,7 +152,7 @@ export default function GetDataBoost() {
           >
             Join Channel here
           </span>
-          <br /> Boost +30% speed for 24h
+          <br /> {bonusSpeedOneTime[3024]}
         </span>
       ),
       type: EDailyType.ONE_TIME_JOIN_CHANNEL_TELE,

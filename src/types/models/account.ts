@@ -33,7 +33,7 @@ export interface IBoost {
   createdAt: string;
   updatedAt: string;
   type?: any;
-  bonusSpeed?: number;
+  bonusSpeed: number;
   isActive?: any;
   account: number;
 }

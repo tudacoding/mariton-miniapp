@@ -39,7 +39,7 @@ export default function Boost() {
             </BaseTitleDivider>
             {oneTimeBoosts.map((item, index) => {
               const { type } = item;
-              const isActive = boosts.find((b) => b.type === type);
+              const isActive = boosts.find((b) => b.type === type && b.bonusSpeed > 0);
               return (
                 <BoostCard
                   index={index}

@@ -24,6 +24,10 @@ const BoostRepository = {
             type
         });
         return res.data ?? {}
+    },
+    checkingBoost: async (data: any) => {
+        const res = await axios.post(`${config.apiUrl}/daily/checking-boost`, data);
+        return res.data || {};
     }
 };
 export default BoostRepository;

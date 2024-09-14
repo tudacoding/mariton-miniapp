@@ -80,7 +80,7 @@ const miningStore = createModel<RootModel>()({
             const mining = rootState.miningStore.mining
             if (mining.id) {
                 const res = await MiningRepository.claimRefTokens(mining.id)
-                dispatch.accountStore.setTokensWallet({ mrtTokens: res.account.mrtTokens})
+                dispatch.accountStore.setTokensWallet({ mrtTokens: res.account.mrtTokens })
                 dispatch.miningStore.setMining(res)
             }
         },
@@ -165,6 +165,14 @@ const miningStore = createModel<RootModel>()({
                 dispatch.miningStore.setListBoosts(res)
                 return res;
             }
+        },
+        checkingBoost: async (data: { type: EDailyType, bonusSpeed: number, isActive: boolean }, rootState) => {
+            if (!rootState.accountStore.account.id) return;
+            const res = await BoostRepository.checkingBoost({
+                ...data,
+                account: rootState.accountStore.account.id
+            });
+            return res;
         }
 
     })
